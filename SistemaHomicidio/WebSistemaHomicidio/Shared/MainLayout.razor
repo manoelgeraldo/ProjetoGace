@@ -33,19 +33,19 @@
                                OnClick="@((e) => DrawerToggle())" />
                 <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
                     <MudText Typo="Typo.h5" Class="mudblazor-appbar-brand-text">
-                        Sistema de Registro de Homicídios
+                        Sistema de Mortes de Interesse Policial
                     </MudText>
                 </MudHidden>
                 <MudSpacer />
 
                 <MudSpacer />
                 <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-                    <MudTooltip Text="Toggle light/dark theme">
+                    <MudTooltip Text="Modo Escuro">
                         <MudIconButton Icon="@Icons.Material.Filled.Brightness4"
                                        Color="Color.Inherit"
                                        OnClick="@((e) => DarkMode())" />
                     </MudTooltip>
-                    <MudTooltip Text="Toggle right-to-left/left-to-right">
+                    <MudTooltip Text="Inverter componentes">
                         <MudIconButton Icon="@Icons.Material.Filled.FormatTextdirectionRToL"
                                        Color="Color.Inherit"
                                        OnClick="@((e) => RightToLeftToggle())" />
@@ -120,7 +120,7 @@
                             <ActivatorContent>
                                 <MudText Typo="Typo.button"
                                          Color="Color.Primary">
-                                    Desenvolvedores
+                                    Desenvolvedor
                                 </MudText>
                             </ActivatorContent>
                             <ChildContent>
@@ -128,11 +128,11 @@
                                              Icon="@Icons.Custom.Brands.LinkedIn"
                                              IconColor="Color.Info"
                                              Href="https://www.linkedin.com/in/manoelgeraldo/" />
-                                <MudDivider />
+                                @*<MudDivider />
                                 <MudListItem Text="Luiz Pereira"
                                              Icon="@Icons.Custom.Brands.LinkedIn"
                                              IconColor="Color.Info"
-                                             Href="https://www.linkedin.com/in/manoelgeraldo/" />
+                                             Href="https://www.linkedin.com/in/manoelgeraldo/" />*@
                             </ChildContent>
                         </MudMenu>
                     </MudText>

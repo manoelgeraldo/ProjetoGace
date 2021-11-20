@@ -5,8 +5,9 @@
     <DataAnnotationsValidator />
     <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
         <MudGrid>
-            <MudItem xs="12" id="fundobranco">
-                <MudPaper Class="sombra pa-2 mx-2" Elevation="3">
+            <!--Cabeçalho do Formulário-->
+            <MudItem xs="12">
+                <MudPaper Class="sombra pa-5 mx-2" Elevation="3">
                     <MudGrid>
                         <!-- Nº BOE-->
                         <MudItem xs="12" sm="6" md="3">
@@ -14,7 +15,7 @@
                                           Label="Nº BOE"
                                           Variant="Variant.Outlined"
                                           For="@(()=> editarRegistro.BOE)"
-                                          id="boe-mask" />
+                                          id="boe-mask"/>
                         </MudItem>
                         <!-- Data Registro-->
                         <MudItem xs="12" sm="6" md="2">
@@ -79,7 +80,6 @@
                                     </RowTemplate>
                                 </MudTable>
                             </MudPaper>
-
                         </MudItem>
                         <!-- Observações-->
                         <MudItem xs="12" sm="6">
@@ -94,222 +94,224 @@
                 </MudPaper>
             </MudItem>
             <!-- TabPages-->
-            <MudItem xs="12" id="fundobranco">
+            <MudItem xs="12">
                 <MudTabs Elevation="3" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" Class="sombra">
                     <!-- Fato-->
                     <MudTabPanel Text="Fato">
                         <MudText>
-                            <MudGrid>
-                                <!--Data-->
-                                <MudItem xs="12" sm="6" md="2">
-                                    <MudDatePicker Label="Data do Fato"
-                                                   DisableToolbar="true"
-                                                   DateFormat="dd/MM/yyyy"
-                                                   AllowKeyboardInput="true"
-                                                   MaxDate="DateTime.Now"
-                                                   @bind-Date="@editarRegistro.Fato.DataFato" />
-                                </MudItem>
-                                <!--Hora-->
-                                <MudItem xs="12" sm="6" md="2">
-                                    <MudTimePicker Label="Hora do Fato"
-                                                   @bind-Time="@editarRegistro.Fato.HoraFato"
-                                                   AllowKeyboardInput="true"
-                                                   AutoClose="true" />
-                                </MudItem>
-                                <!--Turno-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    <MudSelect T="string" Label="Turno" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Fato.TurnoFato">
-                                        <MudSelectItem Value="@("MADRUGADA")" />
-                                        <MudSelectItem Value="@("MANHA")" />
-                                        <MudSelectItem Value="@("TARDE")" />
-                                        <MudSelectItem Value="@("NOITE")" />
-                                    </MudSelect>
-                                </MudItem>
-                                <!--Status Motivação-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    <MudField Label="Status Motivação" Variant="Variant.Outlined" InnerPadding="false">
-                                        <MudRadioGroup @bind-SelectedOption="@editarRegistro.Fato.StatusMotivacaoFato">
-                                            <MudRadio Option="@("PRELIMINAR")" Color="Color.Primary">Preliminar</MudRadio>
-                                            <MudRadio Option="@("DEFINITIVA")" Color="Color.Primary">Definitiva</MudRadio>
-                                        </MudRadioGroup>
-                                    </MudField>
-                                </MudItem>
-                                <!--Natureza-->
-                                <MudItem xs="12" sm="6" md="8">
-                                    <MudSelect T="string" Label="Natureza" Variant="Variant.Outlined" @bind-value="@editarRegistro.Fato.NaturezaBoe">
-                                        <MudSelectItem Value="@("HOMICIDIO")" />
-                                        <MudSelectItem Value="@("FEMINICIDIO")" />
-                                        <MudSelectItem Value="@("ROUBO SEGUIDO DE MORTE (LATROCINIO)")" />
-                                    </MudSelect>
-                                </MudItem>
-                                <!--Causa Juridica-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    <MudSelect T="string" Label="Causa Jurídica" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Fato.CausaJuridicaFato">
-                                        <MudSelectItem Value="@("NAO INFORMADA")" />
-                                        <MudSelectItem Value="@("ACIDENTE DE TRABALHO")" />
-                                        <MudSelectItem Value="@("ATROPELAMENTO")" />
-                                        <MudSelectItem Value="@("ACIDENTE OUTROS")" />
-                                        <MudSelectItem Value="@("ACIDENTE DE TRANSITO")" />
-                                        <MudSelectItem Value="@("SUICIDIO")" />
-                                        <MudSelectItem Value="@("HOMICIDIO")" />
-                                    </MudSelect>
-                                </MudItem>
-                                <!--Região-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    <MudSelect T="string" Label="Região" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Fato.RegiaoFato">
-                                        <MudSelectItem Value="@("REGIAO METROPOLITANA")" />
-                                        <MudSelectItem Value="@("ZONA DA MATA NORTE")" />
-                                        <MudSelectItem Value="@("ZONA DA MATA SUL")" />
-                                        <MudSelectItem Value="@("AGRESTE")" />
-                                        <MudSelectItem Value="@("SERTAO")" />
-                                    </MudSelect>
-                                </MudItem>
-                                <!--Município-->
-                                <MudItem xs="12" sm="6" md="8">
-                                    <MudAutocomplete T="Municipio_Diretoria_AIS_BPM" Label="Município"
-                                                     Variant="Variant.Outlined"
-                                                     @bind-Value="@editarRegistro.Fato.MunicipioFato"
-                                                     SearchFunc="@Municipios"
-                                                     ToStringFunc="@(m => m is null ? null : $"{ m.Municipio }")" />
-                                </MudItem>
-                                <!--Bairro-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    <MudTextField @bind-Value="@editarRegistro.Fato.BairroFato"
-                                                  Label="Bairro"
-                                                  Variant="Variant.Outlined" />
-                                </MudItem>
-                                <!--Logradouro-->
-                                <MudItem xs="12" sm="6" md="6">
-                                    <MudTextField @bind-Value="@editarRegistro.Fato.LogradouroFato"
-                                                  Label="Logradouro"
-                                                  Variant="Variant.Outlined" />
-                                </MudItem>
-                                <!--Numero do Logradouro-->
-                                <MudItem xs="12" sm="6" md="2">
-                                    <MudTextField @bind-Value="@editarRegistro.Fato.NumeroLogradouroFato"
-                                                  Label="Nº Logradouro"
-                                                  Variant="Variant.Outlined" />
-                                </MudItem>
-                                <!--Complemento-->
-                                <MudItem xs="12" sm="12" md="4">
-                                    <MudTextField @bind-Value="@editarRegistro.Fato.ComplementoFato"
-                                                  Label="Complemento"
-                                                  Variant="Variant.Outlined" />
-                                </MudItem>
-                                <!--Ponto de referência-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    <MudTextField @bind-Value="@editarRegistro.Fato.PontoReferenciaFato"
-                                                  Label="Ponto de Referência"
-                                                  Variant="Variant.Outlined" />
-                                </MudItem>
-                                <!--Localidade/Comunidade-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    <MudTextField @bind-Value="@editarRegistro.Fato.LocalidadeComunidadeFato"
-                                                  Label="Localidade/Comunidade"
-                                                  Variant="Variant.Outlined" />
-                                </MudItem>
-                                <!--Local do Fato-->
-                                <MudItem xs="12" sm="6" md="6">
-                                    <MudAutocomplete T="string" Label="Local do Fato"
-                                                     @bind-Value="@editarRegistro.Fato.LocalFato"
-                                                     Variant="Variant.Outlined"
-                                                     SearchFunc="@LocalFato" />
-                                </MudItem>
-                                <!--Zona-->
-                                <MudItem xs="12" sm="6" md="6">
-                                    <MudField Label="Zona" Variant="Variant.Outlined" InnerPadding="false">
-                                        <MudRadioGroup @bind-SelectedOption="@editarRegistro.Fato.ZonaFato">
-                                            <MudRadio Option="@("URBANA")" Color="Color.Primary">Urbana</MudRadio>
-                                            <MudRadio Option="@("RURAL")" Color="Color.Primary">Rural</MudRadio>
-                                        </MudRadioGroup>
-                                    </MudField>
-                                </MudItem>
-                                <!--Diretoria-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    @if (@editarRegistro.Fato.MunicipioFato is null)
-                                    {
-                                        <MudTextField @bind-Value="@editarRegistro.Fato.DiretoriaFato"
-                                                      Label="Diretoria"
+                            <MudPaper Class="pa-5 mx-2" Elevation="3">
+                                <MudGrid>
+                                    <!--Data-->
+                                    <MudItem xs="12" sm="6" md="2">
+                                        <MudDatePicker Label="Data do Fato"
+                                                       DisableToolbar="true"
+                                                       DateFormat="dd/MM/yyyy"
+                                                       AllowKeyboardInput="true"
+                                                       MaxDate="DateTime.Now"
+                                                       @bind-Date="@editarRegistro.Fato.DataFato" />
+                                    </MudItem>
+                                    <!--Hora-->
+                                    <MudItem xs="12" sm="6" md="2">
+                                        <MudTimePicker Label="Hora do Fato"
+                                                       @bind-Time="@editarRegistro.Fato.HoraFato" 
+                                                       AllowKeyboardInput="true" 
+                                                       AutoClose="true"/>
+                                    </MudItem>
+                                    <!--Turno-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudSelect T="string" Label="Turno" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Fato.TurnoFato">
+                                            <MudSelectItem Value="@("MADRUGADA")" />
+                                            <MudSelectItem Value="@("MANHA")" />
+                                            <MudSelectItem Value="@("TARDE")" />
+                                            <MudSelectItem Value="@("NOITE")" />
+                                        </MudSelect>
+                                    </MudItem>
+                                    <!--Status Motivação-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudField Label="Status Motivação" Variant="Variant.Outlined" InnerPadding="false">
+                                            <MudRadioGroup @bind-SelectedOption="@editarRegistro.Fato.StatusMotivacaoFato">
+                                                <MudRadio Option="@("PRELIMINAR")" Color="Color.Primary">Preliminar</MudRadio>
+                                                <MudRadio Option="@("DEFINITIVA")" Color="Color.Primary">Definitiva</MudRadio>
+                                            </MudRadioGroup>
+                                        </MudField>
+                                    </MudItem>
+                                    <!--Natureza-->
+                                    <MudItem xs="12" sm="6" md="8">
+                                        <MudSelect T="string" Label="Natureza" Variant="Variant.Outlined" @bind-value="@editarRegistro.Fato.NaturezaBoe">
+                                            <MudSelectItem Value="@("HOMICIDIO")" />
+                                            <MudSelectItem Value="@("FEMINICIDIO")" />
+                                            <MudSelectItem Value="@("ROUBO SEGUIDO DE MORTE (LATROCINIO)")" />
+                                        </MudSelect>
+                                    </MudItem>
+                                    <!--Causa Juridica-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudSelect T="string" Label="Causa Jurídica" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Fato.CausaJuridicaFato">
+                                            <MudSelectItem Value="@("NAO INFORMADA")" />
+                                            <MudSelectItem Value="@("ACIDENTE DE TRABALHO")" />
+                                            <MudSelectItem Value="@("ATROPELAMENTO")" />
+                                            <MudSelectItem Value="@("ACIDENTE OUTROS")" />
+                                            <MudSelectItem Value="@("ACIDENTE DE TRANSITO")" />
+                                            <MudSelectItem Value="@("SUICIDIO")" />
+                                            <MudSelectItem Value="@("HOMICIDIO")" />
+                                        </MudSelect>
+                                    </MudItem>
+                                    <!--Região-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudSelect T="string" Label="Região" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Fato.RegiaoFato">
+                                            <MudSelectItem Value="@("REGIAO METROPOLITANA")" />
+                                            <MudSelectItem Value="@("ZONA DA MATA NORTE")" />
+                                            <MudSelectItem Value="@("ZONA DA MATA SUL")" />
+                                            <MudSelectItem Value="@("AGRESTE")" />
+                                            <MudSelectItem Value="@("SERTAO")" />
+                                        </MudSelect>
+                                    </MudItem>
+                                    <!--Município-->
+                                    <MudItem xs="12" sm="6" md="8">
+                                        <MudAutocomplete T="Municipio_Diretoria_AIS_BPM" Label="Município"
+                                                         Variant="Variant.Outlined"
+                                                         @bind-Value="@editarRegistro.Fato.MunicipioFato"
+                                                         SearchFunc="@Municipios"
+                                                         ToStringFunc="@(e => e == null ? null : $"{ e.Municipio }")" />
+                                    </MudItem>
+                                    <!--Bairro-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudTextField @bind-Value="@editarRegistro.Fato.BairroFato"
+                                                      Label="Bairro"
                                                       Variant="Variant.Outlined" />
-                                    }
-                                    else
-                                    {
-                                        <MudTextField Value="@editarRegistro.Fato.DiretoriaFato"
-                                                      Label="Diretoria"
-                                                      Variant="Variant.Outlined"
-                                                      Text="@editarRegistro.Fato.MunicipioFato.Diretoria" />
-                                    }
-                                </MudItem>
-                                <!--AIS-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    @if (@editarRegistro.Fato.MunicipioFato is null)
-                                    {
+                                    </MudItem>
+                                    <!--Logradouro-->
+                                    <MudItem xs="12" sm="6" md="6">
+                                        <MudTextField @bind-Value="@editarRegistro.Fato.LogradouroFato"
+                                                      Label="Logradouro"
+                                                      Variant="Variant.Outlined" />
+                                    </MudItem>
+                                    <!--Numero do Logradouro-->
+                                    <MudItem xs="12" sm="6" md="2">
+                                        <MudTextField @bind-Value="@editarRegistro.Fato.NumeroLogradouroFato"
+                                                      Label="Nº Logradouro"
+                                                      Variant="Variant.Outlined" />
+                                    </MudItem>
+                                    <!--Complemento-->
+                                    <MudItem xs="12" sm="12" md="4">
+                                        <MudTextField @bind-Value="@editarRegistro.Fato.ComplementoFato"
+                                                      Label="Complemento"
+                                                      Variant="Variant.Outlined" />
+                                    </MudItem>
+                                    <!--Ponto de referência-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudTextField @bind-Value="@editarRegistro.Fato.PontoReferenciaFato"
+                                                      Label="Ponto de Referência"
+                                                      Variant="Variant.Outlined" />
+                                    </MudItem>
+                                    <!--Localidade/Comunidade-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudTextField @bind-Value="@editarRegistro.Fato.LocalidadeComunidadeFato"
+                                                      Label="Localidade/Comunidade"
+                                                      Variant="Variant.Outlined" />
+                                    </MudItem>
+                                    <!--Local do Fato-->
+                                    <MudItem xs="12" sm="6" md="6">
+                                        <MudAutocomplete T="string" Label="Local do Fato"
+                                                         @bind-Value="@editarRegistro.Fato.LocalFato"
+                                                         Variant="Variant.Outlined"
+                                                         SearchFunc="@LocalFato" />
+                                    </MudItem>
+                                    <!--Zona-->
+                                    <MudItem xs="12" sm="6" md="6">
+                                        <MudField Label="Zona" Variant="Variant.Outlined" InnerPadding="false">
+                                            <MudRadioGroup @bind-SelectedOption="@editarRegistro.Fato.ZonaFato">
+                                                <MudRadio Option="@("URBANA")" Color="Color.Primary">Urbana</MudRadio>
+                                                <MudRadio Option="@("RURAL")" Color="Color.Primary">Rural</MudRadio>
+                                            </MudRadioGroup>
+                                        </MudField>
+                                    </MudItem>
+                                    <!--Diretoria-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        @if (@editarRegistro.Fato.MunicipioFato is null)
+                                        {
+                                            <MudTextField @bind-Value="@editarRegistro.Fato.DiretoriaFato"
+                                                          Label="Diretoria"
+                                                          Variant="Variant.Outlined" />
+                                        }
+                                        else
+                                        {
+                                            <MudTextField Value="@editarRegistro.Fato.DiretoriaFato"
+                                                          Label="Diretoria"
+                                                          Variant="Variant.Outlined"
+                                                          Text="@editarRegistro.Fato.MunicipioFato.Diretoria"/>
+                                        }
+                                    </MudItem>
+                                    <!--AIS-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        @if (@editarRegistro.Fato.MunicipioFato is null)
+                                        {
                                         <MudTextField @bind-Value="@editarRegistro.Fato.AisFato"
                                                       Label="AIS"
                                                       Variant="Variant.Outlined" />
-                                    }
-                                    else
-                                    {
-                                        <MudTextField Value="@editarRegistro.Fato.AisFato"
-                                                      Label="AIS"
-                                                      Variant="Variant.Outlined"
-                                                      Text="@editarRegistro.Fato.MunicipioFato.AIS" />
-                                    }
-
-                                </MudItem>
-                                <!--PMPE-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    @if (@editarRegistro.Fato.MunicipioFato is null)
-                                    {
+                                        }
+                                        else
+                                        {
+                                            <MudTextField Value="@editarRegistro.Fato.AisFato"
+                                                          Label="AIS"
+                                                          Variant="Variant.Outlined"
+                                                          Text="@editarRegistro.Fato.MunicipioFato.AIS" />
+                                        }
+                                    
+                                    </MudItem>
+                                    <!--PMPE-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        @if (@editarRegistro.Fato.MunicipioFato is null)
+                                        {
                                         <MudTextField @bind-Value="@editarRegistro.Fato.UnidadePMFato"
                                                       Label="Unidade PMPE"
                                                       Variant="Variant.Outlined" />
-                                    }
-                                    else
-                                    {
-                                        <MudTextField Value="@editarRegistro.Fato.UnidadePMFato"
-                                                      Label="Unidade PMPE"
+                                        }
+                                        else
+                                        {
+                                            <MudTextField Value="@editarRegistro.Fato.UnidadePMFato"
+                                                          Label="Unidade PMPE"
+                                                          Variant="Variant.Outlined"
+                                                          Text="@editarRegistro.Fato.MunicipioFato.BPM" />
+                                        }
+                                    </MudItem>
+                                    <!--PCPE-->
+                                    <MudItem xs="12" sm="6" md="12">
+                                        <MudTextField @bind-Value="@editarRegistro.Fato.UnidadePCFato"
+                                                      Label="Unidade PCPE"
+                                                      Variant="Variant.Outlined" />
+                                    </MudItem>
+                                    <!--Latitude-->
+                                    <MudItem xs="12" sm="6" md="3">
+                                        <MudTextField @bind-Value="@editarRegistro.Fato.LatitudeFato"
+                                                      Label="Latitude"
+                                                      Variant="Variant.Outlined" />
+                                    </MudItem>
+                                    <!--Longitude-->
+                                    <MudItem xs="12" sm="6" md="3">
+                                        <MudTextField @bind-Value="@editarRegistro.Fato.LongitudeFato"
+                                                      Label="Longitude"
+                                                      Variant="Variant.Outlined" />
+                                    </MudItem>
+                                    <!--Fonte-->
+                                    <MudItem xs="12" sm="6" md="6">
+                                        <MudField Label="Fonte" Variant="Variant.Outlined" InnerPadding="false">
+                                            <MudRadioGroup @bind-SelectedOption="@editarRegistro.Fato.FonteFato">
+                                                <MudRadio Option="@("DO BOE")" Color="Color.Primary">Do BOE</MudRadio>
+                                                <MudRadio Option="@("UNICAME")" Color="Color.Primary">UNICAME</MudRadio>
+                                                <MudRadio Option="@("NO LOCAL")" Color="Color.Primary">No Local</MudRadio>
+                                                <MudRadio Option="@("OUTRAS")" Color="Color.Primary">Outras</MudRadio>
+                                            </MudRadioGroup>
+                                        </MudField>
+                                    </MudItem>
+                                    <!--Histórico-->
+                                    <MudItem xs="12" sm="12" md="12">
+                                        <MudTextField Label="Histórico"
                                                       Variant="Variant.Outlined"
-                                                      Text="@editarRegistro.Fato.MunicipioFato.BPM" />
-                                    }
-                                </MudItem>
-                                <!--PCPE-->
-                                <MudItem xs="12" sm="6" md="12">
-                                    <MudTextField @bind-Value="@editarRegistro.Fato.UnidadePCFato"
-                                                  Label="Unidade PCPE"
-                                                  Variant="Variant.Outlined" />
-                                </MudItem>
-                                <!--Latitude-->
-                                <MudItem xs="12" sm="6" md="3">
-                                    <MudTextField @bind-Value="@editarRegistro.Fato.LatitudeFato"
-                                                  Label="Latitude"
-                                                  Variant="Variant.Outlined" />
-                                </MudItem>
-                                <!--Longitude-->
-                                <MudItem xs="12" sm="6" md="3">
-                                    <MudTextField @bind-Value="@editarRegistro.Fato.LongitudeFato"
-                                                  Label="Longitude"
-                                                  Variant="Variant.Outlined" />
-                                </MudItem>
-                                <!--Fonte-->
-                                <MudItem xs="12" sm="6" md="6">
-                                    <MudField Label="Fonte" Variant="Variant.Outlined" InnerPadding="false">
-                                        <MudRadioGroup @bind-SelectedOption="@editarRegistro.Fato.FonteFato">
-                                            <MudRadio Option="@("DO BOE")" Color="Color.Primary">Do BOE</MudRadio>
-                                            <MudRadio Option="@("UNICAME")" Color="Color.Primary">UNICAME</MudRadio>
-                                            <MudRadio Option="@("NO LOCAL")" Color="Color.Primary">No Local</MudRadio>
-                                            <MudRadio Option="@("OUTRAS")" Color="Color.Primary">Outras</MudRadio>
-                                        </MudRadioGroup>
-                                    </MudField>
-                                </MudItem>
-                                <!--Histórico-->
-                                <MudItem xs="12" sm="12" md="12">
-                                    <MudTextField Label="Histórico"
-                                                  Variant="Variant.Outlined"
-                                                  @bind-Value="@editarRegistro.Fato.HistoricoFato"
-                                                  Lines="6" />
-                                </MudItem>
-                            </MudGrid>
+                                                      @bind-Value="@editarRegistro.Fato.HistoricoFato"
+                                                      Lines="6" />
+                                    </MudItem>
+                                </MudGrid>
+                            </MudPaper>
                         </MudText>
                     </MudTabPanel>
                     <!-- Envolvidos-->
@@ -351,196 +353,204 @@
                             </MudGrid>
                         </MudText>
                     </MudTabPanel>
-                    <!-- Inquerito-->
-                    <MudTabPanel Text="Inquerito">
+                    <!-- Inquérito-->
+                    <MudTabPanel Text="Inquérito">
                         <MudText>
-                            <MudGrid>
-                                <!--Tipo de Instauração-->
-                                <MudItem xs="12" sm="6" md="3">
-                                    <MudSelect T="string" Label="Tipo de Instauração" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Inquerito.TipoInstauracao">
-                                        <MudSelectItem Value="@("APFD")" />
-                                        <MudSelectItem Value="@("AAFAI")" />
-                                        <MudSelectItem Value="@("PEM")" />
-                                        <MudSelectItem Value="@("Requisição do MP")" />
-                                        <MudSelectItem Value="@("Portaria")" />
-                                    </MudSelect>
-                                </MudItem>
-                                <!--Número do Inquérito Policial-->
-                                <MudItem xs="12" sm="6" md="3">
-                                    <MudTextField @bind-Value="@editarRegistro.Inquerito.NumeroIP"
-                                                  Label="Número do Inquérito Policial"
-                                                  Variant="Variant.Outlined"
-                                                  Adornment="Adornment.End"
-                                                  Immediate="true" />
-                                </MudItem>
-                                <!--Data da Instauração-->
-                                <MudItem xs="12" sm="6" md="3">
-                                    <MudPaper Class="pa-2 mx-2" Elevation="0">
-                                        <MudDatePicker Label="Data Instauração"
-                                                       DisableToolbar="true"
-                                                       DateFormat="dd/MM/yyyy"
-                                                       AllowKeyboardInput="true"
-                                                       MaxDate="DateTime.Now"
-                                                       @bind-Date="@editarRegistro.Inquerito.DataInstaraucao" />
+                            <MudPaper Class="pa-5 mx-2" Elevation="3">
+                                <MudGrid>
+                                    <!--Tipo de Instauração-->
+                                    <MudItem xs="12" sm="6" md="3">
+                                        <MudSelect T="string" Label="Tipo de Instauração" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Inquerito.TipoInstauracao">
+                                            <MudSelectItem Value="@("APFD")" />
+                                            <MudSelectItem Value="@("AAFAI")" />
+                                            <MudSelectItem Value="@("PEM")" />
+                                            <MudSelectItem Value="@("REQUISICAO DO MP")" />
+                                            <MudSelectItem Value="@("PORTARIA")" />
+                                        </MudSelect>
+                                    </MudItem>
+                                    <!--Número do Inquérito Policial-->
+                                    <MudItem xs="12" sm="6" md="3">
+                                        <MudTextField @bind-Value="@editarRegistro.Inquerito.NumeroIP"
+                                                      Label="Número do Inquérito Policial"
+                                                      Variant="Variant.Outlined"
+                                                      Adornment="Adornment.End"
+                                                      Immediate="true" />
+                                    </MudItem>
+                                    <!--Data da Instauração-->
+                                    <MudItem xs="12" sm="6" md="3">
+                                        <MudPaper Class="pa-2 mx-2" Elevation="0">
+                                            <MudDatePicker Label="Data Instauração"
+                                                           DisableToolbar="true"
+                                                           DateFormat="dd/MM/yyyy"
+                                                           AllowKeyboardInput="true"
+                                                           MaxDate="DateTime.Now"
+                                                           @bind-Date="@editarRegistro.Inquerito.DataInstaraucao" />
 
-                                    </MudPaper>
-                                </MudItem>
-                                <!--Situação Atual-->
-                                <MudItem xs="12" sm="6" md="3">
-                                    <MudSelect T="string" Label="Situação Atual" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Inquerito.SituacaoIP">
-                                        <MudSelectItem Value="@("Em Investigação")" />
-                                        <MudSelectItem Value="@("Sem Investigação")" />
-                                        <MudSelectItem Value="@("Conclusão com Autoria")" />
-                                        <MudSelectItem Value="@("Conclusão sem Autoria")" />
-                                    </MudSelect>
-                                </MudItem>
-                                <!-- Números -->
-                                <MudItem xs="12" sm="6" md="6">
-                                    <MudField Label="Número de: " Variant="Variant.Outlined">
-                                        <MudGrid>
-                                            <MudItem xs="12" sm="6" md="12" Style="margin: 8px 20px">
-                                                <MudGrid>
-                                                    <label style="margin: 12px 5px">Ouvidas de Testemunhas</label>
-                                                    <MudNumericField @bind-Value="@editarRegistro.Inquerito.NumeroOuvida"
-                                                                     Variant="Variant.Outlined"
-                                                                     Margin="Margin.Dense"
-                                                                     Style="width: 50%; margin-left: 50%;" />
-                                                </MudGrid>
-                                            </MudItem>
-                                            <MudItem xs="12" sm="6" md="12" Style="margin: 8px 20px">
-                                                <MudGrid>
-                                                    <label style="margin: 12px 5px">Declarações de Familiares </label>
-                                                    <MudNumericField @bind-Value="@editarRegistro.Inquerito.NumeroDeclaracao"
-                                                                     Variant="Variant.Outlined"
-                                                                     Margin="Margin.Dense"
-                                                                     Style="width: 50%; margin-left: 49%; " />
-                                                </MudGrid>
-                                            </MudItem>
-                                            <MudItem xs="12" sm="6" md="12" Style="margin: 8px 20px">
-                                                <MudGrid>
-                                                    <label style="margin: 12px 5px">Qual.Interrogatório/Susp.</label>
-                                                    <MudNumericField @bind-Value="@editarRegistro.Inquerito.NumeroQual"
-                                                                     Variant="Variant.Outlined"
-                                                                     Margin="Margin.Dense"
-                                                                     Style="width: 50%; margin-left: 50%;" />
-                                                </MudGrid>
-                                            </MudItem>
-                                        </MudGrid>
-                                    </MudField>
-                                </MudItem>
-                                <!-- Representação-->
-                                <MudItem xs="12" sm="6" md="6">
-                                    <MudField Label="Representação" Variant="Variant.Outlined">
-                                        <MudGrid>
-                                            <MudItem xs="12" sm="6" md="12">
-                                                <MudSelect T="string" Label="Situação Atual" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Inquerito.TipoRepresentacao">
-                                                    <MudSelectItem Value="@("Prisão Preventiva")" />
-                                                    <MudSelectItem Value="@("Prisão Temporária")" />
-                                                    <MudSelectItem Value="@("Busca e Apreenção Adolecente")" />
-                                                    <MudSelectItem Value="@("Busca e Apreenção Domiciliar")" />
-                                                    <MudSelectItem Value="@("Quebra de Sigilo Telefônico")" />
-                                                    <MudSelectItem Value="@("Quebra de Sigilo Telemático")" />
-                                                    <MudSelectItem Value="@("Quebra de Sigilo Bancário")" />
-                                                    <MudSelectItem Value="@("Quebra de Sigilo Fiscal")" />
-                                                    <MudSelectItem Value="@("Interceptação Telefônica")" />
-                                                    <MudSelectItem Value="@("Outros")" />
-                                                </MudSelect>
-                                            </MudItem>
-                                            <!--Data Representação-->
-                                            <MudItem xs="12" sm="6" md="6">
-                                                <MudPaper Class="pa-2 mx-2" Elevation="0">
-                                                    <MudDatePicker Label="Data Representação"
-                                                                   DisableToolbar="true"
-                                                                   DateFormat="dd/MM/yyyy"
-                                                                   AllowKeyboardInput="true"
-                                                                   MaxDate="DateTime.Now"
-                                                                   @bind-Date="@editarRegistro.Inquerito.DataRepresentacao" />
+                                        </MudPaper>
+                                    </MudItem>
+                                    <!--Situação Atual-->
+                                    <MudItem xs="12" sm="6" md="3">
+                                        <MudSelect T="string" Label="Situação Atual" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Inquerito.SituacaoIP">
+                                            <MudSelectItem Value="@("Em Investigação")" />
+                                            <MudSelectItem Value="@("Sem Investigação")" />
+                                            <MudSelectItem Value="@("Conclusão com Autoria")" />
+                                            <MudSelectItem Value="@("Conclusão sem Autoria")" />
+                                        </MudSelect>
+                                    </MudItem>
+                                    <!-- Números -->
+                                    <MudItem xs="12" sm="6" md="6">
+                                        <MudField Label="Número de: " Variant="Variant.Outlined">
+                                            <MudGrid>
+                                                <MudItem xs="12" sm="6" md="12" Style="margin: 8px 20px">
+                                                    <MudGrid>
+                                                        <label style="margin: 12px 5px">Ouvidas de Testemunhas</label>
+                                                        <MudNumericField @bind-Value="@editarRegistro.Inquerito.NumeroOuvida"
+                                                                         Variant="Variant.Outlined"
+                                                                         Margin="Margin.Dense"
+                                                                         Style="width: 50%; margin-left: 50%;" 
+                                                                         Min="0"
+                                                                         Max="10"/>
+                                                    </MudGrid>
+                                                </MudItem>
+                                                <MudItem xs="12" sm="6" md="12" Style="margin: 8px 20px">
+                                                    <MudGrid>
+                                                        <label style="margin: 12px 5px">Declarações de Familiares </label>
+                                                        <MudNumericField @bind-Value="@editarRegistro.Inquerito.NumeroDeclaracao"
+                                                                         Variant="Variant.Outlined"
+                                                                         Margin="Margin.Dense"
+                                                                         Style="width: 50%; margin-left: 49%; " 
+                                                                         Min="0"
+                                                                         Max="10"/>
+                                                    </MudGrid>
+                                                </MudItem>
+                                                <MudItem xs="12" sm="6" md="12" Style="margin: 8px 20px">
+                                                    <MudGrid>
+                                                        <label style="margin: 12px 5px">Qual.Interrogatório/Susp.</label>
+                                                        <MudNumericField @bind-Value="@editarRegistro.Inquerito.NumeroQual"
+                                                                         Variant="Variant.Outlined"
+                                                                         Margin="Margin.Dense"
+                                                                         Style="width: 50%; margin-left: 50%;" 
+                                                                         Min="0"
+                                                                         Max="10"/>
+                                                    </MudGrid>
+                                                </MudItem>
+                                            </MudGrid>
+                                        </MudField>
+                                    </MudItem>
+                                    <!-- Representação-->
+                                    <MudItem xs="12" sm="6" md="6">
+                                        <MudField Label="Representação" Variant="Variant.Outlined">
+                                            <MudGrid>
+                                                <MudItem xs="12" sm="6" md="12">
+                                                    <MudSelect T="string" Label="Situação Atual" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Inquerito.TipoRepresentacao">
+                                                        <MudSelectItem Value="@("PRISAO PREVENTIVA")" />
+                                                        <MudSelectItem Value="@("PRISAO TEMPORARIA")" />
+                                                        <MudSelectItem Value="@("BUSCA E APREENSAO ADOLESCENTE")" />
+                                                        <MudSelectItem Value="@("BUSCA E APREENSAO DOMICILIAR")" />
+                                                        <MudSelectItem Value="@("QUEBRA DE SIGILO TELEFONICO")" />
+                                                        <MudSelectItem Value="@("QUEBRA DE SIGILO TELEMATICO")" />
+                                                        <MudSelectItem Value="@("QUEBRA DE SIGILO BANCARIO")" />
+                                                        <MudSelectItem Value="@("QUEBRA DE SIGILO FISCAL")" />
+                                                        <MudSelectItem Value="@("INTERCEPTACAO TELEFONICA")" />
+                                                        <MudSelectItem Value="@("OUTROS")" />
+                                                    </MudSelect>
+                                                </MudItem>
+                                                <!--Data Representação-->
+                                                <MudItem xs="12" sm="6" md="6">
+                                                    <MudPaper Class="pa-2 mx-2" Elevation="0">
+                                                        <MudDatePicker Label="Data Representação"
+                                                                       DisableToolbar="true"
+                                                                       DateFormat="dd/MM/yyyy"
+                                                                       AllowKeyboardInput="true"
+                                                                       MaxDate="DateTime.Now"
+                                                                       @bind-Date="@editarRegistro.Inquerito.DataRepresentacao" />
 
-                                                </MudPaper>
-                                            </MudItem>
-                                            <!--Numero do Oficio-->
-                                            <MudItem xs="12" sm="6" md="6">
-                                                <MudTextField @bind-Value="@editarRegistro.Inquerito.NumOfRemessa"
-                                                              Label="Número do Ofício"
-                                                              Variant="Variant.Outlined"
-                                                              Adornment="Adornment.End"
-                                                              Immediate="true" />
-                                            </MudItem>
-                                        </MudGrid>
-                                    </MudField>
-                                </MudItem>
-                                <!--Expedição de Mandado-->
-                                <MudItem xs="12" sm="6" md="3">
-                                    <MudField Label="Expediu Mandado?" Variant="Variant.Outlined" InnerPadding="false">
-                                        <MudRadioGroup @bind-SelectedOption="@editarRegistro.Inquerito.ExpedicaoMandado">
-                                            <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
-                                            <MudRadio Option="@("NAO")" Color="Color.Primary">Não</MudRadio>
-                                        </MudRadioGroup>
-                                    </MudField>
-                                </MudItem>
-                                <!--Houve Cumprimento-->
-                                <MudItem xs="12" sm="6" md="3">
-                                    <MudField Label="Houve Cumprimento?" Variant="Variant.Outlined" InnerPadding="false">
-                                        <MudRadioGroup @bind-SelectedOption="@editarRegistro.Inquerito.CumprimentoMandado">
-                                            <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
-                                            <MudRadio Option="@("NAO")" Color="Color.Primary">Não</MudRadio>
-                                        </MudRadioGroup>
-                                    </MudField>
-                                </MudItem>
-                                <!--Unidade Policial Responsável-->
-                                <MudItem xs="12" sm="6" md="6">
-                                    <MudTextField @bind-Value="@editarRegistro.Inquerito.UnidadePC"
-                                                  Label="Unidade Policial Responsável"
-                                                  Variant="Variant.Outlined"
-                                                  Adornment="Adornment.End"
-                                                  Immediate="true" />
-                                </MudItem>
-                                <!--Data de Conclusão-->
-                                <MudItem xs="12" sm="6" md="3">
-                                    <MudPaper Class="pa-2 mx-2" Elevation="0">
-                                        <MudDatePicker Label="Data Conclusão"
-                                                       DisableToolbar="true"
-                                                       DateFormat="dd/MM/yyyy"
-                                                       AllowKeyboardInput="true"
-                                                       MaxDate="DateTime.Now"
-                                                       @bind-Date="@editarRegistro.Inquerito.DataConclusao" />
+                                                    </MudPaper>
+                                                </MudItem>
+                                                <!--Numero do Oficio-->
+                                                <MudItem xs="12" sm="6" md="6">
+                                                    <MudTextField @bind-Value="@editarRegistro.Inquerito.NumOfRemessa"
+                                                                  Label="Número do Ofício"
+                                                                  Variant="Variant.Outlined"
+                                                                  Adornment="Adornment.End"
+                                                                  Immediate="true" />
+                                                </MudItem>
+                                            </MudGrid>
+                                        </MudField>
+                                    </MudItem>
+                                    <!--Expedição de Mandado-->
+                                    <MudItem xs="12" sm="6" md="3">
+                                        <MudField Label="Expediu Mandado?" Variant="Variant.Outlined" InnerPadding="false">
+                                            <MudRadioGroup @bind-SelectedOption="@editarRegistro.Inquerito.ExpedicaoMandado">
+                                                <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
+                                                <MudRadio Option="@("NAO")" Color="Color.Primary">Não</MudRadio>
+                                            </MudRadioGroup>
+                                        </MudField>
+                                    </MudItem>
+                                    <!--Houve Cumprimento-->
+                                    <MudItem xs="12" sm="6" md="3">
+                                        <MudField Label="Houve Cumprimento?" Variant="Variant.Outlined" InnerPadding="false">
+                                            <MudRadioGroup @bind-SelectedOption="@editarRegistro.Inquerito.CumprimentoMandado">
+                                                <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
+                                                <MudRadio Option="@("NAO")" Color="Color.Primary">Não</MudRadio>
+                                            </MudRadioGroup>
+                                        </MudField>
+                                    </MudItem>
+                                    <!--Unidade Policial Responsável-->
+                                    <MudItem xs="12" sm="6" md="6">
+                                        <MudTextField @bind-Value="@editarRegistro.Inquerito.UnidadePC"
+                                                      Label="Unidade Policial Responsável"
+                                                      Variant="Variant.Outlined"
+                                                      Adornment="Adornment.End"
+                                                      Immediate="true" />
+                                    </MudItem>
+                                    <!--Data de Conclusão-->
+                                    <MudItem xs="12" sm="6" md="3">
+                                        <MudPaper Class="pa-2 mx-2" Elevation="0">
+                                            <MudDatePicker Label="Data Conclusão"
+                                                           DisableToolbar="true"
+                                                           DateFormat="dd/MM/yyyy"
+                                                           AllowKeyboardInput="true"
+                                                           MaxDate="DateTime.Now"
+                                                           @bind-Date="@editarRegistro.Inquerito.DataConclusao" />
 
-                                    </MudPaper>
-                                </MudItem>
-                                <!--Nº Of./CI Remessa-->
-                                <MudItem xs="12" sm="6" md="6">
-                                    <MudTextField @bind-Value="@editarRegistro.Inquerito.NumOfRemessa"
-                                                  Label="Nº Of./Ci Remessa"
-                                                  Variant="Variant.Outlined"
-                                                  Adornment="Adornment.End"
-                                                  Immediate="true" />
-                                </MudItem>
-                                <!--Destino-->
-                                <MudItem xs="12" sm="6" md="3">
-                                    <MudSelect T="string" Label="Destino" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Inquerito.Destino">
-                                        <MudSelectItem Value="@("Ministério Público")" />
-                                        <MudSelectItem Value="@("COORDPPOL")" />
-                                        <MudSelectItem Value="@("Poder Judiciário")" />
-                                        <MudSelectItem Value="@("Outros")" />
-                                    </MudSelect>
-                                </MudItem>
-                                <!--Autoridade Policial Responsável pela Investigação-->
-                                <MudItem xs="12" sm="6" md="8">
-                                    <MudTextField T="string" @bind-Value="@editarRegistro.Inquerito.AutoridadeResponsavel"
-                                                  Label="Autoridade Policial Responsável pela Investigação"
-                                                  Variant="Variant.Outlined"
-                                                  Adornment="Adornment.End"
-                                                  Immediate="true" />
-                                </MudItem>
-                                <!--Matrícula-->
-                                <MudItem xs="12" sm="6" md="4">
-                                    <MudTextField @bind-Value="@editarRegistro.Inquerito.MatriculaAutoridadeResponsavel"
-                                                  Label="Matrícula"
-                                                  Variant="Variant.Outlined"
-                                                  Adornment="Adornment.End"
-                                                  Immediate="true" />
-                                </MudItem>
-                            </MudGrid>
+                                        </MudPaper>
+                                    </MudItem>
+                                    <!--Nº Of./CI Remessa-->
+                                    <MudItem xs="12" sm="6" md="6">
+                                        <MudTextField @bind-Value="@editarRegistro.Inquerito.NumOfRemessa"
+                                                      Label="Nº Of./Ci Remessa"
+                                                      Variant="Variant.Outlined"
+                                                      Adornment="Adornment.End"
+                                                      Immediate="true" />
+                                    </MudItem>
+                                    <!--Destino-->
+                                    <MudItem xs="12" sm="6" md="3">
+                                        <MudSelect T="string" Label="Destino" Variant="Variant.Outlined" @bind-Value="@editarRegistro.Inquerito.Destino">
+                                            <MudSelectItem Value="@("MINISTERIO PUBLICO")" />
+                                            <MudSelectItem Value="@("COORDPPOL")" />
+                                            <MudSelectItem Value="@("PODER JUDICIARIO")" />
+                                            <MudSelectItem Value="@("OUTROS")" />
+                                        </MudSelect>
+                                    </MudItem>
+                                    <!--Autoridade Policial Responsável pela Investigação-->
+                                    <MudItem xs="12" sm="6" md="8">
+                                        <MudTextField T="string" @bind-Value="@editarRegistro.Inquerito.AutoridadeResponsavel"
+                                                      Label="Autoridade Policial Responsável pela Investigação"
+                                                      Variant="Variant.Outlined"
+                                                      Adornment="Adornment.End"
+                                                      Immediate="true" />
+                                    </MudItem>
+                                    <!--Matrícula-->
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudTextField @bind-Value="@editarRegistro.Inquerito.MatriculaAutoridadeResponsavel"
+                                                      Label="Matrícula"
+                                                      Variant="Variant.Outlined"
+                                                      Adornment="Adornment.End"
+                                                      Immediate="true" />
+                                    </MudItem>
+                                </MudGrid>
+                            </MudPaper>
                         </MudText>
                     </MudTabPanel>
                     <!-- Arquivos-->
@@ -701,7 +711,6 @@
 
     void Home() => navigationManager.NavigateTo("/");
 
-    #region Envolvido
     async Task ExibirEnvolvido()
     {
         var formModal = Modal.Show<Envolvido>("Adicionar Envolvido");
@@ -743,9 +752,7 @@
         listaEnvolvidos.Remove(envolvido);
         snackbar.Add("Envolvido removido!", Severity.Warning);
     }
-    #endregion
-
-    #region BOEComplementado
+    
     async Task ExibirBOEComplementado()
     {
         var formModal = Modal.Show<BOEComplementado>("Adicionar BOE Complementado");
@@ -787,13 +794,9 @@
         listaBOEComplementados.Remove(boe);
         snackbar.Add("BOE Complementado removido!", Severity.Warning);
     }
-    #endregion
-
-    #region DropLists
-
-    #region Motivação do Crime
+    
     private string[] motivacaoCrime =
-{
+    {
         "A DEFINIR", "ACERTO DE CONTAS", "BALA PERDIDA", "BRIGA (INTRA)FAMILIAR CONTRA MULHER",
         "BRIGA (INTRA)FAMILIAR", "CONFLITO AGRARIO", "CONFLITO INTIMO-AFETIVO CONTRA HOMEM",
         "CONFLITO INTIMO-AFETIVO CONTRA MULHER", "CRIME ORGANIZADO", "CRIME POR ENCOMENDA",
@@ -811,8 +814,7 @@
         "RACISMO/XENOFOBIA", "REACAO DE UM CIDADAO A UM DELITO", "RELIGIOSO", "RETALIACAO POR DIVIDAS - DROGAS ILICITAS",
         "RIXA", "RIXA/GALERA", "SACRIFICIO RITUAL", "SEXUAL (LIBIDINOSA)", "SEXUAL CONTRA PESSOA DO SEXO FEMININO",
         "SEXUAL OU MENOSPREZO AO CORPO", "VINGANCA PESSOAL", "VITIMIZACAO POLICIAL (EM SERVICO)",
-        "VITIMIZACAO POLICIAL (FORA DE SERVICO)", "XENOFOBIA",
-
+        "VITIMIZACAO POLICIAL (FORA DE SERVICO)", "XENOFOBIA"
     };
 
     private async Task<IEnumerable<string>> MotivacaoCrime(string value)
@@ -825,9 +827,6 @@
             return motivacaoCrime;
         return motivacaoCrime.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
-    #endregion
-
-    #region Municipio
 
     private async Task<IEnumerable<Municipio_Diretoria_AIS_BPM>> Municipios(string value)
     {
@@ -838,19 +837,17 @@
         var response = await httpClient.SendAsync(request);
 
         var municipios = JsonSerializer.Deserialize<List<Municipio_Diretoria_AIS_BPM>>
-       (
+        (
             await response.Content.ReadAsStringAsync(),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-       );
+        );
 
         // if text is null or empty, show complete list
         if (string.IsNullOrEmpty(value))
             return municipios;
         return municipios.Where(x => x.Municipio.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
-    #endregion
-
-    #region Local do Fato
+    
     private string[] localFato =
     {
         "ACADEMIA", "ACUDE", "AERONAVE", "AEROPORTO",
@@ -883,7 +880,6 @@
         "QUADRA ESPORTIVA", "QUARTEL",  "REPARTICOES PUBLICAS", "RESIDENCIA ( APARTAMENTO )",
         "RESIDENCIA ( TERREA )",    "RESTAURANTE",  "RIO",  "RODOVIA",  "RODOVIA ESTADUAL",
         "VIA PUBLICA"
-
     };
 
     private async Task<IEnumerable<string>> LocalFato(string value)
@@ -896,11 +892,6 @@
             return localFato;
         return localFato.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
-    #endregion
-
-    #endregion
-
-    #region DropAndDrag
 
     string _dragEnterStyle;
     IList<string> fileNames = new List<string>();
@@ -915,14 +906,9 @@
         snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
         snackbar.Add("TODO: Upload your files!", Severity.Normal);
     }
-    #endregion
 }
 
 <style>
-    #fundobranco {
-        background-color: white;
-    }
-
     .sombra {
         box-shadow: 3px 3px 3px 3px #aaaaaa;
     }

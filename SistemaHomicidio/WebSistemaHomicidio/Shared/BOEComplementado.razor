@@ -2,33 +2,31 @@
     <EditForm Model="@novoBOEComplementado" OnValidSubmit="Salvar">
         <DataAnnotationsValidator />
         <MudGrid>
-            <MudItem xs="12" sm="6">
-                <MudPaper Class="pa-2 mx-2" Elevation="0">
+            <MudPaper Class="pa-2 mx-2" Elevation="3">
+                <MudItem xs="12" sm="6">
                     <MudTextField Label="Nº BOE"
-                                  Variant="Variant.Outlined"
-                                  @bind-Value="@novoBOEComplementado.Boe"
-                                  For="@(() => novoBOEComplementado.Boe)" 
-                                  id="boe-mask"/>
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12" sm="6">
-                <MudPaper Class="pa-2 mx-2" Elevation="0">
+                                      Variant="Variant.Outlined"
+                                      @bind-Value="@novoBOEComplementado.Boe"
+                                      For="@(() => novoBOEComplementado.Boe)" 
+                                      id="boe-mask"/>
+                </MudItem>
+                <MudItem xs="12" sm="6">
                     <MudDatePicker Label="Data Registro"
-                                   DisableToolbar="true"
-                                   DateFormat="dd/MM/yyyy"
-                                   MaxDate="DateTime.Now"
-                                   Required="true"
-                                   @bind-Date="@novoBOEComplementado.DataRegistro"
-                                   ErrorText="Informe uma Data Registro!"
-                                   For="@(() => novoBOEComplementado.DataRegistro)" />
-                </MudPaper>
-            </MudItem>
-            <MudItem>
-                <MudPaper Class="pa-2 mx-2" Elevation="0">
-                    <MudButton OnClick="Cancelar">Cancelar</MudButton>
-                    <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Salvar</MudButton>
-                </MudPaper>
-            </MudItem>
+                                       DisableToolbar="true"
+                                       DateFormat="dd/MM/yyyy"
+                                       MaxDate="DateTime.Now"
+                                       Required="true"
+                                       @bind-Date="@novoBOEComplementado.DataRegistro"
+                                       ErrorText="Informe uma Data Registro!"
+                                       For="@(() => novoBOEComplementado.DataRegistro)" />
+                </MudItem>
+                <MudItem>
+                    <MudPaper Class="pa-2 mx-2" Elevation="0">
+                        <MudButton OnClick="Cancelar">Cancelar</MudButton>
+                        <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Salvar</MudButton>
+                    </MudPaper>
+                </MudItem>
+            </MudPaper>
         </MudGrid>
     </EditForm>
 </div>

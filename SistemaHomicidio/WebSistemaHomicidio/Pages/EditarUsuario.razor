@@ -4,26 +4,30 @@
 <div class="DivCard justify-content-center align-items-center">
     <EditForm Model="@usuario" OnValidSubmit="Alterar">
         <DataAnnotationsValidator />
-        <MudGrid>
-            <MudItem xs="12" sm="12">
-                <MudTextField Label="Nome"
-                              Variant="Variant.Outlined"
-                              @bind-Value="@usuario.Nome"
-                              For="@(()=> usuario.Nome)"/>
-            </MudItem>
-            <MudItem xs="12" sm="12">
-                <MudTextField Label="Senha"
-                              Variant="Variant.Outlined"
-                              @bind-Value="@usuario.Senha"
-                              For="@(()=> usuario.Senha)"/>
-            </MudItem>
-            <MudItem>
-                <MudPaper Class="pa-2 mx-2" Elevation="0">
-                    <MudButton OnClick="Cancelar">Cancelar</MudButton>
-                    <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Alterar</MudButton>
+        <MudContainer Class="mt-16 px-8">
+            <MudGrid>
+                <MudPaper Class="pa-2 mx-2" Elevation="3">
+                    <MudItem xs="12" sm="12">
+                        <MudTextField Label="Nome"
+                                        Variant="Variant.Outlined"
+                                        @bind-Value="@usuario.Nome"
+                                        For="@(()=> usuario.Nome)"/>
+                    </MudItem>
+                    <MudItem xs="12" sm="12">
+                        <MudTextField Label="Senha"
+                                        Variant="Variant.Outlined"
+                                        @bind-Value="@usuario.Senha"
+                                        For="@(()=> usuario.Senha)"/>
+                    </MudItem>
+                    <MudItem>
+                        <MudPaper Class="pa-2 mx-2" Elevation="0">
+                            <MudButton OnClick="Cancelar">Cancelar</MudButton>
+                            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Alterar</MudButton>
+                        </MudPaper>
+                    </MudItem>
                 </MudPaper>
-            </MudItem>
-        </MudGrid>
+            </MudGrid>
+        </MudContainer>
     </EditForm>
 </div>
 

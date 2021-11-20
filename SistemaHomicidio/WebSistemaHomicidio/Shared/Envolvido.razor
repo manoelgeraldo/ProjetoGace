@@ -5,543 +5,550 @@
             <!--Dados Pessoais-->
             <MudTabPanel Text="Dados Pessoais">
                 <MudText>
-                    <MudGrid>
-                        <!--Nº Sequencial-->
-                        <MudItem xs="12" sm="6" md="1">
-                            <MudTextField @bind-Value="@novoEnvolvido.SequencialEnvolvido"
-                                          Label="Nº"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Tipo de Envolvimento-->
-                        <MudItem xs="12" sm="6" md="4">
-                            <MudField Label="Tipo de Envolvimento" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.TipoEnvolvido">
-                                    <MudRadio Option="@("VITIMA")" Color="Color.Primary">Vítima</MudRadio>
-                                    <MudRadio Option="@("IMPULTADO")" Color="Color.Primary">Impultado</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                        <!--Autoria-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudField Label="Autoria" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Autoria">
-                                    <MudRadio Option="@("CONHECIDA")" Color="Color.Primary">Conhecida</MudRadio>
-                                    <MudRadio Option="@("DESCONHECIDA")" Color="Color.Primary">Desconhecida</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                        <!--Prisão Em Flagrante-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudField Label="Prisão Em Flagrante" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Flagrante">
-                                    <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
-                                    <MudRadio Option="@("NAO")" Color="Color.Primary">Não</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                        <!--Turista-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudField Label="Turista" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Turista">
-                                    <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
-                                    <MudRadio Option="@("NAO")" Color="Color.Primary">Não</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                        <!--Nome do Envolvido-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudTextField @bind-Value="@novoEnvolvido.NomeEnvolvido"
-                                          Label="Nome"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Nome Social-->
-                        <MudItem xs="12" sm="6" md="4">
-                            <MudTextField @bind-Value="@novoEnvolvido.NomeSocial"
-                                          Label="Nome Social"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Vulgo-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudTextField @bind-Value="@novoEnvolvido.Vulgo"
-                                          Label="Vugo"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Nome Da Mãe-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudTextField @bind-Value="@novoEnvolvido.NomeGenitora"
-                                          Label="Nome Da Mãe"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Data de Nascimento-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudDatePicker Label="Data de Nascimento"
-                                           DisableToolbar="true"
-                                           DateFormat="dd/MM/yyyy"
-                                           AllowKeyboardInput="true"
-                                           MaxDate="DateTime.Now"
-                                           @bind-Date="@novoEnvolvido.DataNascimento" />
-                        </MudItem>
-                        <!--Idade Exata-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudTextField @bind-Value="@novoEnvolvido.IdadeExata"
-                                          Label="Idade Exata"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Idade Aparente-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudTextField @bind-Value="@novoEnvolvido.IdadeAparente"
-                                          Label="Idade Aparente"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Sexo-->
-                        <MudItem xs="12" sm="6" md="8">
-                            <MudField Label="Sexo" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Sexo">
-                                    <MudRadio Option="@("MASCULINO")" Color="Color.Primary">Masculino</MudRadio>
-                                    <MudRadio Option="@("FEMININO")" Color="Color.Primary">Feminino</MudRadio>
-                                    <MudRadio Option="@("DESCONHECIDO")" Color="Color.Primary">Desconhecido</MudRadio>
-                                    <MudRadio Option="@("NAO INFORMADO")" Color="Color.Primary">Desconhecido</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                        <!--Identidade de Gênero-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudSelect T="string" Label="Ident.Gênero" @bind-Value="@novoEnvolvido.IdentidadeGenero" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("HOMEM CISGENERO")" />
-                                <MudSelectItem Value="@("MULHER CISGENERO")" />
-                                <MudSelectItem Value="@("HOMEM TRANS")" />
-                                <MudSelectItem Value="@("MULHER TRANS")" />
-                                <MudSelectItem Value="@("TRAVESTI")" />
-                                <MudSelectItem Value="@("NAO INFORMADO")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Orientação Afetiva-Sexual-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.OrientacaoSexual" Label="Orientação Sexual" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("HETEROSSEXUAL")" />
-                                <MudSelectItem Value="@("HOMOSSEXUAL")" />
-                                <MudSelectItem Value="@("BISSEXUAL")" />
-                                <MudSelectItem Value="@("LESBICA")" />
-                                <MudSelectItem Value="@("GAY")" />
-                                <MudSelectItem Value="@("NAO INFORMADO")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Deficiência-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.DeficienciaFisica" Label="Deficiência" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("AUTISMO")" />
-                                <MudSelectItem Value="@("COM DEFICIENCIA AUDITIVA")" />
-                                <MudSelectItem Value="@("COM DEFICIENCIA FISICA")" />
-                                <MudSelectItem Value="@("COM DEFICIENCIA INTELECTUAL/MENTAL")" />
-                                <MudSelectItem Value="@("COM DEFICIENCIA VISUAL")" />
-                                <MudSelectItem Value="@("DESCONHECIDO")" />
-                                <MudSelectItem Value="@("NAO INFORMADO")" />
-                                <MudSelectItem Value="@("SEM DEFICIENCIAS")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Cor de Pele-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.CorPele" Label="Cor Pele" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("ALBINA")" />
-                                <MudSelectItem Value="@("AMARELA")" />
-                                <MudSelectItem Value="@("BRANCA")" />
-                                <MudSelectItem Value="@("DESCONHECIDA")" />
-                                <MudSelectItem Value="@("NAO INFORMADA")" />
-                                <MudSelectItem Value="@("NEGRA")" />
-                                <MudSelectItem Value="@("PARDA")" />
-                                <MudSelectItem Value="@("VERMELHA/INDIGENA")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Estado Civil-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.EstadoCivil" Label="Estado Civil" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("AMASIADO(A)")" />
-                                <MudSelectItem Value="@("CASADO(A)")" />
-                                <MudSelectItem Value="@("DESCONHECIDO")" />
-                                <MudSelectItem Value="@("DIVORCIADO(A)")" />
-                                <MudSelectItem Value="@("NAO INFORMADO")" />
-                                <MudSelectItem Value="@("SEPARADO(A)")" />
-                                <MudSelectItem Value="@("SOLTEIRO(A)")" />
-                                <MudSelectItem Value="@("VIUVO(A)")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Depedencia Quimica-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.DepedenciaQuimica" Label="Dep.Químico" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("SIM")" />
-                                <MudSelectItem Value="@("NAO")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Consumo de Drogas-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.ConsumoDrogas" Label="Cons.Drogas" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("SIM")" />
-                                <MudSelectItem Value="@("NAO")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Profissão-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudAutocomplete T="string" Label="Profissões"
-                                             Variant="Variant.Outlined"
-                                             @bind-Value="@novoEnvolvido.ProfissaoEnvolvildo"
-                                             SearchFunc="@Profissoes" />
-                        </MudItem>
-                        <!-- Inormação do Trabalho-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudField Label="Inormação do Trabalho" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.InformacaoTrabalho">
-                                    <MudRadio Option="@("DE SERVICO")" Color="Color.Primary">De Serviço</MudRadio>
-                                    <MudRadio Option="@("DE FOLGA")" Color="Color.Primary">De Folga</MudRadio>
-                                    <MudRadio Option="@("NAO INFORMADO")" Color="Color.Primary">Não Informado</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                        <!--Relação Vítima/Autor-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.RelacaoAutorVitima" Label="Relação Vítima/Autor" Variant="Variant.Outlined" AnchorOrigin="Origin.TopCenter">
-                                <MudSelectItem Value="@("AMIGO(A)")" />
-                                <MudSelectItem Value="@("AVO")" />
-                                <MudSelectItem Value="@("COLEGA DE TRABALHO")" />
-                                <MudSelectItem Value="@("CONJUGE")" />
-                                <MudSelectItem Value="@("CUNHADO(A)")" />
-                                <MudSelectItem Value="@("DESCONHECIDO")" />
-                                <MudSelectItem Value="@("ENTEADO(A)")" />
-                                <MudSelectItem Value="@("FILHO(A)")" />
-                                <MudSelectItem Value="@("GENRO/NORA")" />
-                                <MudSelectItem Value="@("IRMAO(A)")" />
-                                <MudSelectItem Value="@("MAE")" />
-                                <MudSelectItem Value="@("NAMORADO(A)")" />
-                                <MudSelectItem Value="@("NAO INFORMADO")" />
-                                <MudSelectItem Value="@("NETO(A)")" />
-                                <MudSelectItem Value="@("NOIVO(A)")" />
-                                <MudSelectItem Value="@("OUTROS")" />
-                                <MudSelectItem Value="@("PADRASTO/MADRASTA")" />
-                                <MudSelectItem Value="@("PAI")" />
-                                <MudSelectItem Value="@("PRIMO(A)")" />
-                                <MudSelectItem Value="@("RESPONSAVEL LEGAL")" />
-                                <MudSelectItem Value="@("SOBRINHO(A)")" />
-                                <MudSelectItem Value="@("SOGRO(A)")" />
-                                <MudSelectItem Value="@("TIO(A)")" />
-                                <MudSelectItem Value="@("VIZINHO(A)")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Relação Intrafamiliar - Vítima/Autor-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.RelacaoIntraFamiliarVitimaAutor" Label="Relação Intrafamiliar - Vítima/Autor" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("AMIGO(A)")" />
-                                <MudSelectItem Value="@("AVO")" />
-                                <MudSelectItem Value="@("COLEGA DE TRABALHO")" />
-                                <MudSelectItem Value="@("CONJUGE")" />
-                                <MudSelectItem Value="@("CUNHADO(A)")" />
-                                <MudSelectItem Value="@("DESCONHECIDO")" />
-                                <MudSelectItem Value="@("ENTEADO(A)")" />
-                                <MudSelectItem Value="@("FILHO(A)")" />
-                                <MudSelectItem Value="@("GENRO/NORA")" />
-                                <MudSelectItem Value="@("IRMAO(A)")" />
-                                <MudSelectItem Value="@("MAE")" />
-                                <MudSelectItem Value="@("NAMORADO(A)")" />
-                                <MudSelectItem Value="@("NAO INFORMADO")" />
-                                <MudSelectItem Value="@("NETO(A)")" />
-                                <MudSelectItem Value="@("NOIVO(A)")" />
-                                <MudSelectItem Value="@("OUTROS")" />
-                                <MudSelectItem Value="@("PADRASTO/MADRASTA")" />
-                                <MudSelectItem Value="@("PAI")" />
-                                <MudSelectItem Value="@("PRIMO(A)")" />
-                                <MudSelectItem Value="@("RESPONSAVEL LEGAL")" />
-                                <MudSelectItem Value="@("SOBRINHO(A)")" />
-                                <MudSelectItem Value="@("SOGRO(A)")" />
-                                <MudSelectItem Value="@("TIO(A)")" />
-                                <MudSelectItem Value="@("VIZINHO(A)")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Instrumento Utilizado-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.InstrumentoUtilizado" Label="Instrumento Utilizado" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("ARMA DE FOGO")" />
-                                <MudSelectItem Value="@("ARMA BRANCA")" />
-                                <MudSelectItem Value="@("INSTRUMENTO CONTUDENTE")" />
-                                <MudSelectItem Value="@("OUTROS TIPOS DE OBJETOS")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Nome do Instrumento Utilizado-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudAutocomplete T="string" Label="Tipos de Objetos"
-                                             Variant="Variant.Outlined"
-                                             @bind-Value="@novoEnvolvido.NomeInstrumentoUtilizado"
-                                             SearchFunc="@TiposDeObjetos" />
-                        </MudItem>
-                    </MudGrid>
+                    <MudPaper Class="pa-5 mx-2" Elevation="3">
+                        <MudGrid>
+                        
+                                <!--Nº Sequencial-->
+                                <MudItem xs="12" sm="6" md="1">
+                                    <MudTextField @bind-Value="@novoEnvolvido.SequencialEnvolvido"
+                                                    Label="Nº"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End" />
+                                </MudItem>
+                                <!--Tipo de Envolvimento-->
+                                <MudItem xs="12" sm="6" md="4">
+                                    <MudField Label="Tipo de Envolvimento" Variant="Variant.Outlined" InnerPadding="false">
+                                        <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.TipoEnvolvido">
+                                            <MudRadio Option="@("VITIMA")" Color="Color.Primary">Vítima</MudRadio>
+                                            <MudRadio Option="@("IMPULTADO")" Color="Color.Primary">Impultado</MudRadio>
+                                        </MudRadioGroup>
+                                    </MudField>
+                                </MudItem>
+                                <!--Autoria-->
+                                <MudItem xs="12" sm="6" md="3">
+                                    <MudField Label="Autoria" Variant="Variant.Outlined" InnerPadding="false">
+                                        <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Autoria">
+                                            <MudRadio Option="@("CONHECIDA")" Color="Color.Primary">Conhecida</MudRadio>
+                                            <MudRadio Option="@("DESCONHECIDA")" Color="Color.Primary">Desconhecida</MudRadio>
+                                        </MudRadioGroup>
+                                    </MudField>
+                                </MudItem>
+                                <!--Prisão Em Flagrante-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudField Label="Prisão Em Flagrante" Variant="Variant.Outlined" InnerPadding="false">
+                                        <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Flagrante">
+                                            <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
+                                            <MudRadio Option="@("NAO")" Color="Color.Primary">Não</MudRadio>
+                                        </MudRadioGroup>
+                                    </MudField>
+                                </MudItem>
+                                <!--Turista-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudField Label="Turista" Variant="Variant.Outlined" InnerPadding="false">
+                                        <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Turista">
+                                            <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
+                                            <MudRadio Option="@("NAO")" Color="Color.Primary">Não</MudRadio>
+                                        </MudRadioGroup>
+                                    </MudField>
+                                </MudItem>
+                                <!--Nome do Envolvido-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudTextField @bind-Value="@novoEnvolvido.NomeEnvolvido"
+                                                    Label="Nome"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End" />
+                                </MudItem>
+                                <!--Nome Social-->
+                                <MudItem xs="12" sm="6" md="4">
+                                    <MudTextField @bind-Value="@novoEnvolvido.NomeSocial"
+                                                    Label="Nome Social"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End" />
+                                </MudItem>
+                                <!--Vulgo-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudTextField @bind-Value="@novoEnvolvido.Vulgo"
+                                                    Label="Vugo"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End" />
+                                </MudItem>
+                                <!--Nome Da Mãe-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudTextField @bind-Value="@novoEnvolvido.NomeGenitora"
+                                                    Label="Nome Da Mãe"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End" />
+                                </MudItem>
+                                <!--Data de Nascimento-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudDatePicker Label="Data de Nascimento"
+                                                    DisableToolbar="true"
+                                                    DateFormat="dd/MM/yyyy"
+                                                    AllowKeyboardInput="true"
+                                                    MaxDate="DateTime.Now"
+                                                    @bind-Date="@novoEnvolvido.DataNascimento" />
+                                </MudItem>
+                                <!--Idade Exata-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudTextField @bind-Value="@novoEnvolvido.IdadeExata"
+                                                    Label="Idade Exata"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End" />
+                                </MudItem>
+                                <!--Idade Aparente-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudTextField @bind-Value="@novoEnvolvido.IdadeAparente"
+                                                    Label="Idade Aparente"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End" />
+                                </MudItem>
+                                <!--Sexo-->
+                                <MudItem xs="12" sm="6" md="8">
+                                    <MudField Label="Sexo" Variant="Variant.Outlined" InnerPadding="false">
+                                        <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Sexo">
+                                            <MudRadio Option="@("MASCULINO")" Color="Color.Primary">Masculino</MudRadio>
+                                            <MudRadio Option="@("FEMININO")" Color="Color.Primary">Feminino</MudRadio>
+                                            <MudRadio Option="@("DESCONHECIDO")" Color="Color.Primary">Desconhecido</MudRadio>
+                                            <MudRadio Option="@("NAO INFORMADO")" Color="Color.Primary">Desconhecido</MudRadio>
+                                        </MudRadioGroup>
+                                    </MudField>
+                                </MudItem>
+                                <!--Identidade de Gênero-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudSelect T="string" Label="Ident.Gênero" @bind-Value="@novoEnvolvido.IdentidadeGenero" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("HOMEM CISGENERO")" />
+                                        <MudSelectItem Value="@("MULHER CISGENERO")" />
+                                        <MudSelectItem Value="@("HOMEM TRANS")" />
+                                        <MudSelectItem Value="@("MULHER TRANS")" />
+                                        <MudSelectItem Value="@("TRAVESTI")" />
+                                        <MudSelectItem Value="@("NAO INFORMADO")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Orientação Afetiva-Sexual-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudSelect T="string" @bind-Value="@novoEnvolvido.OrientacaoSexual" Label="Orientação Sexual" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("HETEROSSEXUAL")" />
+                                        <MudSelectItem Value="@("HOMOSSEXUAL")" />
+                                        <MudSelectItem Value="@("BISSEXUAL")" />
+                                        <MudSelectItem Value="@("LESBICA")" />
+                                        <MudSelectItem Value="@("GAY")" />
+                                        <MudSelectItem Value="@("NAO INFORMADO")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Deficiência-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudSelect T="string" @bind-Value="@novoEnvolvido.DeficienciaFisica" Label="Deficiência" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("AUTISMO")" />
+                                        <MudSelectItem Value="@("COM DEFICIENCIA AUDITIVA")" />
+                                        <MudSelectItem Value="@("COM DEFICIENCIA FISICA")" />
+                                        <MudSelectItem Value="@("COM DEFICIENCIA INTELECTUAL/MENTAL")" />
+                                        <MudSelectItem Value="@("COM DEFICIENCIA VISUAL")" />
+                                        <MudSelectItem Value="@("DESCONHECIDO")" />
+                                        <MudSelectItem Value="@("NAO INFORMADO")" />
+                                        <MudSelectItem Value="@("SEM DEFICIENCIAS")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Cor de Pele-->
+                                <MudItem xs="12" sm="6" md="3">
+                                    <MudSelect T="string" @bind-Value="@novoEnvolvido.CorPele" Label="Cor Pele" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("ALBINA")" />
+                                        <MudSelectItem Value="@("AMARELA")" />
+                                        <MudSelectItem Value="@("BRANCA")" />
+                                        <MudSelectItem Value="@("DESCONHECIDA")" />
+                                        <MudSelectItem Value="@("NAO INFORMADA")" />
+                                        <MudSelectItem Value="@("NEGRA")" />
+                                        <MudSelectItem Value="@("PARDA")" />
+                                        <MudSelectItem Value="@("VERMELHA/INDIGENA")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Estado Civil-->
+                                <MudItem xs="12" sm="6" md="3">
+                                    <MudSelect T="string" @bind-Value="@novoEnvolvido.EstadoCivil" Label="Estado Civil" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("AMASIADO(A)")" />
+                                        <MudSelectItem Value="@("CASADO(A)")" />
+                                        <MudSelectItem Value="@("DESCONHECIDO")" />
+                                        <MudSelectItem Value="@("DIVORCIADO(A)")" />
+                                        <MudSelectItem Value="@("NAO INFORMADO")" />
+                                        <MudSelectItem Value="@("SEPARADO(A)")" />
+                                        <MudSelectItem Value="@("SOLTEIRO(A)")" />
+                                        <MudSelectItem Value="@("VIUVO(A)")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Dependência Química-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudSelect T="string" @bind-Value="@novoEnvolvido.DepedenciaQuimica" Label="Dep.Químico" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("SIM")" />
+                                        <MudSelectItem Value="@("NAO")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Consumo de Drogas-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudSelect T="string" @bind-Value="@novoEnvolvido.ConsumoDrogas" Label="Cons.Drogas" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("SIM")" />
+                                        <MudSelectItem Value="@("NAO")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Profissão-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudAutocomplete T="string" Label="Profissões"
+                                                        Variant="Variant.Outlined"
+                                                        @bind-Value="@novoEnvolvido.ProfissaoEnvolvildo"
+                                                        SearchFunc="@Profissoes" />
+                                </MudItem>
+                                <!-- Informação do Trabalho-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudField Label="Informação do Trabalho" Variant="Variant.Outlined" InnerPadding="false">
+                                        <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.InformacaoTrabalho">
+                                            <MudRadio Option="@("DE SERVICO")" Color="Color.Primary">De Serviço</MudRadio>
+                                            <MudRadio Option="@("DE FOLGA")" Color="Color.Primary">De Folga</MudRadio>
+                                            <MudRadio Option="@("NAO INFORMADO")" Color="Color.Primary">Não Informado</MudRadio>
+                                        </MudRadioGroup>
+                                    </MudField>
+                                </MudItem>
+                                <!--Relação Vítima/Autor-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudSelect T="string" @bind-Value="@novoEnvolvido.RelacaoAutorVitima" Label="Relação Vítima/Autor" Variant="Variant.Outlined" AnchorOrigin="Origin.TopCenter">
+                                        <MudSelectItem Value="@("AMIGO(A)")" />
+                                        <MudSelectItem Value="@("AVO")" />
+                                        <MudSelectItem Value="@("COLEGA DE TRABALHO")" />
+                                        <MudSelectItem Value="@("CONJUGE")" />
+                                        <MudSelectItem Value="@("CUNHADO(A)")" />
+                                        <MudSelectItem Value="@("DESCONHECIDO")" />
+                                        <MudSelectItem Value="@("ENTEADO(A)")" />
+                                        <MudSelectItem Value="@("FILHO(A)")" />
+                                        <MudSelectItem Value="@("GENRO/NORA")" />
+                                        <MudSelectItem Value="@("IRMAO(A)")" />
+                                        <MudSelectItem Value="@("MAE")" />
+                                        <MudSelectItem Value="@("NAMORADO(A)")" />
+                                        <MudSelectItem Value="@("NAO INFORMADO")" />
+                                        <MudSelectItem Value="@("NETO(A)")" />
+                                        <MudSelectItem Value="@("NOIVO(A)")" />
+                                        <MudSelectItem Value="@("OUTROS")" />
+                                        <MudSelectItem Value="@("PADRASTO/MADRASTA")" />
+                                        <MudSelectItem Value="@("PAI")" />
+                                        <MudSelectItem Value="@("PRIMO(A)")" />
+                                        <MudSelectItem Value="@("RESPONSAVEL LEGAL")" />
+                                        <MudSelectItem Value="@("SOBRINHO(A)")" />
+                                        <MudSelectItem Value="@("SOGRO(A)")" />
+                                        <MudSelectItem Value="@("TIO(A)")" />
+                                        <MudSelectItem Value="@("VIZINHO(A)")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Relação Intra familiar - Vítima/Autor-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudSelect T="string" @bind-Value="@novoEnvolvido.RelacaoIntraFamiliarVitimaAutor" Label="Relação Intrafamiliar - Vítima/Autor" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("AMIGO(A)")" />
+                                        <MudSelectItem Value="@("AVO")" />
+                                        <MudSelectItem Value="@("COLEGA DE TRABALHO")" />
+                                        <MudSelectItem Value="@("CONJUGE")" />
+                                        <MudSelectItem Value="@("CUNHADO(A)")" />
+                                        <MudSelectItem Value="@("DESCONHECIDO")" />
+                                        <MudSelectItem Value="@("ENTEADO(A)")" />
+                                        <MudSelectItem Value="@("FILHO(A)")" />
+                                        <MudSelectItem Value="@("GENRO/NORA")" />
+                                        <MudSelectItem Value="@("IRMAO(A)")" />
+                                        <MudSelectItem Value="@("MAE")" />
+                                        <MudSelectItem Value="@("NAMORADO(A)")" />
+                                        <MudSelectItem Value="@("NAO INFORMADO")" />
+                                        <MudSelectItem Value="@("NETO(A)")" />
+                                        <MudSelectItem Value="@("NOIVO(A)")" />
+                                        <MudSelectItem Value="@("OUTROS")" />
+                                        <MudSelectItem Value="@("PADRASTO/MADRASTA")" />
+                                        <MudSelectItem Value="@("PAI")" />
+                                        <MudSelectItem Value="@("PRIMO(A)")" />
+                                        <MudSelectItem Value="@("RESPONSAVEL LEGAL")" />
+                                        <MudSelectItem Value="@("SOBRINHO(A)")" />
+                                        <MudSelectItem Value="@("SOGRO(A)")" />
+                                        <MudSelectItem Value="@("TIO(A)")" />
+                                        <MudSelectItem Value="@("VIZINHO(A)")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Instrumento Utilizado-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudSelect T="string" @bind-Value="@novoEnvolvido.InstrumentoUtilizado" Label="Instrumento Utilizado" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("ARMA DE FOGO")" />
+                                        <MudSelectItem Value="@("ARMA BRANCA")" />
+                                        <MudSelectItem Value="@("INSTRUMENTO CONTUDENTE")" />
+                                        <MudSelectItem Value="@("OUTROS TIPOS DE OBJETOS")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Nome do Instrumento Utilizado-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudAutocomplete T="string" Label="Tipos de Objetos"
+                                                        Variant="Variant.Outlined"
+                                                        @bind-Value="@novoEnvolvido.NomeInstrumentoUtilizado"
+                                                        SearchFunc="@TiposDeObjetos" />
+                                </MudItem>      
+                        </MudGrid>
+                    </MudPaper>
                 </MudText>
             </MudTabPanel>
             <!--Endereço-->
             <MudTabPanel Text="Endereço">
                 <MudText>
-                    <MudGrid>
-                        <!--Região-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.Endereco.RegiaoEndereco" Label="Região" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("REGIAO METROPOLITANA")" />
-                                <MudSelectItem Value="@("ZONA DA MATA NORTE")" />
-                                <MudSelectItem Value="@("ZONA DA MATA SUL")" />
-                                <MudSelectItem Value="@("AGRESTE")" />
-                                <MudSelectItem Value="@("SERTÃO")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Município-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudAutocomplete T="string" Label="Município"
-                                             Variant="Variant.Outlined"
-                                             @bind-Value="@novoEnvolvido.Endereco.MunicipioEndereco"
-                                             SearchFunc="@Municipios" />
-                        </MudItem>
-                        <!--Bairro-->
-                        <MudItem xs="12" sm="6" md="4">
-                            <MudTextField @bind-Value="@novoEnvolvido.Endereco.BairroEndereco"
-                                          Label="Bairro"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End"/>
-                        </MudItem>
-                        <!--Logradouro-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudTextField @bind-Value="@novoEnvolvido.Endereco.LogradouroEndereco"
-                                          Label="Logradouro"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End"/>
-                        </MudItem>
-                        <!--Número do Logradouro-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudTextField @bind-Value="@novoEnvolvido.Endereco.NumeroLogradouroEndereco"
-                                          Label="Nº Logradouro"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Complemento-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudTextField @bind-Value="@novoEnvolvido.Endereco.ComplementoLogradouroEndereco"
-                                          Label="Complemento"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Ponto de Referência-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudTextField @bind-Value="@novoEnvolvido.Endereco.PontoReferenciaEndereco"
-                                          Label="Ponto de Referência"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End"/>
-                        </MudItem>
-                        <!--Localidade/Comunidade-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudTextField @bind-Value="@novoEnvolvido.Endereco.LocalidadeComunidadeEndereco"
-                                          Label="Localidade/Comunidade"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End"/>
-                        </MudItem>
-                        <!--Tipo de Residência-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudTextField @bind-Value="@novoEnvolvido.Endereco.TipoResidenciaEndereco"
-                                          Label="Tipo de Residência"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End"/>
-                        </MudItem>
-                        <!--Latitude-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudTextField @bind-Value="@novoEnvolvido.Endereco.LatitudeEndereco"
-                                          Label="Latitude"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End"/>
-                        </MudItem>
-                        <!--Longitude-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudTextField @bind-Value="@novoEnvolvido.Endereco.LongitudeEndereco"
-                                          Label="Longitude"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End"
-                                           />
-                        </MudItem>
-                        <!--Fonte-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudField Label="Fonte" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Endereco.Fonte">
-                                    <MudRadio Option="@("DO BOE")" Color="Color.Primary">Do BOE</MudRadio>
-                                    <MudRadio Option="@("UNICAME")" Color="Color.Primary">UNICAME</MudRadio>
-                                    <MudRadio Option="@("NO LOCAL")" Color="Color.Primary">No Local</MudRadio>
-                                    <MudRadio Option="@("OUTRAS")" Color="Color.Primary">Outras</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                    </MudGrid>
+                    <MudPaper Class="pa-5 mx-2" Elevation="3">
+                        <MudGrid>
+                                <!--Região-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudSelect T="string" @bind-Value="@novoEnvolvido.Endereco.RegiaoEndereco" Label="Região" Variant="Variant.Outlined">
+                                        <MudSelectItem Value="@("REGIAO METROPOLITANA")" />
+                                        <MudSelectItem Value="@("ZONA DA MATA NORTE")" />
+                                        <MudSelectItem Value="@("ZONA DA MATA SUL")" />
+                                        <MudSelectItem Value="@("AGRESTE")" />
+                                        <MudSelectItem Value="@("SERTÃO")" />
+                                    </MudSelect>
+                                </MudItem>
+                                <!--Município-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudAutocomplete T="string" Label="Município"
+                                                        Variant="Variant.Outlined"
+                                                        @bind-Value="@novoEnvolvido.Endereco.MunicipioEndereco"
+                                                        SearchFunc="@Municipios" />
+                                </MudItem>
+                                <!--Bairro-->
+                                <MudItem xs="12" sm="6" md="4">
+                                    <MudTextField @bind-Value="@novoEnvolvido.Endereco.BairroEndereco"
+                                                    Label="Bairro"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End"/>
+                                </MudItem>
+                                <!--Logradouro-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudTextField @bind-Value="@novoEnvolvido.Endereco.LogradouroEndereco"
+                                                    Label="Logradouro"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End"/>
+                                </MudItem>
+                                <!--Número do Logradouro-->
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudTextField @bind-Value="@novoEnvolvido.Endereco.NumeroLogradouroEndereco"
+                                                    Label="Nº Logradouro"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End" />
+                                </MudItem>
+                                <!--Complemento-->
+                                <MudItem xs="12" sm="6" md="3">
+                                    <MudTextField @bind-Value="@novoEnvolvido.Endereco.ComplementoLogradouroEndereco"
+                                                    Label="Complemento"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End" />
+                                </MudItem>
+                                <!--Ponto de Referência-->
+                                <MudItem xs="12" sm="6" md="3">
+                                    <MudTextField @bind-Value="@novoEnvolvido.Endereco.PontoReferenciaEndereco"
+                                                    Label="Ponto de Referência"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End"/>
+                                </MudItem>
+                                <!--Localidade/Comunidade-->
+                                <MudItem xs="12" sm="6" md="3">
+                                    <MudTextField @bind-Value="@novoEnvolvido.Endereco.LocalidadeComunidadeEndereco"
+                                                    Label="Localidade/Comunidade"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End"/>
+                                </MudItem>
+                                <!--Tipo de Residência-->
+                                <MudItem xs="12" sm="6" md="3">
+                                    <MudTextField @bind-Value="@novoEnvolvido.Endereco.TipoResidenciaEndereco"
+                                                    Label="Tipo de Residência"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End"/>
+                                </MudItem>
+                                <!--Latitude-->
+                                <MudItem xs="12" sm="6" md="3">
+                                    <MudTextField @bind-Value="@novoEnvolvido.Endereco.LatitudeEndereco"
+                                                    Label="Latitude"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End"/>
+                                </MudItem>
+                                <!--Longitude-->
+                                <MudItem xs="12" sm="6" md="3">
+                                    <MudTextField @bind-Value="@novoEnvolvido.Endereco.LongitudeEndereco"
+                                                    Label="Longitude"
+                                                    Variant="Variant.Outlined"
+                                                    Adornment="Adornment.End"
+                                                    />
+                                </MudItem>
+                                <!--Fonte-->
+                                <MudItem xs="12" sm="6" md="6">
+                                    <MudField Label="Fonte" Variant="Variant.Outlined" InnerPadding="false">
+                                        <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Endereco.Fonte">
+                                            <MudRadio Option="@("DO BOE")" Color="Color.Primary">Do BOE</MudRadio>
+                                            <MudRadio Option="@("UNICAME")" Color="Color.Primary">UNICAME</MudRadio>
+                                            <MudRadio Option="@("NO LOCAL")" Color="Color.Primary">No Local</MudRadio>
+                                            <MudRadio Option="@("OUTRAS")" Color="Color.Primary">Outras</MudRadio>
+                                        </MudRadioGroup>
+                                    </MudField>
+                                </MudItem>   
+                        </MudGrid>
+                    </MudPaper>
                 </MudText>
             </MudTabPanel>
             <!-- Saúde -->
             <MudTabPanel Text="Saúde">
                 <MudText>
-                    <MudGrid>
-                        <!--Lesão-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudField Label="Lesão" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Saude.Lesao">
-                                    <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
-                                    <MudRadio Option="@("NAO")" Color="Color.Primary">Não</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                        <!--Orgão de Socorro-->
-                        <MudItem xs="12" sm="6" md="9">
-                            <MudField Label="Socorro efetuado" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Saude.OrgaoSocorro">
-                                    <MudRadio Option="@("SAMU")" Color="Color.Primary">SAMU</MudRadio>
-                                    <MudRadio Option="@("CBMPE")" Color="Color.Primary">CBMPE</MudRadio>
-                                    <MudRadio Option="@("PMPE")" Color="Color.Primary">Viatura PM</MudRadio>
-                                    <MudRadio Option="@("PCPE")" Color="Color.Primary">Viatura PC</MudRadio>
-                                    <MudRadio Option="@("POPULARES")" Color="Color.Primary">Populares</MudRadio>
-                                    <MudRadio Option="@("OUTROS")" Color="Color.Primary">Outros</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                        <!--Hospital de Socorro-->
-                        <MudItem xs="12" sm="6" md="8">
-                            <MudTextField @bind-Value="@novoEnvolvido.Saude.HospitalSocorro"
-                                          Label="Unidade de Socorro"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Data do Óbito-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudDatePicker Label="Data da Morte"
-                                           DisableToolbar="true"
-                                           DateFormat="dd/MM/yyyy"
-                                           AllowKeyboardInput="true"
-                                           MaxDate="DateTime.Now"
-                                           @bind-Date="@novoEnvolvido.Saude.DataObito" />
-                        </MudItem>
-                        <!--Hora da Morte-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudTimePicker Label="Hora da Morte"
-                                           @bind-Time="@novoEnvolvido.Saude.HoraMorte" />
-                        </MudItem>
-                        <!--Local da Morte-->
-                        <MudItem xs="12" sm="6" md="8">
-                            <MudField Label="Local da Morte" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Saude.LocalMorte">
-                                    <MudRadio Option="@("LOCAL DO CRIME/EVENTO")" Color="Color.Primary">Local do Crime/Evento</MudRadio>
-                                    <MudRadio Option="@("HOSPITAL")" Color="Color.Primary">Hospital</MudRadio>
-                                    <MudRadio Option="@("UPA")" Color="Color.Primary">UPA</MudRadio>
-                                    <MudRadio Option="@("OUTRA UNIDADE DE SAUDE")" Color="Color.Primary">Outra Unidade de Saúde</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                        <!--NIC-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudTextField @bind-Value="@novoEnvolvido.Saude.NIC"
-                                          Label="NIC"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Registro IML-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudTextField @bind-Value="@novoEnvolvido.Saude.RegistroIML"
-                                          Label="Registro IML"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Data da Perícia (Adcionar a entidade)-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudDatePicker Label="Data da Perícia"
-                                           DisableToolbar="true"
-                                           DateFormat="dd/MM/yyyy"
-                                           AllowKeyboardInput="true"
-                                           MaxDate="DateTime.Now" />
-                        </MudItem>
-                        <!--IML-->
-                        <MudItem xs="12" sm="6" md="5">
-                            <MudField Label="IML" Variant="Variant.Outlined" InnerPadding="false">
-                                <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Saude.IML">
-                                    <MudRadio Option="@("RECIFE")" Color="Color.Primary">Recife</MudRadio>
-                                    <MudRadio Option="@("CARUARU")" Color="Color.Primary">Caruaru</MudRadio>
-                                    <MudRadio Option="@("PETROLINA")" Color="Color.Primary">Petrolina</MudRadio>
-                                </MudRadioGroup>
-                            </MudField>
-                        </MudItem>
-                        <!--Declaração de Óbito-->
-                        <MudItem xs="12" sm="6" md="3">
-                            <MudTextField @bind-Value="@novoEnvolvido.Saude.NumeroDeclaracaoObito"
-                                          Label="Declaração de Óbito"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Nº do GDL-->
-                        <MudItem xs="12" sm="6" md="2">
-                            <MudTextField @bind-Value="novoEnvolvido.Saude.GDL"
-                                          Label="Nº do GDL"
-                                          Variant="Variant.Outlined"
-                                          Adornment="Adornment.End" />
-                        </MudItem>
-                        <!--Unidade de Saúde-->
-                        <MudItem xs="12" sm="6" md="12">
-                            <MudSelect T="string" @bind-Value="novoEnvolvido.Saude.UnidadeHospitalar" Label="Unidade de Saúde do Estado" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("HOSPITAL DA RESTAURACAO")" />
-                                <MudSelectItem Value="@("HOSPITAL PORTUGUES")" />
-                                <MudSelectItem Value="@("HOSPITAL MIGUEL ARRAES")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Motivação Inicial-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudAutocomplete T="string" Label="Motivação Inicial"
-                                             Variant="Variant.Outlined"
-                                             @bind-Value="@novoEnvolvido.Saude.MotivacaoInicial"
-                                             SearchFunc="@MotivacaoCrime" />
-                        </MudItem>
-                        <!--Motivação Com o Fim do Inquerito Policial-->
-                        <MudItem xs="12" sm="6" md="6">
-                            <MudAutocomplete T="string" Label="Motivação Final"
-                                             Variant="Variant.Outlined"
-                                             @bind-Value="@novoEnvolvido.Saude.MotivacaoFinal"
-                                             SearchFunc="@MotivacaoCrime" />
-                        </MudItem>
-                        <!--Situação da Vítima no Acidente (Adicionar a entidade)-->
-                        <MudItem xs="12" sm="6" md="4">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.Saude.SituacaoVitimaAcidente" Label="Situação da Vítima no Acidente" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("CONDUTOR")" />
-                                <MudSelectItem Value="@("PASSAGEIRO")" />
-                                <MudSelectItem Value="@("PEDESTRE")" />
-                                <MudSelectItem Value="@("IGNORADO")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Meio de Tranporte da Vítima (Adicionar a entidade)-->
-                        <MudItem xs="12" sm="6" md="4">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.Saude.TransporteVitima" Label="Meio de Tranporte da Vítima" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("AUTOMOVEL")" />
-                                <MudSelectItem Value="@("BICICLETA")" />
-                                <MudSelectItem Value="@("MOTOCICLETA")" />
-                                <MudSelectItem Value="@("ONIBUS")" />
-                                <MudSelectItem Value="@("IGNORADO")" />
-                            </MudSelect>
-                        </MudItem>
-                        <!--Forma de Aproximação do Autor (Adicionar a entidade)-->
-                        <MudItem xs="12" sm="6" md="4">
-                            <MudSelect T="string" @bind-Value="@novoEnvolvido.Saude.TransporteAutor" Label="Forma de Aproximação do Autor" Variant="Variant.Outlined">
-                                <MudSelectItem Value="@("AUTOMOVEL")" />
-                                <MudSelectItem Value="@("BICICLETA")" />
-                                <MudSelectItem Value="@("CAVALO")" />
-                                <MudSelectItem Value="@("EMBARCACAO")" />
-                                <MudSelectItem Value="@("MOTOCICLETA")" />
-                                <MudSelectItem Value="@("IGNORADO")" />
-                            </MudSelect>
-                        </MudItem>
-                    </MudGrid>
+                    <MudPaper Class="pa-5 mx-2" Elevation="3">
+                        <MudGrid>
+                            <!--Lesão-->
+                            <MudItem xs="12" sm="6" md="3">
+                                <MudField Label="Lesão" Variant="Variant.Outlined" InnerPadding="false">
+                                    <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Saude.Lesao">
+                                        <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
+                                        <MudRadio Option="@("NAO")" Color="Color.Primary">Não</MudRadio>
+                                    </MudRadioGroup>
+                                </MudField>
+                            </MudItem>
+                            <!--Órgão de Socorro-->
+                            <MudItem xs="12" sm="6" md="9">
+                                <MudField Label="Socorro efetuado" Variant="Variant.Outlined" InnerPadding="false">
+                                    <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Saude.OrgaoSocorro">
+                                        <MudRadio Option="@("SAMU")" Color="Color.Primary">SAMU</MudRadio>
+                                        <MudRadio Option="@("CBMPE")" Color="Color.Primary">CBMPE</MudRadio>
+                                        <MudRadio Option="@("PMPE")" Color="Color.Primary">Viatura PM</MudRadio>
+                                        <MudRadio Option="@("PCPE")" Color="Color.Primary">Viatura PC</MudRadio>
+                                        <MudRadio Option="@("POPULARES")" Color="Color.Primary">Populares</MudRadio>
+                                        <MudRadio Option="@("OUTROS")" Color="Color.Primary">Outros</MudRadio>
+                                    </MudRadioGroup>
+                                </MudField>
+                            </MudItem>
+                            <!--Hospital de Socorro-->
+                            <MudItem xs="12" sm="6" md="8">
+                                <MudTextField @bind-Value="@novoEnvolvido.Saude.HospitalSocorro"
+                                                Label="Unidade de Socorro"
+                                                Variant="Variant.Outlined"
+                                                Adornment="Adornment.End" />
+                            </MudItem>
+                            <!--Data do Óbito-->
+                            <MudItem xs="12" sm="6" md="2">
+                                <MudDatePicker Label="Data da Morte"
+                                                DisableToolbar="true"
+                                                DateFormat="dd/MM/yyyy"
+                                                AllowKeyboardInput="true"
+                                                MaxDate="DateTime.Now"
+                                                @bind-Date="@novoEnvolvido.Saude.DataObito" />
+                            </MudItem>
+                            <!--Hora da Morte-->
+                            <MudItem xs="12" sm="6" md="2">
+                                <MudTimePicker Label="Hora da Morte"
+                                                @bind-Time="@novoEnvolvido.Saude.HoraMorte" />
+                            </MudItem>
+                            <!--Local da Morte-->
+                            <MudItem xs="12" sm="6" md="8">
+                                <MudField Label="Local da Morte" Variant="Variant.Outlined" InnerPadding="false">
+                                    <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Saude.LocalMorte">
+                                        <MudRadio Option="@("LOCAL DO CRIME/EVENTO")" Color="Color.Primary">Local do Crime/Evento</MudRadio>
+                                        <MudRadio Option="@("HOSPITAL")" Color="Color.Primary">Hospital</MudRadio>
+                                        <MudRadio Option="@("UPA")" Color="Color.Primary">UPA</MudRadio>
+                                        <MudRadio Option="@("OUTRA UNIDADE DE SAUDE")" Color="Color.Primary">Outra Unidade de Saúde</MudRadio>
+                                    </MudRadioGroup>
+                                </MudField>
+                            </MudItem>
+                            <!--NIC-->
+                            <MudItem xs="12" sm="6" md="2">
+                                <MudTextField @bind-Value="@novoEnvolvido.Saude.NIC"
+                                                Label="NIC"
+                                                Variant="Variant.Outlined"
+                                                Adornment="Adornment.End" />
+                            </MudItem>
+                            <!--Registro IML-->
+                            <MudItem xs="12" sm="6" md="2">
+                                <MudTextField @bind-Value="@novoEnvolvido.Saude.RegistroIML"
+                                                Label="Registro IML"
+                                                Variant="Variant.Outlined"
+                                                Adornment="Adornment.End" />
+                            </MudItem>
+                            <!--Data da Perícia (Adcionar a entidade)-->
+                            <MudItem xs="12" sm="6" md="2">
+                                <MudDatePicker Label="Data da Perícia"
+                                                DisableToolbar="true"
+                                                DateFormat="dd/MM/yyyy"
+                                                AllowKeyboardInput="true"
+                                                MaxDate="DateTime.Now" />
+                            </MudItem>
+                            <!--IML-->
+                            <MudItem xs="12" sm="6" md="5">
+                                <MudField Label="IML" Variant="Variant.Outlined" InnerPadding="false">
+                                    <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Saude.IML">
+                                        <MudRadio Option="@("RECIFE")" Color="Color.Primary">Recife</MudRadio>
+                                        <MudRadio Option="@("CARUARU")" Color="Color.Primary">Caruaru</MudRadio>
+                                        <MudRadio Option="@("PETROLINA")" Color="Color.Primary">Petrolina</MudRadio>
+                                    </MudRadioGroup>
+                                </MudField>
+                            </MudItem>
+                            <!--Declaração de Óbito-->
+                            <MudItem xs="12" sm="6" md="3">
+                                <MudTextField @bind-Value="@novoEnvolvido.Saude.NumeroDeclaracaoObito"
+                                                Label="Declaração de Óbito"
+                                                Variant="Variant.Outlined"
+                                                Adornment="Adornment.End" />
+                            </MudItem>
+                            <!--Nº do GDL-->
+                            <MudItem xs="12" sm="6" md="2">
+                                <MudTextField @bind-Value="novoEnvolvido.Saude.GDL"
+                                                Label="Nº do GDL"
+                                                Variant="Variant.Outlined"
+                                                Adornment="Adornment.End" />
+                            </MudItem>
+                            <!--Unidade de Saúde-->
+                            <MudItem xs="12" sm="6" md="12">
+                                <MudSelect T="string" @bind-Value="novoEnvolvido.Saude.UnidadeHospitalar" Label="Unidade de Saúde do Estado" Variant="Variant.Outlined">
+                                    <MudSelectItem Value="@("HOSPITAL DA RESTAURACAO")" />
+                                    <MudSelectItem Value="@("HOSPITAL PORTUGUES")" />
+                                    <MudSelectItem Value="@("HOSPITAL MIGUEL ARRAES")" />
+                                </MudSelect>
+                            </MudItem>
+                            <!--Motivação Inicial-->
+                            <MudItem xs="12" sm="6" md="6">
+                                <MudAutocomplete T="string" Label="Motivação Inicial"
+                                                    Variant="Variant.Outlined"
+                                                    @bind-Value="@novoEnvolvido.Saude.MotivacaoInicial"
+                                                    SearchFunc="@MotivacaoCrime" />
+                            </MudItem>
+                            <!--Motivação Com o Fim do Inquerito Policial-->
+                            <MudItem xs="12" sm="6" md="6">
+                                <MudAutocomplete T="string" Label="Motivação Final"
+                                                    Variant="Variant.Outlined"
+                                                    @bind-Value="@novoEnvolvido.Saude.MotivacaoFinal"
+                                                    SearchFunc="@MotivacaoCrime" />
+                            </MudItem>
+                            <!--Situação da Vítima no Acidente (Adicionar a entidade)-->
+                            <MudItem xs="12" sm="6" md="4">
+                                <MudSelect T="string" @bind-Value="@novoEnvolvido.Saude.SituacaoVitimaAcidente" Label="Situação da Vítima no Acidente" Variant="Variant.Outlined">
+                                    <MudSelectItem Value="@("CONDUTOR")" />
+                                    <MudSelectItem Value="@("PASSAGEIRO")" />
+                                    <MudSelectItem Value="@("PEDESTRE")" />
+                                    <MudSelectItem Value="@("IGNORADO")" />
+                                </MudSelect>
+                            </MudItem>
+                            <!--Meio de Tranporte da Vítima (Adicionar a entidade)-->
+                            <MudItem xs="12" sm="6" md="4">
+                                <MudSelect T="string" @bind-Value="@novoEnvolvido.Saude.TransporteVitima" Label="Meio de Tranporte da Vítima" Variant="Variant.Outlined">
+                                    <MudSelectItem Value="@("AUTOMOVEL")" />
+                                    <MudSelectItem Value="@("BICICLETA")" />
+                                    <MudSelectItem Value="@("MOTOCICLETA")" />
+                                    <MudSelectItem Value="@("ONIBUS")" />
+                                    <MudSelectItem Value="@("IGNORADO")" />
+                                </MudSelect>
+                            </MudItem>
+                            <!--Forma de Aproximação do Autor (Adicionar a entidade)-->
+                            <MudItem xs="12" sm="6" md="4">
+                                <MudSelect T="string" @bind-Value="@novoEnvolvido.Saude.TransporteAutor" Label="Forma de Aproximação do Autor" Variant="Variant.Outlined">
+                                    <MudSelectItem Value="@("AUTOMOVEL")" />
+                                    <MudSelectItem Value="@("BICICLETA")" />
+                                    <MudSelectItem Value="@("CAVALO")" />
+                                    <MudSelectItem Value="@("EMBARCACAO")" />
+                                    <MudSelectItem Value="@("MOTOCICLETA")" />
+                                    <MudSelectItem Value="@("IGNORADO")" />
+                                </MudSelect>
+                            </MudItem>
+                        </MudGrid>
+                    </MudPaper>
                 </MudText>
             </MudTabPanel>
             <!-- Criminal -->
             <MudTabPanel Text="Criminal">
                 <MudText>
-                    <MudGrid>
+                    <MudPaper Class="pa-5 mx-2">
                         <MudGrid>
                             <!--Situação Criminal-->
                             <MudItem xs="12" sm="6" md="6">
@@ -580,42 +587,39 @@
                             <!--ProntuarioSeres-->
                             <MudItem xs="12" sm="6" md="6">
                                 <MudTextField @bind-Value="@novoEnvolvido.Criminal.ProntuarioSeres"
-                                              Label="Prontuario Seres"
-                                              Variant="Variant.Outlined"
-                                              Adornment="Adornment.End"
-                                               />
+                                                Label="Prontuario Seres"
+                                                Variant="Variant.Outlined"
+                                                Adornment="Adornment.End"
+                                                />
                             </MudItem>
                             <!--Envolvimento do Crime-->
                             <MudItem xs="12" sm="6" md="6">
                                 <MudTextField @bind-Value="@novoEnvolvido.Criminal.EnvolvimentoCrime"
-                                              Label="Envolvimento do Crime"
-                                              Variant="Variant.Outlined"
-                                              Adornment="Adornment.End"
-                                               />
+                                                Label="Envolvimento do Crime"
+                                                Variant="Variant.Outlined"
+                                                Adornment="Adornment.End"
+                                                />
                             </MudItem>
                             <!--Situação Carcerária-->
                             <MudItem xs="12" sm="6">
-                                <MudPaper Class="pa-2 mx-2" Elevation="0">
-                                    <MudTextField T="string" @bind-Value="@novoEnvolvido.Criminal.SituacaoCarceraria"
-                                                  Label="Situação Carcerária"
-                                                  Variant="Variant.Outlined"
-                                                  Lines="6" />
-                                </MudPaper>
+                                <MudTextField T="string" @bind-Value="@novoEnvolvido.Criminal.SituacaoCarceraria"
+                                                    Label="Situação Carcerária"
+                                                    Variant="Variant.Outlined"
+                                                    Lines="6" />
                             </MudItem>
                             <!--Tipo de Procedimento-->
                             <MudItem xs="12" sm="6">
-                                <MudPaper Class="pa-2 mx-2" Elevation="0">
-                                    <MudTextField T="string" @bind-Value="@novoEnvolvido.Criminal.TipoProcedimento"
-                                                  Label="Tipo de Procedimento"
-                                                  Variant="Variant.Outlined"
-                                                  Lines="6" />
-                                </MudPaper>
+                                <MudTextField T="string" @bind-Value="@novoEnvolvido.Criminal.TipoProcedimento"
+                                                    Label="Tipo de Procedimento"
+                                                    Variant="Variant.Outlined"
+                                                    Lines="6" />
                             </MudItem>
                         </MudGrid>
-                    </MudGrid>
+                    </MudPaper>
                 </MudText>
             </MudTabPanel>
         </MudTabs>
+        <!--Botões-->
         <MudItem>
             <MudPaper Class="pa-2 mx-2" Elevation="0">
                 <MudButton OnClick="Cancelar">Cancelar</MudButton>
