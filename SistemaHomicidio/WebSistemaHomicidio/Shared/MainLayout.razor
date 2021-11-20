@@ -1,0 +1,305 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="_currentTheme" />
+<MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.Large" />
+<MudSnackbarProvider />
+
+<MudLayout RightToLeft="@_rightToLeft" id="bandeirape">
+
+    @if (Authentication.Usuario is null)
+    {
+        <MudGrid Class="superior justify-content-between">
+            <MudItem xs="12" Class="img_MudItem">
+                <MudPaper Class="img_superior d-flex align-center justify-center py-2" Elevation="1">
+                    <img src="imagens/pmpe.png" height="70" />
+                    <img src="imagens/pcpe.png" height="70" />
+                    <img src="imagens/cbmpe.png" height="70" />
+                    <img src="imagens/pcintifica.png" height="70" />
+                    <img src="imagens/infopol.png" height="70" />
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    }
+
+
+    @if (Authentication.Usuario != null)
+    {
+        if (!IsTokenExpired(Authentication.Usuario.Token))
+        {
+            <MudAppBar Elevation="25">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                               Color="Color.Inherit"
+                               Edge="Edge.Start"
+                               OnClick="@((e) => DrawerToggle())" />
+                <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+                    <MudText Typo="Typo.h5" Class="mudblazor-appbar-brand-text">
+                        Sistema de Registro de Homicídios
+                    </MudText>
+                </MudHidden>
+                <MudSpacer />
+
+                <MudSpacer />
+                <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+                    <MudTooltip Text="Toggle light/dark theme">
+                        <MudIconButton Icon="@Icons.Material.Filled.Brightness4"
+                                       Color="Color.Inherit"
+                                       OnClick="@((e) => DarkMode())" />
+                    </MudTooltip>
+                    <MudTooltip Text="Toggle right-to-left/left-to-right">
+                        <MudIconButton Icon="@Icons.Material.Filled.FormatTextdirectionRToL"
+                                       Color="Color.Inherit"
+                                       OnClick="@((e) => RightToLeftToggle())" />
+                    </MudTooltip>
+                </MudHidden>
+                <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+                    <MudMenu Icon="@Icons.Filled.Settings"
+                             Color="Color.Inherit"
+                             Dense="true"
+                             Direction="Direction.Right"
+                             OffsetY="true">
+                        <div class="px-2">
+                            <MudIconButton Icon="@Icons.Material.Filled.Brightness4"
+                                           Color="Color.Inherit"
+                                           OnClick="@((e) => DarkMode())" />
+                            <MudIconButton Icon="@Icons.Material.Filled.FormatTextdirectionRToL"
+                                           Color="Color.Inherit"
+                                           OnClick="@((e) => RightToLeftToggle())" />
+                        </div>
+                    </MudMenu>
+                </MudHidden>
+            </MudAppBar>
+
+            <MudDrawer @bind-Open=_drawerOpen Elevation="25" Class="mudblazor-appbar-band">
+                <MudDrawerHeader Class="mudblazor-brand" LinkToIndex="true">
+                    <MudCard Elevation="0" Square="true">
+                        <MudCardHeader>
+                            <CardHeaderAvatar>
+                                <MudAvatar Image="imagens/anubis.png" />
+                            </CardHeaderAvatar>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body2">
+                                    @Authentication.Usuario.Nome
+                                </MudText>
+                                <MudText Typo="Typo.caption">
+                                    @foreach (var item in @Authentication.Usuario.Funcoes)
+                                    {
+                                        @item.Descricao
+                                    }
+                                </MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                    </MudCard>
+                </MudDrawerHeader>
+                <MudDivider Class="mb-4" />
+                <NavMenu />
+            </MudDrawer>
+        }
+        else
+        {
+            StateHasChanged();
+            Authentication.Logout();
+        }
+
+    }
+
+    <MudMainContent Class="mudblazor-main-content">
+        <MudContainer MaxWidth="MaxWidth.Large">
+            @Body
+        </MudContainer>
+        <MudGrid Class="rodape_1">
+            <MudItem xs="12">
+                <MudPaper Class="rodape_2 d-flex align-center justify-center py-2" Elevation="1">
+                    <MudText>
+                        <MudText Typo="Typo.button">
+                            © 2021 Gerência de Análise Criminal e Estatística/SDS  -
+                        </MudText>
+                        <MudMenu Direction="Direction.Top"
+                                 OffsetX="true"
+                                 Dense="true"
+                                 ActivationEvent="@MouseEvent.MouseOver">
+                            <ActivatorContent>
+                                <MudText Typo="Typo.button"
+                                         Color="Color.Primary">
+                                    Desenvolvedores
+                                </MudText>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudListItem Text="Manoel Geraldo"
+                                             Icon="@Icons.Custom.Brands.LinkedIn"
+                                             IconColor="Color.Info"
+                                             Href="https://www.linkedin.com/in/manoelgeraldo/" />
+                                <MudDivider />
+                                <MudListItem Text="Luiz Pereira"
+                                             Icon="@Icons.Custom.Brands.LinkedIn"
+                                             IconColor="Color.Info"
+                                             Href="https://www.linkedin.com/in/manoelgeraldo/" />
+                            </ChildContent>
+                        </MudMenu>
+                    </MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+        <MudScrollToTop TopOffset="400">
+            <MudFab Icon="@Icons.Material.Filled.KeyboardArrowUp" Color="Color.Primary" />
+        </MudScrollToTop>
+    </MudMainContent>
+
+</MudLayout>
+
+@code
+{
+
+    private bool _drawerOpen = false;
+    private bool _rightToLeft = false;
+    private string searchValue = string.Empty;
+
+    private void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    private void RightToLeftToggle()
+    {
+        _rightToLeft = !_rightToLeft;
+    }
+
+    protected override void OnInitialized()
+    {
+        _currentTheme = _defaultTheme;
+
+    }
+
+    #region Theme
+
+    private void DarkMode()
+    {
+        if (_currentTheme == _defaultTheme)
+        {
+            _currentTheme = _darkTheme;
+        }
+        else
+        {
+            _currentTheme = _defaultTheme;
+        }
+    }
+
+    private MudTheme _currentTheme = new MudTheme();
+    private readonly MudTheme _defaultTheme =
+        new MudTheme()
+        {
+            Palette = new Palette()
+            {
+                Black = "#272c34"
+            }
+        };
+    private readonly MudTheme _darkTheme =
+        new MudTheme()
+        {
+            Palette = new Palette()
+            {
+                Black = "#27272f",
+                Background = "#32333d",
+                BackgroundGrey = "#27272f",
+                Surface = "#373740",
+                DrawerBackground = "#27272f",
+                DrawerText = "rgba(255,255,255, 0.50)",
+                DrawerIcon = "rgba(255,255,255, 0.50)",
+                AppbarBackground = "#27272f",
+                AppbarText = "rgba(255,255,255, 0.70)",
+                TextPrimary = "rgba(255,255,255, 0.70)",
+                TextSecondary = "rgba(255,255,255, 0.50)",
+                ActionDefault = "#adadb1",
+                ActionDisabled = "rgba(255,255,255, 0.26)",
+                ActionDisabledBackground = "rgba(255,255,255, 0.12)",
+                Divider = "rgba(255,255,255, 0.12)",
+                DividerLight = "rgba(255,255,255, 0.06)",
+                TableLines = "rgba(255,255,255, 0.12)",
+                LinesDefault = "rgba(255,255,255, 0.12)",
+                LinesInputs = "rgba(255,255,255, 0.3)",
+                TextDisabled = "rgba(255,255,255, 0.2)"
+            }
+        };
+
+    #endregion
+
+    private static bool IsTokenExpired(string token)
+    {
+        if (token == null || ("").Equals(token))
+        {
+            return true;
+        }
+
+        /***
+         * Make string valid for FromBase64String
+         * FromBase64String cannot accept '.' characters and only accepts stringth whose length is a multitude of 4
+         * If the string doesn't have the correct length trailing padding '=' characters should be added.
+         */
+        int indexOfFirstPoint = token.IndexOf('.') + 1;
+        String toDecode = token.Substring(indexOfFirstPoint, token.LastIndexOf('.') - indexOfFirstPoint);
+        while (toDecode.Length % 4 != 0)
+        {
+            toDecode += '=';
+        }
+
+        //Decodifica a string
+        string decodedString = Encoding.ASCII.GetString(Convert.FromBase64String(toDecode));
+
+        //Obtém o "exp" da string
+        Regex regex = new("(\"exp\":)([0-9]{1,})");
+        Match match = regex.Match(decodedString);
+        long timestamp = Convert.ToInt64(match.Groups[2].Value);
+
+        DateTime date = new DateTime(1970, 1, 1).AddSeconds(timestamp);
+        DateTime compareTo = DateTime.UtcNow;
+
+        int result = DateTime.Compare(date, compareTo);
+
+        return result < 0;
+    }
+}
+
+<style>
+    #bandeirape {
+        background-image: url(imagens/background.png);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+    .rodape_2 {
+        width: 100%;
+        margin: auto;
+        margin-top: 200px;
+        height: auto;
+    }
+
+    .rodape_2 p {
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .superior {
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    .img_superior img {
+        height: 100%;
+        min-width: 50px;
+        max-width: 20%;
+    }
+
+    .img_MudItem {
+        height: 100%;
+        width: 100%;
+    }
+
+    .rodape_1 {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .mud-list-item-icon {
+        min-width: 36px;
+    }
+</style>

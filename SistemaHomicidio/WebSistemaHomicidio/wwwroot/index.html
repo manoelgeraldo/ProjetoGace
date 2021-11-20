@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" lang="pt-br" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>SIMIP</title>
+    <base href="/" />
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="WebSistemaHomicidio.styles.css" rel="stylesheet" />
+    <link href="manifest.json" rel="manifest" />
+    <link href="imagens/anubis.png" rel="apple-touch-icon" sizes="512x512" />
+
+    <!-- Link da biblioteca MudBlazor-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
+    <!-- Link da biblioteca Blazored-->
+    <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div id="app">
+        <app class="grid">
+            <div>
+                <h2>Carregando...</h2>
+                <h3>Por favor, aguarde!</h3>
+            </div>
+            <div class="spinner"> </div>
+        </app>
+    </div>
+
+    <div id="blazor-error-ui">
+        Ocorreu um erro inesperado.
+        <a href="" class="reload">Por favor, atualize a página!</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script>navigator.serviceWorker.register('service-worker.js');</script>
+
+    <!-- Script do MudBlazor -->
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <!-- Script do Blazored -->
+    <script src="_content/Blazored.Modal/blazored.modal.js"></script>
+    <!-- Script IMaskJS -->
+    <script src="js/iMask.js"></script>
+    <!-- Script Mascaras Personalizadas -->
+    <script src="js/customMasks.js"></script>
+</body>
+
+</html>

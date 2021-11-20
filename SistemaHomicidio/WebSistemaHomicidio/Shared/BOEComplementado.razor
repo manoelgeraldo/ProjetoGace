@@ -1,0 +1,77 @@
+﻿<div style="max-width: 500px;">
+    <EditForm Model="@novoBOEComplementado" OnValidSubmit="Salvar">
+        <DataAnnotationsValidator />
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudPaper Class="pa-2 mx-2" Elevation="0">
+                    <MudTextField Label="Nº BOE"
+                                  Variant="Variant.Outlined"
+                                  @bind-Value="@novoBOEComplementado.Boe"
+                                  For="@(() => novoBOEComplementado.Boe)" 
+                                  id="boe-mask"/>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudPaper Class="pa-2 mx-2" Elevation="0">
+                    <MudDatePicker Label="Data Registro"
+                                   DisableToolbar="true"
+                                   DateFormat="dd/MM/yyyy"
+                                   MaxDate="DateTime.Now"
+                                   Required="true"
+                                   @bind-Date="@novoBOEComplementado.DataRegistro"
+                                   ErrorText="Informe uma Data Registro!"
+                                   For="@(() => novoBOEComplementado.DataRegistro)" />
+                </MudPaper>
+            </MudItem>
+            <MudItem>
+                <MudPaper Class="pa-2 mx-2" Elevation="0">
+                    <MudButton OnClick="Cancelar">Cancelar</MudButton>
+                    <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Salvar</MudButton>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+</div>
+
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+
+    [Parameter]
+    public NovoBoe novoBOEComplementado { get; set; } = new NovoBoe();
+
+    void Salvar()
+    {
+        ModalInstance.CloseAsync(ModalResult.Ok<NovoBoe>(novoBOEComplementado));
+    }
+
+    void Cancelar()
+    {
+        ModalInstance.CancelAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("masks");
+        }
+    }
+
+    //public async Task Submit()
+    //{
+    //    listaBOEComplementados = await localStorage.GetItemAsync<List<NovoBoe>>("boes");
+
+    //    var boes = listaBOEComplementados != null ? listaBOEComplementados : new List<NovoBoe>();
+
+    //    boes.Add(novoBOEComplementado);
+
+    //    await localStorage.SetItemAsync("boes", boes);
+
+    //    MudDialog.Close(DialogResult.Ok(true));
+    //}
+
+    //void Cancel() => MudDialog.Cancel();
+
+}

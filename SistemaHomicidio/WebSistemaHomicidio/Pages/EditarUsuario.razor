@@ -1,0 +1,81 @@
+﻿@page "/SIMIP/alterar-usuario"
+@attribute [Authorize]
+
+<div class="DivCard justify-content-center align-items-center">
+    <EditForm Model="@usuario" OnValidSubmit="Alterar">
+        <DataAnnotationsValidator />
+        <MudGrid>
+            <MudItem xs="12" sm="12">
+                <MudTextField Label="Nome"
+                              Variant="Variant.Outlined"
+                              @bind-Value="@usuario.Nome"
+                              For="@(()=> usuario.Nome)"/>
+            </MudItem>
+            <MudItem xs="12" sm="12">
+                <MudTextField Label="Senha"
+                              Variant="Variant.Outlined"
+                              @bind-Value="@usuario.Senha"
+                              For="@(()=> usuario.Senha)"/>
+            </MudItem>
+            <MudItem>
+                <MudPaper Class="pa-2 mx-2" Elevation="0">
+                    <MudButton OnClick="Cancelar">Cancelar</MudButton>
+                    <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Alterar</MudButton>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+</div>
+
+@code{
+
+    public AlterarUsuario usuario = new AlterarUsuario { };
+
+    protected override async Task OnInitializedAsync()
+    {
+        var usuarioLogado = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/Usuarios");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
+        var response = await httpClient.SendAsync(request);
+
+        var usuarioExiste = JsonSerializer.Deserialize<UsuarioLogado>
+        (
+            await response.Content.ReadAsStringAsync(),
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
+        );
+
+        usuario.Login = usuarioExiste.Login;
+    }
+
+    protected async Task Alterar()
+    {
+        var usuarioLogado = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+
+        var request = new HttpRequestMessage(HttpMethod.Put, "https://localhost:44343/api/Usuarios/alterar-usuario");
+        request.Content = new StringContent(JsonSerializer.Serialize(usuario, new JsonSerializerOptions { }), Encoding.UTF8, "application/json");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
+        var response = await httpClient.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            snackbar.Add("Usuário Alterado!", Severity.Success);
+            snackbar.Add("Por favor, faça novamente o login!", Severity.Info);
+            await Authentication.Logout();
+        }
+        else
+        {
+            snackbar.Add("Usuário não foi alterado!", Severity.Error);
+        }
+    }
+
+    void Cancelar() => navigationManager.NavigateTo("/");
+}
+
+<style>
+    .DivCard {
+        max-width: 350px;
+        min-width: 150px;
+        margin: auto;
+    }
+</style>

@@ -1,0 +1,146 @@
+﻿@page "/login"
+
+
+<div class="DivCard justify-content-center">
+    <EditForm Model="@model" OnValidSubmit="Entrar">
+        <DataAnnotationsValidator />
+        <MudCard>
+            <MudCardHeader Style="display: block;">
+                <MudCardMedia Class="img" Image="imagens/logoSDS-PE.png" Height="400"/>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudItem xs="12">
+                    <MudPaper Class="pa-2 mx-2" Elevation="0">
+                        <MudTextField @bind-Value="@model.Login"
+                                      Placeholder="Login"
+                                      IconSize="Size.Medium"
+                                      Clearable="true"
+                                      Adornment="Adornment.Start"
+                                      AdornmentColor="Color.Primary"
+                                      AdornmentIcon="@Icons.Filled.People"
+                                      OnAdornmentClick="IconeLogin"
+                                      For="@(()=> model.Login)" />
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudPaper Class="pa-2 mx-2" Elevation="0">
+                        <MudTextField @bind-Value="@model.Senha"
+                                      Placeholder="Senha"
+                                      Clearable="true"
+                                      InputType="@PasswordInput"
+                                      Adornment="Adornment.Start"
+                                      AdornmentColor="Color.Primary"
+                                      IconSize="Size.Medium"
+                                      OnAdornmentClick="MostrarSenhar"
+                                      AdornmentIcon="@PasswordInputIcon"
+                                      For="@(()=> model.Senha)" />
+                    </MudPaper>
+                </MudItem>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
+                    @if (verificando)
+                    {
+                        <MudProgressCircular Class="ms-n1" Color="Color.Info" Size="Size.Small" Indeterminate="true" />
+                        <MudText Class="ms-2">Verificando...</MudText>
+                    }
+                    else
+                    {
+                        <MudText>Entrar</MudText>
+                    }
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    </EditForm>
+</div>
+
+@code{
+
+    private UsuarioLogin model = new();
+    private bool verificando;
+
+    protected override void OnInitialized()
+    {
+        //Redireciona para Home se já estiver logado
+        if (Authentication.Usuario != null)
+        {
+            navigationManager.NavigateTo("/");
+        }
+    }
+
+    private async void Entrar()
+    {
+        verificando = true;
+        var response = await httpClient.PostAsJsonAsync("https://localhost:44343/api/Usuarios/login", model);
+        var loginResult = JsonSerializer.Deserialize<ExibirUsuario>
+        (
+            await response.Content.ReadAsStringAsync(),
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+        );
+
+        switch (response.StatusCode)
+        {
+            case HttpStatusCode.Unauthorized:
+                verificando = false;
+                StateHasChanged();
+                snackbar.Add("Desculpe, você não possui autorização para acessar o sistema!", Severity.Info);
+                break;
+            case HttpStatusCode.OK:
+                await localStorage.SetItemAsync("usuario", loginResult);
+                await Authentication.Login(model);
+                var returnUrl = navigationManager.QueryString("returnUrl") ?? "/";
+                navigationManager.NavigateTo(returnUrl);
+                break;
+            default:
+                verificando = false;
+                StateHasChanged();
+                snackbar.Add("Sistema indisponível no momento!", Severity.Error);
+                break;
+        }
+    }
+
+    #region Senha
+    bool mostrarSenha;
+    InputType PasswordInput = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+    void MostrarSenhar()
+    {
+        @if (mostrarSenha)
+        {
+            mostrarSenha = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            mostrarSenha = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+
+    void IconeLogin() { }
+    #endregion 
+}
+
+<style>
+    .MudPaper_1 {
+        width: 80%;
+        background-color: green
+    }
+
+    .MudCard_1 {
+        width: 95%;
+        background-color: aqua;
+    }
+
+    .DivCard {
+        max-width: 350px;
+        min-width: 150px;
+        margin: auto;
+    }
+    .img {
+        background-size: 100% 100%;
+    }
+</style>

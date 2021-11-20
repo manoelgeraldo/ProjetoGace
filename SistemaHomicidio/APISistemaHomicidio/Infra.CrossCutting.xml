@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Infra.CrossCutting</name>
+    </assembly>
+    <members>
+        <member name="P:Infra.CrossCutting.ViewModels.Boe.NovoBoe.Boe">
+            <summary>
+            Número do Boletim eletrônico complementado.
+            </summary>
+            <example>21E0000000000</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Boe.NovoBoe.DataRegistro">
+            <summary>
+            Data Registro do Boletim eletrônico Complementado.
+            </summary>
+            <example>11/05/2021</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.SequencialEnvolvido">
+            <summary>
+            Informe o sequencial do envolvido.
+            </summary>
+            <example>1</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.TipoEnvolvido">
+            <summary>
+            Tipo de envolvimento
+            </summary>
+            <example>VITIMA</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.Autoria">
+            <summary>
+            Qaulificação do envolvido.
+            </summary>
+            <example>CONHECIDA</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.Turista">
+            <summary>
+            Informe se é turista ou não.
+            </summary>
+            <example>NAO</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.NomeEnvolvido">
+            <summary>
+            Nome do envolvido.
+            </summary>
+            <example>FERNADINHO BEIRA MAR</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.NomeSocial">
+            <summary>
+            Informe o nome social se houver.
+            </summary>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.Vulgo">
+            <summary>
+            Informe o vulgo do envolvido.
+            </summary>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.NomeGenitora">
+            <summary>
+            Nome da genitora.
+            </summary>
+            <example>DONA MARIA</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.DataNascimento">
+            <summary>
+            Data de Nascimento do envolvido.
+            </summary>
+            <example>01/01/2021</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.IdadeAparente">
+            <summary>
+            Informe a idade aparente.
+            </summary>
+            <example>21</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.IdadeExata">
+            <summary>
+            Informe a idade aparente.
+            </summary>
+            <example>21</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoSaude.DataObito">
+            <summary>
+            Data que ocorreu o óbito.
+            </summary>
+            <example>01/01/2021</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoSaude.HoraMorte">
+            <summary>
+            Hora que ocorreu o óbito.
+            </summary>
+            <example>00:00</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.AlterarFato.DataFato">
+            <summary>
+            Data que ocorreu o fato.
+            </summary>
+            <example>01/01/2021</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.AlterarFato.HoraFato">
+            <summary>
+            Hora que ocorreu o fato.
+            </summary>
+            <example>00:00</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.AlterarFato.TurnoFato">
+            <summary>
+            Turno que ocorreu o fato.
+            </summary>
+            <example>NOITE</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.AlterarFato.NaturezaBoe">
+            <summary>
+            Natureza do fato.
+            </summary>
+            <example>HOMICIDIO</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.AlterarFato.MotivacacaoInicialFato">
+            <summary>
+            Motivação inicial do BOE.
+            </summary>
+            <example>A DEFINIR</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.AlterarFato.StatusMotivacaoFato">
+            <summary>
+            informe o status da motivação.
+            </summary>
+            <example>PRELIMINAR</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.AlterarFato.MunicipioFato">
+            <summary>
+            Informe a cidade que ocorreu o fato.
+            </summary>
+            <example>RECIFE</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.ExibirFato.DataFato">
+            <summary>
+            Data que ocorreu o fato.
+            </summary>
+            <example>01/01/2021</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.ExibirFato.HoraFato">
+            <summary>
+            Hora que ocorreu o fato.
+            </summary>
+            <example>00:00</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.ExibirFato.TurnoFato">
+            <summary>
+            Turno que ocorreu o fato.
+            </summary>
+            <example>NOITE</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.ExibirFato.NaturezaBoe">
+            <summary>
+            Natureza do fato.
+            </summary>
+            <example>HOMICIDIO</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.ExibirFato.MotivacacaoInicialFato">
+            <summary>
+            Motivação inicial do BOE.
+            </summary>
+            <example>A DEFINIR</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.ExibirFato.StatusMotivacaoFato">
+            <summary>
+            informe o status da motivação.
+            </summary>
+            <example>PRELIMINAR</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.Fato.ExibirFato.MunicipioFato">
+            <summary>
+            Informe a cidade que ocorreu o fato.
+            </summary>
+            <example>RECIFE</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoFato.DataFato">
+            <summary>
+            Data que ocorreu o fato.
+            </summary>
+            <example>01/01/2021</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoFato.HoraFato">
+            <summary>
+            Hora que ocorreu o fato.
+            </summary>
+            <example>00:00</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoFato.TurnoFato">
+            <summary>
+            Turno que ocorreu o fato.
+            </summary>
+            <example>NOITE</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoFato.NaturezaBoe">
+            <summary>
+            Natureza do fato.
+            </summary>
+            <example>HOMICIDIO</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoFato.MotivacacaoInicialFato">
+            <summary>
+            Motivação inicial do BOE.
+            </summary>
+            <example>A DEFINIR</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoFato.StatusMotivacaoFato">
+            <summary>
+            informe o status da motivação.
+            </summary>
+            <example>PRELIMINAR</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoFato.MunicipioFato">
+            <summary>
+            Informe a cidade que ocorreu o fato.
+            </summary>
+            <example>RECIFE</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.AlterarRegistro.DataRegistroBOE">
+            <summary>
+            Data Registro do Boletim eletrônico.
+            </summary>
+            <example>01/01/2021</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.AlterarRegistro.BOE">
+            <summary>
+            Número do Boletim eletrônico.
+            </summary>
+            <example>21E0000000001</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.AlterarRegistro.TipoDeRegistro">
+            <summary>
+            Informe o Tipo do Registro.
+            </summary>
+            <example>TENTATIVA</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.AlterarRegistro.Intencionalidade">
+            <summary>
+            Informe a Intencionalidade.
+            </summary>
+            <example>CULPOSO</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.AlterarRegistro.StatusRegistro">
+            <summary>
+            Informe o status.
+            </summary>
+            <example>CONSISTIDO</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.AlterarRegistro.ObservacaoRegistro">
+            <summary>
+            Espaço reservado para anotações de observações sobre o registro.
+            </summary>
+            /// <example>TESTANDO API</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.ExibirRegistro.DataRegistroBOE">
+            <summary>
+            Data Registro do Boletim eletrônico.
+            </summary>
+            <example>01/01/2021</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.ExibirRegistro.BOE">
+            <summary>
+            Número do Boletim eletrônico.
+            </summary>
+            <example>21E0000000001</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.ExibirRegistro.TipoDeRegistro">
+            <summary>
+            Informe o Tipo do Registro.
+            </summary>
+            <example>TENTATIVA</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.ExibirRegistro.Intencionalidade">
+            <summary>
+            Informe a Intencionalidade.
+            </summary>
+            <example>CULPOSO</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.ExibirRegistro.StatusRegistro">
+            <summary>
+            Informe o status.
+            </summary>
+            <example>CONSISTIDO</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.ExibirRegistro.ObservacaoRegistro">
+            <summary>
+            Espaço reservado para anotações de observações sobre o registro.
+            </summary>
+            /// <example>TESTANDO API</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoRegistro.DataRegistroBOE">
+            <summary>
+            Data Registro do Boletim eletrônico.
+            </summary>
+            <example>01/01/2021</example>.
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoRegistro.BOE">
+            <summary>
+            Número do Boletim eletrônico.
+            </summary>
+            <example>21E0000000001</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoRegistro.TipoDeRegistro">
+            <summary>
+            Informe o Tipo do Registro.
+            </summary>
+            <example>TENTATIVA</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoRegistro.Intencionalidade">
+            <summary>
+            Informe a Intencionalidade.
+            </summary>
+            <example>CULPOSO</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoRegistro.StatusRegistro">
+            <summary>
+            Informe o status.
+            </summary>
+            <example>CONSISTIDO</example>
+        </member>
+        <member name="P:Infra.CrossCutting.ViewModels.NovoRegistro.ObservacaoRegistro">
+            <summary>
+            Espaço reservado para anotações de observações sobre o registro.
+            </summary>
+            /// <example>TESTANDO API</example>
+        </member>
+    </members>
+</doc>

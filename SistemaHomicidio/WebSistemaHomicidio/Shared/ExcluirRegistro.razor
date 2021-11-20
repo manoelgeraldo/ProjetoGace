@@ -1,0 +1,40 @@
+﻿
+<EditForm Model="@Id" OnValidSubmit="Excluir">
+    <MudGrid>
+        <MudItem>
+            <MudText Typo="Typo.body2">
+                <b>Você tem certeza que deseja excluir o registro?</b>
+            </MudText>
+        </MudItem>
+        <!--Botão Salvar-->
+        <MudItem xs="6">
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" FullWidth="true">Cancelar</MudButton>
+        </MudItem>
+        <MudItem xs="6">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Excluir</MudButton>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+@code{
+    [Parameter] public int Id { get; set; }
+
+    async Task Excluir()
+    {
+        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+
+        var request = new HttpRequestMessage(HttpMethod.Delete, "https://localhost:44343/api/v1/Registro/excluir-registro/" + Id);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
+        var response = await httpClient.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            snackbar.Add("Registro Excluido!", Severity.Success);
+            StateHasChanged();
+        }
+        else
+        {
+            snackbar.Add("O Registro não foi excluído", Severity.Error);
+        }
+    }
+}

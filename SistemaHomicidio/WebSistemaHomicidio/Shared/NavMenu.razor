@@ -1,0 +1,35 @@
+﻿<MudNavMenu>
+    <MudNavLink Href="/" Icon="@Icons.Material.Outlined.Home">Home</MudNavLink>
+    <MudNavLink Href="/SIMIP/novo-registro" Icon="@Icons.Material.Outlined.PostAdd">Novo Registro</MudNavLink>
+    <MudNavGroup Icon="@Icons.Material.Outlined.Dashboard" Title="Dashboard">
+        <MudNavLink Icon="@Icons.Material.Outlined.Analytics" Href="/SIMIP/CVLI">CVLI</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.IntegrationInstructions" Href="/SIMIP/dashboard">CVP</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.BarChart" Href="/SIMIP/dashboard">Crime Patrimônial</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.PieChart" Href="/SIMIP/dashboard">Vítimas de Viôlencia</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.BubbleChart" Href="/SIMIP/dashboard">Mortes de Trânsito</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.TableChart" Href="/SIMIP/dashboard">Dicionário de Dados</MudNavLink>
+    </MudNavGroup>
+    <MudNavGroup Icon="@Icons.Material.Outlined.MiscellaneousServices" Title="Configurações">
+        <MudNavLink Icon="@Icons.Material.Outlined.Person" Href="/SIMIP/alterar-usuario">Usuário</MudNavLink>
+        @foreach (var funcao in Authentication.Usuario.Funcoes)
+        {
+            @if (funcao.Descricao == "Gestor" || funcao.Descricao == "Administrador")
+            {
+                <MudNavLink Icon="@Icons.Material.Outlined.VpnKey" Href="/Tabelas">Tabelas</MudNavLink>   
+            }   
+        }
+    </MudNavGroup>
+    <MudNavLink Icon="@Icons.Material.Outlined.ExitToApp" OnClick="Sair">Sair</MudNavLink>
+</MudNavMenu>
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    async Task Sair()=> await Authentication.Logout();
+}

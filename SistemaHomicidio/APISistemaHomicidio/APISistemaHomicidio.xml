@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>APISistemaHomicidio</name>
+    </assembly>
+    <members>
+        <member name="M:APISistemaHomicidio.Controllers.v1.ArquivosController.UploadArquivo(System.Int32,Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Anexar arquivo ao registro.
+            </summary>
+            <param name="registroId"></param>
+            <param name="novoArquivo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.BoeComplementadoController.Get">
+            <summary>
+            Exibe uma lista com todos os BOEs Complementados
+            </summary>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.BoeComplementadoController.Get(System.Int32)">
+            <summary>
+            Exibe um BOE Complementado consultado pelo id
+            </summary>
+            <param name="id" example="2"> BOE Complementado</param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.BoeComplementadoController.GetByRegistroId(System.Int32)">
+            <summary>
+            Exibe BOE Complementado consultado pelo RegistroId
+            </summary>
+            <param name="id" example="2"> RegistroId</param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.BoeComplementadoController.Post(Infra.CrossCutting.ViewModels.Boe.NovoBoe)">
+            <summary>
+            Adiciona um novo BOE Complementado
+            </summary>
+            <param name="novoBoeComplementado"></param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.BoeComplementadoController.Put(Infra.CrossCutting.ViewModels.Boe.AlterarBoe)">
+            <summary>
+            Altera um BOE Complementado
+            </summary>
+            <param name="alterarBoeComplementado"></param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.BoeComplementadoController.Delete(System.Int32)">
+            <summary>
+            Exclui um BOE Complementado
+            </summary>
+            <param name="id" example="2">Id do BOE Complementado</param>
+            <remarks>Ao excluir um BOE Complementado o mesmo será removido permanentemente da base!</remarks>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.EnvolvidoController.Get">
+            <summary>
+            Exibe uma lista com todos os Envolvidos
+            </summary>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.EnvolvidoController.Get(System.Int32)">
+            <summary>
+            Exibe um Envolvido consultado pelo id
+            </summary>
+            <param name="id" example="2">Envolvido</param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.EnvolvidoController.GetByName(System.String)">
+            <summary>
+            Exibe um Envolvido consultado pelo nome
+            </summary>
+            <param name="nome" example="Fulano de tal">Envolvido</param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.EnvolvidoController.Post(Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido)">
+            <summary>
+            Adiciona um novo Envolvido
+            </summary>
+            <param name="novoEnvolvido"></param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.EnvolvidoController.Put(Infra.CrossCutting.ViewModels.Envolvido.AlterarEnvolvido)">
+            <summary>
+            Altera um Envolvido existente
+            </summary>
+            <param name="alterarEnvolvido"></param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.EnvolvidoController.Delete(System.Int32)">
+            <summary>
+            Exclui um Envolvido
+            </summary>
+            <param name="id" example="2">Id do Envolvido</param>
+            <remarks>Ao excluir um Envolvido o mesmo será removido permanentemente da base!</remarks>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.Municipio_Diretoria_AIS_BPMController.Get">
+            <summary>
+            Exibe uma lista Municipio_Diretoria_AIS_BPM
+            </summary>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.RegistroController.Get">
+            <summary>
+            Exibe uma lista com todos os registros
+            </summary>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.RegistroController.Get(System.Int32)">
+            <summary>
+            Exibe um Registro consultado pelo id
+            </summary>
+            <param name="id" example="2">Registro</param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.RegistroController.Post(Infra.CrossCutting.ViewModels.NovoRegistro)">
+            <summary>
+            Adiciona um novo registro
+            </summary>
+            <param name="novoRegistro"></param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.RegistroController.Put(Infra.CrossCutting.ViewModels.AlterarRegistro)">
+            <summary>
+            Altera um registro existente
+            </summary>
+            <param name="alterarRegistro"></param>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.RegistroController.Delete(System.Int32)">
+            <summary>
+            Exclui um registro
+            </summary>
+            <param name="id" example="2">Id do registro</param>
+            <remarks>Ao excluir um registro o mesmo será removido permanentemente da base!</remarks>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.UsuariosController.Login(Infra.CrossCutting.ViewModels.Usuario.UsuarioLogin)">
+            <summary>
+            Efetua o login na API
+            </summary>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.UsuariosController.Get">
+            <summary>
+            Informa o usuário Logado.
+            </summary>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.UsuariosController.GetAllUsers">
+            <summary>
+            Exibe uma lista com todos os usuários.
+            </summary>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.UsuariosController.Post(Infra.CrossCutting.ViewModels.Usuario.NovoUsuario)">
+            <summary>
+            Adiciona um novo usuário.
+            </summary>
+        </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.UsuariosController.Put(Infra.CrossCutting.ViewModels.Usuario.AlterarUsuario)">
+            <summary>
+            Altera um usuário existente.
+            </summary>
+        </member>
+    </members>
+</doc>

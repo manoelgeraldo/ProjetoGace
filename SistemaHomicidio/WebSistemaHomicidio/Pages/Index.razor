@@ -1,0 +1,223 @@
+﻿@page "/"
+@attribute [Authorize]
+
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+    <MudGrid>
+        <!--Gráfico 01-->
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
+                <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="100%"></MudChart>
+            </MudPaper>
+        </MudItem>
+        <!--Gráfico 02-->
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
+                <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="100%"></MudChart>
+            </MudPaper>
+        </MudItem>
+        <!--Gráfico 03-->
+        <MudItem xs="12" sm="12" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
+                <MudChart ChartType="ChartType.Donut" Width="50%" Height="50%" InputData="@data" InputLabels="@labels"></MudChart>
+            </MudPaper>
+        </MudItem>
+        <!--Tabela de Registros-->
+        <MudItem xs="12">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 100%;">
+                <MudTable ServerData="@(new Func<TableState, Task<TableData<ExibirRegistro>>>(ServerReload))"
+                          Dense="true" Hover="true" @ref="table" FixedHeader="true" Height="400px" Striped="true">
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h6">Lista de Registros</MudText>
+                        <MudSpacer />
+                        <MudTextField T="string"
+                                      ValueChanged="@(s => OnProcurar(s))"
+                                      Placeholder="Procurar"
+                                      Adornment="Adornment.Start"
+                                      AdornmentIcon="@Icons.Material.Filled.Search"
+                                      IconSize="Size.Medium"
+                                      Class="mt-0">
+                        </MudTextField>
+                    </ToolBarContent>
+                    <HeaderContent>
+                        <MudTh><MudTableSortLabel SortLabel="id" T="ExibirRegistro">Id</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortLabel="tipoDeRegistro" T="ExibirRegistro">Tipo</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortLabel="boe" T="ExibirRegistro">Nº BOE</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortLabel="dataRegistro" T="ExibirRegistro">Data</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortLabel="envolvido" T="ExibirRegistro">Nome do Envolvido</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortLabel="fato" T="ExibirRegistro">Município</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortLabel="statusRegistro" T="ExibirRegistro">Status</MudTableSortLabel></MudTh>
+                        <MudTh>Ações</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        @foreach (var envolvido in @context.Envolvidos)
+                        {
+                            <MudTd DataLabel="Id">@context.Id</MudTd>
+                            <MudTd DataLabel="Tipo">@context.TipoDeRegistro</MudTd>
+                            <MudTd DataLabel="Nº BOE">@context.BOE</MudTd>
+                            <MudTd DataLabel="Data">@context.DataRegistroBOE.Value.ToString("d")</MudTd>
+                            <MudTd DataLabel="Envolvido">@envolvido.NomeEnvolvido</MudTd>
+                            <MudTd DataLabel="Município">@(context.Fato == null ? "N/A" : context.Fato.MunicipioFato)</MudTd>
+                            <MudTd DataLabel="Status">
+                                @if (!@context.StatusRegistro)
+                                {
+                                    <MudAvatar Size="Size.Small" Style="background-color: #1DE9B6" />
+                                }
+                                else
+                                {
+                                    <MudAvatar Size="Size.Small" Style="background-color: #2979FF" />
+                                }
+                            </MudTd>
+                            <MudTd DataLabel="Ações">
+                                <MudTooltip Text="Editar">
+                                    <MudIconButton OnClick="@(()=> Editar(context.Id))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
+                                </MudTooltip>
+                                <MudTooltip Text="Excluir">
+                                    <MudIconButton OnClick="@(()=> Excluir(context.Id))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                                </MudTooltip>
+                            </MudTd>
+                        }
+                    </RowTemplate>
+                    <NoRecordsContent>
+                        <MudText>Não encontrado!</MudText>
+                    </NoRecordsContent>
+                    <LoadingContent>
+                        <MudText>Carregando...</MudText>
+                    </LoadingContent>
+                    <PagerContent>
+                        <MudTablePager InfoFormat="{first_item}-{last_item} de {all_items}"
+                                       RowsPerPageString="Registros por página"
+                                       PageSizeOptions="new int[]{5, 10, 15, 20}" />
+                    </PagerContent>
+                </MudTable>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+
+@code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    private IEnumerable<ExibirRegistro> pagedData;
+    private MudTable<ExibirRegistro> table;
+
+    private int totalRegistros;
+    private string procurar = null;
+
+    private async Task<TableData<ExibirRegistro>> ServerReload(TableState state)
+    {
+        //Busca o token no localStorage
+        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+
+        //Cria um objeto request
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/v1/Registro/lista-de-registros");
+
+        //Adiciona authorization no header
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
+
+        //Envia o request
+        var response = await httpClient.SendAsync(request);
+
+        //Converte o http response
+        IEnumerable<ExibirRegistro> data = JsonSerializer.Deserialize<IEnumerable<ExibirRegistro>>
+        (
+            await response.Content.ReadAsStringAsync(),
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
+        );
+
+        //Busca os itens
+        data = data.Where(registro =>
+        {
+            if (string.IsNullOrWhiteSpace(procurar))
+                return true;
+            if (registro.TipoDeRegistro.Contains(procurar, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (registro.BOE.Contains(procurar, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (registro.DataRegistroBOE.ToString().Contains(procurar, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if ($"{registro.Id} {registro.Fato.MunicipioFato}".Contains(procurar, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if ((registro.Envolvidos.ToString()).Contains(procurar, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        }).ToArray();
+
+        //Total de itens
+        totalRegistros = data.Count();
+
+        //Ordena os itens
+        switch (state.SortLabel)
+        {
+            case "id":
+                data = data.OrderByDirection(state.SortDirection, o => o.Id);
+                break;
+            case "tipoDeRegistro":
+                data = data.OrderByDirection(state.SortDirection, o => o.TipoDeRegistro);
+                break;
+            case "boe":
+                data = data.OrderByDirection(state.SortDirection, o => o.BOE);
+                break;
+            case "dataRegistro":
+                data = data.OrderByDirection(state.SortDirection, o => o.DataRegistroBOE);
+                break;
+            case "statusRegistro":
+                data = data.OrderByDirection(state.SortDirection, o => o.StatusRegistro);
+                break;
+            case "fato":
+                data = data.OrderByDirection(state.SortDirection, o => o.Fato.MunicipioFato);
+                break;
+            case "envolvido":
+                data = data.OrderByDirection(state.SortDirection, o => o.Envolvidos);
+                break;
+        }
+
+        //Configura a quantidade de página;
+        pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        return new TableData<ExibirRegistro>() { TotalItems = totalRegistros, Items = pagedData };
+
+    }
+
+    private void OnProcurar(string text)
+    {
+        procurar = text;
+        table.ReloadServerData();
+    }
+
+    void Editar(int id) => navigationManager.NavigateTo($"/SIMIP/alterar-registro/{id}");
+
+    async Task Excluir(int id)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add("id", id);
+
+        var formModal = Modal.Show<ExcluirRegistro>("Excluir Registro", parameters);
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
+        {
+            snackbar.Add("Registro não foi Excluído!", Severity.Info);
+        }
+        else
+        {
+            StateHasChanged();
+        }
+    }
+
+    #region Gráfico1-2
+    public List<ChartSeries> Series = new List<ChartSeries>()
+{
+        new ChartSeries() { Name = "Tentativa", Data = new double[] { 40, 20, 25, 27, 46, 60, 48, 80, 15 } },
+        new ChartSeries() { Name = "Consumado", Data = new double[] { 19, 24, 35, 13, 28, 15, 13, 16, 31 } },
+    };
+    public string[] XAxisLabels = { "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set" };
+    #endregion
+
+    #region Gráfico3
+    int dataSize = 4;
+    public double[] data = { 50, 25 };
+    public string[] labels = { "Consistido", "Não Consistido" };
+    #endregion
+}
