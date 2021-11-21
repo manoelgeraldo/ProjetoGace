@@ -65,7 +65,7 @@ namespace Service.Services
         public async Task<ExibirUsuario> ValidaUsuarioEGeraTokenAsync(UsuarioLogin usuario)
         {
             var usuarioConsultado = await repository.GetAsync(usuario.Login).ConfigureAwait(false);
-            if (usuarioConsultado == null)
+            if (usuarioConsultado is null)
             {
                 return null;
             }

@@ -1,6 +1,5 @@
 ﻿@page "/login"
 
-
 <div class="DivCard justify-content-center">
     <EditForm Model="@model" OnValidSubmit="Entrar">
         <DataAnnotationsValidator />
@@ -11,21 +10,20 @@
             <MudCardContent>
                 <MudItem xs="12">
                     <MudPaper Class="pa-2 mx-2" Elevation="0">
-                        <MudTextField @bind-Value="@model.Login"
-                                      Placeholder="Login"
+                        <MudTextField Placeholder="Login"
                                       IconSize="Size.Medium"
                                       Clearable="true"
                                       Adornment="Adornment.Start"
                                       AdornmentColor="Color.Primary"
                                       AdornmentIcon="@Icons.Filled.People"
                                       OnAdornmentClick="IconeLogin"
-                                      For="@(()=> model.Login)" />
+                                      @bind-Value="@model.Login"
+                                      For="@(()=> model.Login)"/>
                     </MudPaper>
                 </MudItem>
                 <MudItem xs="12">
                     <MudPaper Class="pa-2 mx-2" Elevation="0">
-                        <MudTextField @bind-Value="@model.Senha"
-                                      Placeholder="Senha"
+                        <MudTextField Placeholder="Senha"
                                       Clearable="true"
                                       InputType="@PasswordInput"
                                       Adornment="Adornment.Start"
@@ -33,7 +31,8 @@
                                       IconSize="Size.Medium"
                                       OnAdornmentClick="MostrarSenhar"
                                       AdornmentIcon="@PasswordInputIcon"
-                                      For="@(()=> model.Senha)" />
+                                      @bind-Value="@model.Senha"
+                                      For="@(()=> model.Senha)"/>
                     </MudPaper>
                 </MudItem>
             </MudCardContent>
