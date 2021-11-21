@@ -27,19 +27,24 @@ namespace Service.Services
 
         public async Task<IEnumerable<ExibirUsuario>> GetAllUsersAsync()
         {
-            return mapper.Map<IEnumerable<Usuario>, IEnumerable<ExibirUsuario>>(await repository.GetAllUsersAsync());
+            return mapper.Map<IEnumerable<Usuario>, IEnumerable<ExibirUsuario>>(await repository.GetAllUsersAsync().ConfigureAwait(false));
         }
 
-        public async Task<UsuarioLogado> GetAsync(string login)
+        public async Task<ExibirUsuario> GetAsync(string login)
         {
-            return mapper.Map<UsuarioLogado>(await repository.GetAsync(login));
+            return mapper.Map<ExibirUsuario>(await repository.GetAsync(login).ConfigureAwait(false));
+        }
+
+        public async Task<UsuarioLogado> GetUsuarioLogadoAsync(string login)
+        {
+            return mapper.Map<UsuarioLogado>(await repository.GetAsync(login).ConfigureAwait(false));
         }
 
         public async Task<ExibirUsuario> InsertAsync(NovoUsuario novoUsuario)
         {
             var usuario = mapper.Map<Usuario>(novoUsuario);
             ConverteSenhaEmHash(usuario);
-            return mapper.Map<ExibirUsuario>(await repository.InsertAsync(usuario));
+            return mapper.Map<ExibirUsuario>(await repository.InsertAsync(usuario).ConfigureAwait(false));
         }
 
         private static void ConverteSenhaEmHash(Usuario usuario)
@@ -54,12 +59,12 @@ namespace Service.Services
             usuario.Nome = alterarUsuario.Nome;
             usuario.Senha = alterarUsuario.Senha;
             ConverteSenhaEmHash(usuario);
-            return mapper.Map<ExibirUsuario>(await repository.UpdateAsync(usuario));
+            return mapper.Map<ExibirUsuario>(await repository.UpdateAsync(usuario).ConfigureAwait(false));
         }
 
         public async Task<ExibirUsuario> ValidaUsuarioEGeraTokenAsync(UsuarioLogin usuario)
         {
-            var usuarioConsultado = await repository.GetAsync(usuario.Login);
+            var usuarioConsultado = await repository.GetAsync(usuario.Login).ConfigureAwait(false);
             if (usuarioConsultado == null)
             {
                 return null;
@@ -75,7 +80,7 @@ namespace Service.Services
 
         private async Task<bool> ValidaEAtualizaHashAsync(UsuarioLogin usuario, string hash)
         {
-            var usuarioConsultado = await repository.GetAsync(usuario.Login);
+            var usuarioConsultado = await repository.GetAsync(usuario.Login).ConfigureAwait(false);
             var passwordHasher = new PasswordHasher<Usuario>();
             var status = passwordHasher.VerifyHashedPassword(usuarioConsultado, hash, usuario.Senha);
             var usuarioAlterado = mapper.Map<AlterarUsuario>(usuarioConsultado);
@@ -88,7 +93,7 @@ namespace Service.Services
                     return true;
 
                 case PasswordVerificationResult.SuccessRehashNeeded:
-                    await UpdateUsuarioAsync(usuarioAlterado);
+                    await UpdateUsuarioAsync(usuarioAlterado).ConfigureAwait(false);
                     return true;
 
                 default:

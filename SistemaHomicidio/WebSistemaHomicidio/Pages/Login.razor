@@ -83,7 +83,7 @@
             case HttpStatusCode.Unauthorized:
                 verificando = false;
                 StateHasChanged();
-                snackbar.Add("Desculpe, você não possui autorização para acessar o sistema!", Severity.Info);
+                snackbar.Add("Você não possui autorização para acessar o sistema!", Severity.Info);
                 break;
             case HttpStatusCode.OK:
                 await localStorage.SetItemAsync("usuario", loginResult);

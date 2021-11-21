@@ -1,24 +1,24 @@
 ﻿<div style="max-width: 500px;">
     <EditForm Model="@novoBOEComplementado" OnValidSubmit="Salvar">
         <DataAnnotationsValidator />
-        <MudGrid>
-            <MudPaper Class="pa-2 mx-2" Elevation="3">
+        <MudPaper Class="pa-5 mx-2" Elevation="0">
+            <MudGrid>
                 <MudItem xs="12" sm="6">
                     <MudTextField Label="Nº BOE"
-                                      Variant="Variant.Outlined"
-                                      @bind-Value="@novoBOEComplementado.Boe"
-                                      For="@(() => novoBOEComplementado.Boe)" 
-                                      id="boe-mask"/>
+                                  Variant="Variant.Outlined"
+                                  @bind-Value="@novoBOEComplementado.Boe"
+                                  For="@(() => novoBOEComplementado.Boe)" 
+                                  id="boe-mask"/>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudDatePicker Label="Data Registro"
-                                       DisableToolbar="true"
-                                       DateFormat="dd/MM/yyyy"
-                                       MaxDate="DateTime.Now"
-                                       Required="true"
-                                       @bind-Date="@novoBOEComplementado.DataRegistro"
-                                       ErrorText="Informe uma Data Registro!"
-                                       For="@(() => novoBOEComplementado.DataRegistro)" />
+                                   DisableToolbar="true"
+                                   DateFormat="dd/MM/yyyy"
+                                   MaxDate="DateTime.Now"
+                                   Required="true"
+                                   @bind-Date="@novoBOEComplementado.DataRegistro"
+                                   ErrorText="Informe uma Data Registro!"
+                                   For="@(() => novoBOEComplementado.DataRegistro)" />
                 </MudItem>
                 <MudItem>
                     <MudPaper Class="pa-2 mx-2" Elevation="0">
@@ -26,8 +26,8 @@
                         <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Salvar</MudButton>
                     </MudPaper>
                 </MudItem>
-            </MudPaper>
-        </MudGrid>
+            </MudGrid>
+        </MudPaper>
     </EditForm>
 </div>
 

@@ -41,7 +41,7 @@ namespace APISistemaHomicidio.Controllers.v1
         public async Task<IActionResult> Get()
         {
             string login = User.Identity.Name;
-            var usuario = await manager.GetAsync(login).ConfigureAwait(false);
+            var usuario = await manager.GetUsuarioLogadoAsync(login).ConfigureAwait(false);
             return Ok(usuario);
         }
 

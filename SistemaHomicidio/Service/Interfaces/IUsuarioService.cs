@@ -12,7 +12,9 @@ namespace Service.Interfaces
     {
         Task<IEnumerable<ExibirUsuario>> GetAllUsersAsync();
 
-        Task<UsuarioLogado> GetAsync(string login);
+        Task<ExibirUsuario> GetAsync(string login);
+
+        Task<UsuarioLogado> GetUsuarioLogadoAsync(string login);
 
         Task<ExibirUsuario> InsertAsync(NovoUsuario usuario);
 
