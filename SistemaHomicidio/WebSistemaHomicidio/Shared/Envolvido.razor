@@ -515,8 +515,8 @@
                             </MudItem>
                             <!--Meio de Transporte da Vítima (Adicionar a entidade)-->
                             <MudItem xs="12" sm="6" md="4">
-                                <MudSelect T="string" Label="Meio de Transporte da Vítima" Variant="Variant.Outlined">
-                                           @bind-Value="@novoEnvolvido.Saude.TransporteVitima"
+                                <MudSelect T="string" Label="Meio de Transporte da Vítima" Variant="Variant.Outlined"
+                                           @bind-Value="@novoEnvolvido.Saude.TransporteVitima">
                                     <MudSelectItem Value="@("AUTOMOVEL")" />
                                     <MudSelectItem Value="@("BICICLETA")" />
                                     <MudSelectItem Value="@("MOTOCICLETA")" />

@@ -9,13 +9,9 @@ namespace WebSistemaHomicidio.ViewModels.Fato
         [Display(Name = "Data do Fato")]
         [Required(ErrorMessage = "Informe a {0}!")]
         public DateTime? DataFato { get; set; }
-
-        [Display(Name = "Hora do Fato")]
-        [Required(ErrorMessage = "Informe a {0}!")]
         public TimeSpan? HoraFato { get; set; }
         public string TurnoFato { get; set; }
         public string NaturezaBoe { get; set; }
-        
         public string CausaJuridicaFato { get; set; }
         public string StatusMotivacaoFato { get; set; }
         public string RegiaoFato { get; set; }

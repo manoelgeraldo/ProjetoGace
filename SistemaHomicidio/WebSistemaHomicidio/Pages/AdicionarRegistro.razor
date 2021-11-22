@@ -48,8 +48,9 @@
                             </MudSelect>
                             <ValidationMessage For="@(()=> novoRegistro.Intencionalidade)" />
                         </MudItem>
+                        <!--Status do Registro-->
                         <MudItem xs="12" sm="6" md="1">
-                            <MudSwitch @bind-Checked="novoRegistro.StatusRegistro" Color="Color.Primary" />
+                            <MudSwitch Color="Color.Primary" Label="Status" @bind-Checked="novoRegistro.StatusRegistro"/>
                         </MudItem>
                         <!--BOEComplementado-->
                         <MudItem xs="12" sm="6">
@@ -109,7 +110,8 @@
                                                        DateFormat="dd/MM/yyyy"
                                                        AllowKeyboardInput="true"
                                                        MaxDate="DateTime.Now"
-                                                       @bind-Date="@novoRegistro.Fato.DataFato" />
+                                                       @bind-Date="@novoRegistro.Fato.DataFato"
+                                                       For="@(()=> novoRegistro.Fato.DataFato)"/>
                                     </MudItem>
                                     <!--Hora-->
                                     <MudItem xs="12" sm="6" md="2">
@@ -144,7 +146,7 @@
                                             <MudSelectItem Value="@("ROUBO SEGUIDO DE MORTE (LATROCINIO)")" />
                                         </MudSelect>
                                     </MudItem>
-                                    <!--Causa Juridica-->
+                                    <!--Causa Jurídica-->
                                     <MudItem xs="12" sm="6" md="4">
                                         <MudSelect T="string" Label="Causa Jurídica" Variant="Variant.Outlined" @bind-Value="@novoRegistro.Fato.CausaJuridicaFato">
                                             <MudSelectItem Value="@("NAO INFORMADA")" />
@@ -554,68 +556,44 @@
                             </MudPaper>
                         </MudText>
                     </MudTabPanel>
-                    <!-- Arquivos-->
+                    <!--Arquivos-->
                     <MudTabPanel Text="Arquivos">
                         <MudText>
-                            <style>
-                                .drag-drop-zone {
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    transition: all .4s;
-                                    min-height: 400px;
-                                }
-
-                                .drag-drop-input {
-                                    position: absolute;
-                                    width: 100%;
-                                    height: 90%;
-                                    opacity: 0;
-                                    cursor: pointer;
-                                    z-index: 2;
-                                }
-
-                                .drag-enter {
-                                    box-shadow: var(--mud-elevation-10);
-                                }
-
-                                .list {
-                                    padding: 2em;
-                                    min-width: 100%;
-                                }
-                            </style>
                             <MudPaper @ondragenter="@(()=>_dragEnterStyle="drag-enter")"
                                       @ondragleave="@(()=>_dragEnterStyle=null)"
                                       @ondragend="@(()=>_dragEnterStyle=null)"
                                       Class=@("drag-drop-zone "+ _dragEnterStyle)>
 
-                                <InputFile OnChange="OnInputFileChanged" multiple class="drag-drop-input" />
+                                <InputFile OnChange="UploadArquivos" multiple class="drag-drop-input" />
 
-                                @if (fileNames.Count() == 0)
+                                @if (listaArquivos.Count() == 0)
                                 {
                                     <MudText Typo="Typo.h3">Arraste e solte ou clique aqui!</MudText>
                                 }
                                 else
                                 {
                                     <MudList Style="padding:2em;width:100%;" Dense="true">
-                                        @foreach (var file in fileNames)
+                                        @foreach (var arquivo in listaArquivos)
                                         {
-                                            <MudListItem @key="@file">
+                                            <MudListItem @key="@arquivo">
                                                 <MudChip Color="Color.Dark"
                                                          Style="width:60px; overflow:hidden;"
-                                                         Text="@(file.Split(".").Last())" />
-                                                @file
+                                                         Text="@arquivo.TipoArquivo"/>
+                                                @arquivo.NomeArquivo
                                             </MudListItem>}
                                     </MudList>
                                 }
                             </MudPaper>
-
+                            <!--Botão-->
                             <MudGrid Justify="Justify.Center" Spacing="4" Class="py-4">
                                 <MudItem>
-                                    <MudButton OnClick="Upload" Disabled="@(!fileNames.Any())" Color="Color.Primary" Variant="Variant.Filled">Carregar</MudButton>
-                                </MudItem>
-                                <MudItem>
-                                    <MudButton OnClick="@fileNames.Clear" Disabled="@(!fileNames.Any())" Color="Color.Error" Variant="Variant.Filled">Limpar</MudButton>
+                                    <MudButton OnClick="@listaArquivos.Clear" 
+                                               Disabled="@(!listaArquivos.Any())" 
+                                               Color="Color.Error" 
+                                               Variant="Variant.Filled"
+                                               FullWidth="true">
+                                               Limpar
+                                    </MudButton>
                                 </MudItem>
                             </MudGrid>
                         </MudText>
@@ -642,6 +620,8 @@
 
     public List<NovoBoe> listaBOEComplementados { get; set; } = new List<NovoBoe> { };
 
+    public List<NovoArquivo> listaArquivos { get; set; } = new List<NovoArquivo> { };
+
     public NovoRegistro novoRegistro = new NovoRegistro
     {
         Fato = new NovoFato(),
@@ -655,6 +635,7 @@
     {
         novoRegistro.Envolvidos = listaEnvolvidos;
         novoRegistro.BoeComplementados = listaBOEComplementados;
+        novoRegistro.Arquivos = listaArquivos;
 
         var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
 
@@ -686,6 +667,7 @@
         }
     }
 
+    //Envolvido
     async Task ExibirEnvolvido()
     {
         var formModal = Modal.Show<Envolvido>("Adicionar Envolvido");
@@ -728,6 +710,7 @@
         snackbar.Add("Envolvido removido!", Severity.Warning);
     }
 
+    //BOEComplementado
     async Task ExibirBOEComplementado()
     {
         var formModal = Modal.Show<BOEComplementado>("Adicionar BOE Complementado");
@@ -770,7 +753,7 @@
         snackbar.Add("BOE Complementado removido!", Severity.Warning);
     }
 
-
+    //Municípios
     private async Task<IEnumerable<Municipio_Diretoria_AIS_BPM>> Municipios(string value)
     {
         var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
@@ -790,6 +773,7 @@
         return municipios.Where(x => x.Municipio.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
+    //Local do Fato
     private string[] localFato =
     {
         "ACADEMIA", "ACUDE", "AERONAVE", "AEROPORTO",
@@ -826,27 +810,31 @@
 
     private async Task<IEnumerable<string>> LocalFato(string value)
     {
-        // In real life use an asynchronous function for fetching data from an api.
-        await Task.Delay(3);
-
-        // if text is null or empty, show complete list
+        await Task.Delay(1);
         if (string.IsNullOrEmpty(value))
             return localFato;
         return localFato.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
+    //Upload Arquivos
     string _dragEnterStyle;
-    IList<string> fileNames = new List<string>();
-    void OnInputFileChanged(InputFileChangeEventArgs e)
+
+    void UploadArquivos(InputFileChangeEventArgs e)
     {
-        var files = e.GetMultipleFiles();
-        fileNames = files.Select(f => f.Name).ToList();
-    }
-    void Upload()
-    {
-        //Upload the files here
-        snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
-        snackbar.Add("TODO: Upload your files!", Severity.Normal);
+        foreach (var arquivo in e.GetMultipleFiles(maximumFileCount: 5))
+        {
+            var fileContent = new StreamContent(arquivo.OpenReadStream(maxAllowedSize: 2097152));
+
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(arquivo.ContentType);
+
+            listaArquivos.Add( new NovoArquivo()
+            {
+                NomeArquivo = arquivo.Name,
+                TipoArquivo = (arquivo.Name).Split(".").Last(),
+                CriacaoArquivo = DateTime.Now,
+                DadosArquivo = new byte[arquivo.Size]
+            });
+        }
     }
 }
 

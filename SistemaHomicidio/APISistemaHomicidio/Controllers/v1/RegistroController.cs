@@ -31,9 +31,9 @@ namespace APISistemaHomicidio.Controllers.v1
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get()
         {
-            var ExibirTodosResgistros = await _registroService.ExibirTodosRegistros();
+            var ExibirTodosResgistros = await _registroService.ExibirTodosRegistros().ConfigureAwait(false);
             
-            if (ExibirTodosResgistros.Any())
+            if (ExibirTodosResgistros.Count > 0)
             {
                 return Ok(ExibirTodosResgistros);
             }
@@ -50,7 +50,7 @@ namespace APISistemaHomicidio.Controllers.v1
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(int id)
         {
-            var registro = await _registroService.ExibirRegistroPorId(id);
+            var registro = await _registroService.ExibirRegistroPorId(id).ConfigureAwait(false);
 
             if (registro.Id == 0)
             {
@@ -70,8 +70,7 @@ namespace APISistemaHomicidio.Controllers.v1
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Post(NovoRegistro novoRegistro)
         {
-            ExibirRegistro registroInserido;
-            registroInserido = await _registroService.AdicionarRegistro(novoRegistro);
+            ExibirRegistro registroInserido = await _registroService.AdicionarRegistro(novoRegistro).ConfigureAwait(false);
             return CreatedAtAction(nameof(Get), new { id = registroInserido.Id }, registroInserido);
         }
 
@@ -85,8 +84,8 @@ namespace APISistemaHomicidio.Controllers.v1
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Put(AlterarRegistro alterarRegistro)
         {
-            var registroAtualizado = await _registroService.EditarRegistro(alterarRegistro);
-            if (registroAtualizado == null)
+            var registroAtualizado = await _registroService.EditarRegistro(alterarRegistro).ConfigureAwait(false);
+            if (registroAtualizado is null)
             {
                 return NotFound();
             }
@@ -104,8 +103,8 @@ namespace APISistemaHomicidio.Controllers.v1
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            var registroExcluido = await _registroService.ExcluirRegistro(id);
-            if (registroExcluido == null)
+            var registroExcluido = await _registroService.ExcluirRegistro(id).ConfigureAwait(false);
+            if (registroExcluido is null)
             {
                 return NotFound();
             }

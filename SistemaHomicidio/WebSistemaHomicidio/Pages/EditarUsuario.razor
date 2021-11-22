@@ -2,6 +2,7 @@
 @attribute [Authorize]
 
 <div class="DivCard justify-content-center align-items-center">
+    <MudText Typo="Typo.caption">Altere seu Nome e/ou Senha</MudText>
     <EditForm Model="@usuario" OnValidSubmit="Alterar">
         <DataAnnotationsValidator />
         <MudContainer Class="mt-16 px-8">

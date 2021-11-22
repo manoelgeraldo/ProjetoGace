@@ -34,7 +34,8 @@ namespace Infra.Data.Repositories
                                       .Include(b => b.BoeComplementados)
                                       .Include(a => a.Arquivos)
                                       .Include(i => i.Inquerito)
-                                      .ToListAsync();
+                                      .ToListAsync()
+                                      .ConfigureAwait(false);
         }
 
         public async Task<Registro> ObterRegistroPorID(int id)
@@ -49,7 +50,8 @@ namespace Infra.Data.Repositories
                                       .Include(b => b.BoeComplementados)
                                       .Include(a => a.Arquivos)
                                       .Include(i => i.Inquerito)
-                                      .SingleOrDefaultAsync(i => i.Id == id);
+                                      .SingleOrDefaultAsync(i => i.Id == id)
+                                      .ConfigureAwait(false);
         }
 
         public async Task<Registro> AdicionarRegistro(Registro registro)
@@ -57,14 +59,14 @@ namespace Infra.Data.Repositories
             AdicionaEnvolvidoNoRegistro(registro);
             AdicionaBoeComplementadoNoRegistro(registro);
             AdicionaArquivoNoRegistro(registro);
-            await _db.Registros.AddAsync(registro);
-            await _db.SaveChangesAsync();
+            await _db.Registros.AddAsync(registro).ConfigureAwait(false);
+            await _db.SaveChangesAsync().ConfigureAwait(false);
             return registro;
         }
-        #region AdicionarEnvolvido
+        #region AdicionarRegistro
         private static void AdicionaEnvolvidoNoRegistro(Registro registro)
         {
-            registro.Envolvidos = (registro.Envolvidos.Select(envolvido => new Envolvido()
+            registro.Envolvidos = registro.Envolvidos.ConvertAll(envolvido => new Envolvido()
             {
                 RegistroId = registro.Id,
                 SequencialEnvolvido = envolvido.SequencialEnvolvido,
@@ -97,48 +99,52 @@ namespace Infra.Data.Repositories
                 Endereco = envolvido.Endereco,
                 Saude = envolvido.Saude
 
-            })).ToList();
+            });
         }
 
         private static void AdicionaBoeComplementadoNoRegistro(Registro registro)
         {
-            registro.BoeComplementados = (registro.BoeComplementados.Select(boeComplementado => new BoeComplementado()
+            registro.BoeComplementados = registro.BoeComplementados.ConvertAll(boeComplementado => new BoeComplementado()
             {
                 RegistroId = boeComplementado.RegistroId,
                 Boe = boeComplementado.Boe,
                 DataRegistro = boeComplementado.DataRegistro
 
-            })).ToList();
+            });
         }
 
         private static void AdicionaArquivoNoRegistro(Registro registro)
         {
-            registro.Arquivos = (registro.Arquivos.Select(arquivo => new Arquivo() 
-            { 
+            registro.Arquivos = registro.Arquivos.ConvertAll(arquivo => new Arquivo()
+            {
+                Id = arquivo.Id,
                 RegistroId = arquivo.RegistroId,
-                NomeArquivo = arquivo.NomeArquivo
-
-            })).ToList();
+                NomeArquivo = arquivo.NomeArquivo,
+                CriacaoArquivo = arquivo.CriacaoArquivo,
+                DadosArquivo = arquivo.DadosArquivo,
+                TipoArquivo = arquivo.TipoArquivo
+            });
         }
         #endregion
 
         public async Task<Registro> EditarRegistro(Registro registro)
         {
-            var verificaRegistro = await ObterRegistroPorID(registro.Id);
-            
-            if (verificaRegistro == null) { return null; }
+            var verificaRegistro = await ObterRegistroPorID(registro.Id).ConfigureAwait(false);
 
-            registro.DataLancamento = verificaRegistro.DataLancamento;
+            if (verificaRegistro != null)
+            {
+                registro.DataLancamento = verificaRegistro.DataLancamento;
 
-            _db.Entry(verificaRegistro).CurrentValues.SetValues(registro);
-            verificaRegistro.Fato = registro.Fato;
-            verificaRegistro.Inquerito = registro.Inquerito;
-            EditarEnvolvidoDoRegistro(verificaRegistro, registro);
-            EditarBoeComplementadoDoRegistro(verificaRegistro, registro);
-            EditarArquivoDoRegistro(verificaRegistro, registro);
-            await _db.SaveChangesAsync();
-            return verificaRegistro;
-
+                _db.Entry(verificaRegistro).CurrentValues.SetValues(registro);
+                verificaRegistro.Fato = registro.Fato;
+                verificaRegistro.Inquerito = registro.Inquerito;
+                EditarEnvolvidoDoRegistro(verificaRegistro, registro);
+                EditarBoeComplementadoDoRegistro(verificaRegistro, registro);
+                EditarArquivoDoRegistro(verificaRegistro, registro);
+                await _db.SaveChangesAsync().ConfigureAwait(false);
+                return verificaRegistro;
+            }
+            return null;
         }
         #region EditarRegistro
         private static void EditarEnvolvidoDoRegistro(Registro verificaRegistro, Registro registro)
@@ -173,13 +179,15 @@ namespace Infra.Data.Repositories
 
         public async Task<Registro> ExcluirRegistro(int id)
         {
-            var verificaRegistro = await _db.Registros.FindAsync(id);
+            var verificaRegistro = await _db.Registros.FindAsync(id).ConfigureAwait(false);
 
-            if(verificaRegistro == null) { return null; }
-
-            var registroExcluido = _db.Registros.Remove(verificaRegistro);
-            await _db.SaveChangesAsync();
-            return registroExcluido.Entity;
+            if (verificaRegistro != null)
+            {
+                var registroExcluido = _db.Registros.Remove(verificaRegistro);
+                await _db.SaveChangesAsync().ConfigureAwait(false);
+                return registroExcluido.Entity;
+            }
+            return null;
         }
     }
 }

@@ -71,7 +71,7 @@ namespace APISistemaHomicidio.Controllers.v1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UploadArquivo(int registroId, IFormFile novoArquivo)
         {
-            if(novoArquivo != null & novoArquivo.Length > 0)
+            if(novoArquivo?.Length > 0)
             {
                 var nomeArquivo = Path.GetFileName(novoArquivo.FileName);
                 var extensaoArquivo = Path.GetExtension(nomeArquivo);
@@ -89,7 +89,7 @@ namespace APISistemaHomicidio.Controllers.v1
                 novoArquivo.CopyTo(target);
                 objArquivo.DadosArquivo = target.ToArray();
 
-                await _arquivoService.UploadArquivo(objArquivo);
+                await _arquivoService.UploadArquivo(objArquivo).ConfigureAwait(false);
                 return CreatedAtAction(nameof(UploadArquivo), new { registroId }, novoArquivo.FileName);
             }
             return BadRequest("Nenhum arquivo foi carregado!");
