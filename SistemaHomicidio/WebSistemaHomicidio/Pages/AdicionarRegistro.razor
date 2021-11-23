@@ -50,9 +50,7 @@
                         </MudItem>
                         <!--Status do Registro-->
                         <MudItem xs="12" sm="6" md="1">
-                            <MudChipSet @bind-Value="novoRegistro.StatusRegistro" Filter="true">
-                                <MudChip Variant="Variant.Text" Color="Color.Secondary" SelectedColor="Color.Primary">Status</MudChip>
-                            </MudChipSet>
+                            <MudSwitch @bind-Checked="novoRegistro.StatusRegistro" Color="Color.Primary" Class="status"/>
                         </MudItem>
                         <!--BOEComplementado-->
                         <MudItem xs="12" sm="6">
@@ -564,7 +562,7 @@
                             <MudGrid>
                                 <MudItem xs="12">
                                     <InputFile id="upload" OnChange="UploadArquivos" multiple hidden/>
-                                    <MudTable Items="@listaArquivos" Dense="true" Hover="true" Striped="true">
+                                    <MudTable Items="@listaArquivos" Dense="true" Hover="true" Striped="true" Height="400px">
                                         <ToolBarContent>
                                             <MudText Typo="Typo.subtitle2">Lista de Arquivos</MudText>
                                             <MudSpacer />
@@ -605,11 +603,8 @@
                                             </MudTd>
                                             <MudTd DataLabel="Adicionado em">@listaArquivos.CriacaoArquivo.Value.ToString("g")</MudTd>
                                             <MudTd DataLabel="Ações">
-                                                <MudTooltip Text="Visualizar" Arrow="true" Placement="Placement.Left">
-                                                    <MudIconButton Icon="@Icons.Filled.Visibility" Color="Color.Success" />
-                                                </MudTooltip>
                                                 <MudTooltip Text="Baixar" Arrow="true" Placement="Placement.Top">
-                                                    <MudIconButton Icon="@Icons.Filled.FileDownload" Color="Color.Primary" />
+                                                    <MudIconButton @onclick="(()=> BaixarArquivo(listaArquivos))" Icon="@Icons.Filled.FileDownload" Color="Color.Primary" />
                                                 </MudTooltip>
                                                 <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
                                                     <MudIconButton @onclick="(()=> ExcluirArquivo(listaArquivos))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
@@ -840,11 +835,9 @@
     }
 
     //Upload Arquivos
-    string _dragEnterStyle;
-
     void UploadArquivos(InputFileChangeEventArgs e)
     {
-        foreach (var arquivo in e.GetMultipleFiles(maximumFileCount: 5))
+        foreach (var arquivo in e.GetMultipleFiles())
         {
             var fileContent = new StreamContent(arquivo.OpenReadStream(maxAllowedSize: 2097152));
 
@@ -858,6 +851,17 @@
                 DadosArquivo = new byte[arquivo.Size]
             });
         }
+    }
+
+    private async Task BaixarArquivo(NovoArquivo arquivo)
+    {
+        var fileStream = new MemoryStream(arquivo.DadosArquivo);
+
+        var fileName = arquivo.NomeArquivo;
+
+        using var streamRef = new DotNetStreamReference(stream: fileStream);
+
+        await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
     }
 
     void ExcluirArquivo(NovoArquivo arquivo) => listaArquivos.Remove(arquivo);
@@ -880,24 +884,4 @@
     .chipTransparente {
         background-color: transparent; 
     }
-
-    .mud-chip-text.mud-chip-color-secondary {
-        color: #2eae8e;
-        background-color: #1de9b63b;
-    }
-
-    .mud-chip-filled.mud-chip-color-primary {
-        background-color: #2979FF;
-    }
-
-    .mud-chip-text.mud-chip-color-secondary:hover:not(.mud-disabled), .mud-chip-text.mud-chip-color-secondary:focus-visible:not(.mud-disabled) {
-        color: #ffffff;
-        background-color: #2979FF;
-    }
-
-    .mud-chip-filled.mud-chip-color-primary:hover:not(.mud-disabled), .mud-chip-filled.mud-chip-color-primary:focus-visible:not(.mud-disabled) {
-        color: #2eae8e;
-        background-color: #1de9b63b;
-    }
-}
 </style>

@@ -275,6 +275,18 @@
                             <MudItem xs="12" sm="6" md="6">
                                 <MudAutocomplete T="string" Label="Tipos de Objetos" Variant="Variant.Outlined" @bind-Value="@novoEnvolvido.NomeInstrumentoUtilizado"
                                                     SearchFunc="@TiposDeObjetos" />
+                            </MudItem>
+                            <!--Motivação Inicial-->
+                            <MudItem xs="12" sm="6" md="6">
+                                <MudAutocomplete T="string" Label="Motivação Inicial" Variant="Variant.Outlined"
+                                                 @bind-Value="@novoEnvolvido.MotivacaoInicial"
+                                                 SearchFunc="@MotivacaoCrime" />
+                            </MudItem>
+                            <!--Motivação Com o Fim do Inquérito Policial-->
+                            <MudItem xs="12" sm="6" md="6">
+                                <MudAutocomplete T="string" Label="Motivação Final" Variant="Variant.Outlined"
+                                                 @bind-Value="@novoEnvolvido.MotivacaoFinal"
+                                                 SearchFunc="@MotivacaoCrime" />
                             </MudItem>      
                         </MudGrid>
                     </MudPaper>
@@ -490,18 +502,6 @@
                                     <MudSelectItem Value="@("HOSPITAL PORTUGUES")" />
                                     <MudSelectItem Value="@("HOSPITAL MIGUEL ARRAES")" />
                                 </MudSelect>
-                            </MudItem>
-                            <!--Motivação Inicial-->
-                            <MudItem xs="12" sm="6" md="6">
-                                <MudAutocomplete T="string" Label="Motivação Inicial" Variant="Variant.Outlined"
-                                                 @bind-Value="@novoEnvolvido.Saude.MotivacaoInicial"
-                                                 SearchFunc="@MotivacaoCrime" />
-                            </MudItem>
-                            <!--Motivação Com o Fim do Inquérito Policial-->
-                            <MudItem xs="12" sm="6" md="6">
-                                <MudAutocomplete T="string" Label="Motivação Final" Variant="Variant.Outlined"
-                                                 @bind-Value="@novoEnvolvido.Saude.MotivacaoFinal"
-                                                 SearchFunc="@MotivacaoCrime" />
                             </MudItem>
                             <!--Situação da Vítima no Acidente (Adicionar a entidade)-->
                             <MudItem xs="12" sm="6" md="4">

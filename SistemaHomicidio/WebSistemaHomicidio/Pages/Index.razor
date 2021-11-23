@@ -206,18 +206,16 @@
         }
     }
 
-    #region Gráfico1-2
+    //Gráfico1-2
     public List<ChartSeries> Series = new List<ChartSeries>()
-{
+    {
         new ChartSeries() { Name = "Tentativa", Data = new double[] { 40, 20, 25, 27, 46, 60, 48, 80, 15 } },
         new ChartSeries() { Name = "Consumado", Data = new double[] { 19, 24, 35, 13, 28, 15, 13, 16, 31 } },
     };
+    
     public string[] XAxisLabels = { "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set" };
-    #endregion
-
-    #region Gráfico3
-    int dataSize = 4;
+    
+    // Gráfico3;
     public double[] data = { 50, 25 };
     public string[] labels = { "Consistido", "Não Consistido" };
-    #endregion
 }

@@ -36,6 +36,8 @@ namespace Domain.Entities
         public string InstrumentoUtilizado { get; set; }
         public string NomeInstrumentoUtilizado { get; set; }
         public string Flagrante { get; set; }
+        public string MotivacaoInicial { get; set; }
+        public string MotivacaoFinal { get; set; }
 
         //Navegação
         public EnvolvidoCriminal Criminal { get; set; }

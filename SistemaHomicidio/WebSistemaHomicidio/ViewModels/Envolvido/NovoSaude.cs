@@ -23,8 +23,6 @@ namespace WebSistemaHomicidio.ViewModels.Envolvido
         public string IML { get; set; }
         public string NumeroDeclaracaoObito { get; set; }
         public string GDL { get; set; }
-        public string MotivacaoInicial { get; set; }
-        public string MotivacaoFinal { get; set; }
         public string SituacaoVitimaAcidente { get; set; }
         public string TransporteVitima { get; set; }
         public string TransporteAutor { get; set; }
