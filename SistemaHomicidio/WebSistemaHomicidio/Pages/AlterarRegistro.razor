@@ -553,7 +553,7 @@
                             </MudPaper>
                         </MudText>
                     </MudTabPanel>
-                    <!-- Arquivos-->
+                    <!--Arquivos-->
                     <MudTabPanel Text="Arquivos">
                         <MudText>
                             <MudPaper @ondragenter="@(()=>_dragEnterStyle="drag-enter")"
@@ -561,33 +561,38 @@
                                       @ondragend="@(()=>_dragEnterStyle=null)"
                                       Class=@("drag-drop-zone "+ _dragEnterStyle)>
 
-                                <InputFile OnChange="OnInputFileChanged" multiple class="drag-drop-input" />
+                                <InputFile OnChange="UploadArquivos" multiple class="drag-drop-input" />
 
-                                @if (fileNames.Count() == 0)
+                                @if (listaArquivos.Count() == 0)
                                 {
                                     <MudText Typo="Typo.h3">Arraste e solte ou clique aqui!</MudText>
                                 }
                                 else
                                 {
                                     <MudList Style="padding:2em;width:100%;" Dense="true">
-                                        @foreach (var file in fileNames)
+                                        @foreach (var arquivo in listaArquivos)
                                         {
-                                            <MudListItem @key="@file">
+                                            <MudListItem @key="@arquivo">
                                                 <MudChip Color="Color.Dark"
                                                          Style="width:60px; overflow:hidden;"
-                                                         Text="@(file.Split(".").Last())" />
-                                                @file
+                                                         OnClose="ExcluirArquivo"
+                                                         Label="true"
+                                                         Text="@arquivo.TipoArquivo"/>
+                                                @arquivo.NomeArquivo
                                             </MudListItem>}
                                     </MudList>
                                 }
                             </MudPaper>
-
+                            <!--Botão-->
                             <MudGrid Justify="Justify.Center" Spacing="4" Class="py-4">
                                 <MudItem>
-                                    <MudButton OnClick="Upload" Disabled="@(!fileNames.Any())" Color="Color.Primary" Variant="Variant.Filled">Carregar</MudButton>
-                                </MudItem>
-                                <MudItem>
-                                    <MudButton OnClick="@fileNames.Clear" Disabled="@(!fileNames.Any())" Color="Color.Error" Variant="Variant.Filled">Limpar</MudButton>
+                                    <MudButton OnClick="@listaArquivos.Clear" 
+                                               Disabled="@(!listaArquivos.Any())" 
+                                               Color="Color.Error" 
+                                               Variant="Variant.Filled"
+                                               FullWidth="true">
+                                               Excluir Tudo
+                                    </MudButton>
                                 </MudItem>
                             </MudGrid>
                         </MudText>
@@ -613,6 +618,8 @@
     public List<NovoEnvolvido> listaEnvolvidos { get; set; } = new List<NovoEnvolvido> { };
 
     public List<NovoBoe> listaBOEComplementados { get; set; } = new List<NovoBoe> { };
+
+    public List<NovoArquivo> listaArquivos { get; set; } = new List<NovoArquivo> { };
 
     public EditarRegistro editarRegistro = new EditarRegistro
     {
@@ -725,7 +732,7 @@
         listaEnvolvidos.Remove(envolvido);
         snackbar.Add("Envolvido removido!", Severity.Warning);
     }
-    
+
     async Task ExibirBOEComplementado()
     {
         var formModal = Modal.Show<BOEComplementado>("Adicionar BOE Complementado");
@@ -767,7 +774,7 @@
         listaBOEComplementados.Remove(boe);
         snackbar.Add("BOE Complementado removido!", Severity.Warning);
     }
-    
+
     private string[] motivacaoCrime =
     {
         "A DEFINIR", "ACERTO DE CONTAS", "BALA PERDIDA", "BRIGA (INTRA)FAMILIAR CONTRA MULHER",
@@ -820,7 +827,7 @@
             return municipios;
         return municipios.Where(x => x.Municipio.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
-    
+
     private string[] localFato =
     {
         "ACADEMIA", "ACUDE", "AERONAVE", "AEROPORTO",
@@ -866,18 +873,31 @@
         return localFato.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
+    //Upload Arquivos
     string _dragEnterStyle;
-    IList<string> fileNames = new List<string>();
-    void OnInputFileChanged(InputFileChangeEventArgs e)
+
+    void UploadArquivos(InputFileChangeEventArgs e)
     {
-        var files = e.GetMultipleFiles();
-        fileNames = files.Select(f => f.Name).ToList();
+        foreach (var arquivo in e.GetMultipleFiles(maximumFileCount: 5))
+        {
+            var fileContent = new StreamContent(arquivo.OpenReadStream(maxAllowedSize: 2097152));
+
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(arquivo.ContentType);
+
+            listaArquivos.Add( new NovoArquivo()
+            {
+                NomeArquivo = arquivo.Name,
+                TipoArquivo = (arquivo.Name).Split(".").Last(),
+                CriacaoArquivo = DateTime.Now,
+                DadosArquivo = new byte[arquivo.Size]
+            });
+        }
     }
-    void Upload()
+
+    void ExcluirArquivo(MudChip chip)
     {
-        //Upload the files here
-        snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
-        snackbar.Add("TODO: Upload your files!", Severity.Normal);
+        var arquivo = listaArquivos.SingleOrDefault(x => x.NomeArquivo == chip.Text);
+        listaArquivos.Remove(arquivo);
     }
 }
 
