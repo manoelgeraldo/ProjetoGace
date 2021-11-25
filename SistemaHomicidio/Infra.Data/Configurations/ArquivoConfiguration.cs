@@ -13,7 +13,7 @@ namespace Infra.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Arquivo> builder)
         {
-            
+            builder.Property(i => i.Id).ValueGeneratedOnAdd(); ;
         }
     }
 }

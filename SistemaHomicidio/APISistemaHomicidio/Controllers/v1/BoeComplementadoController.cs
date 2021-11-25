@@ -31,7 +31,7 @@ namespace APISistemaHomicidio.Controllers.v1
         {
             var ExibirTodosBoeComplementados = await _boeComplementadoService.ExibirTodosBoeComplementado();
 
-            if (ExibirTodosBoeComplementados.Any())
+            if (ExibirTodosBoeComplementados.Count > 0)
             {
                 return Ok(ExibirTodosBoeComplementados);
             }
@@ -70,12 +70,13 @@ namespace APISistemaHomicidio.Controllers.v1
         {
             var boeComplementado = await _boeComplementadoService.ObterBoeComplementadoPorRegistroID(id);
 
-            if (boeComplementado.Id == 0)
+            if (boeComplementado.Count > 0)
             {
-                return NotFound();
+                return Ok(boeComplementado);
             }
 
-            return Ok(boeComplementado);
+            return NotFound();
+
         }
 
         /// <summary>
@@ -88,8 +89,7 @@ namespace APISistemaHomicidio.Controllers.v1
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Post(NovoBoe novoBoeComplementado)
         {
-            ExibirBoeComplementado boeComplementadoInserido;
-            boeComplementadoInserido = await _boeComplementadoService.AdicionarBoeComplementado(novoBoeComplementado);
+            ExibirBoeComplementado boeComplementadoInserido = await _boeComplementadoService.AdicionarBoeComplementado(novoBoeComplementado);
             return CreatedAtAction(nameof(Get), new { id = boeComplementadoInserido.Id }, boeComplementadoInserido);
         }
 

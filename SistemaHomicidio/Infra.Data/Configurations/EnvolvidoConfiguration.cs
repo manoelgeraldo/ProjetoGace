@@ -13,6 +13,7 @@ namespace Infra.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Envolvido> builder)
         {
+            builder.Property(i => i.Id);
             builder.Property(d => d.DataNascimento).HasColumnType("date");
         }
     }

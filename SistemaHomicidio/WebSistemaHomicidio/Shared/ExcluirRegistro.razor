@@ -8,7 +8,7 @@
         </MudItem>
         <!--Botão Salvar-->
         <MudItem xs="6">
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary" FullWidth="true">Cancelar</MudButton>
+            <MudButton OnClick="Cancelar" Variant="Variant.Filled" Color="Color.Secondary" FullWidth="true">Cancelar</MudButton>
         </MudItem>
         <MudItem xs="6">
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Excluir</MudButton>
@@ -19,7 +19,9 @@
 @code{
     [Parameter] public int Id { get; set; }
 
-    async Task Excluir()
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+
+    private async Task Excluir()
     {
         var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
 
@@ -29,12 +31,13 @@
 
         if (response.IsSuccessStatusCode)
         {
-            snackbar.Add("Registro Excluido!", Severity.Success);
-            StateHasChanged();
+            await ModalInstance.CloseAsync();
         }
         else
         {
             snackbar.Add("O Registro não foi excluído", Severity.Error);
         }
     }
+
+    private void Cancelar() => ModalInstance.CancelAsync();
 }

@@ -834,21 +834,23 @@
         return localFato.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    //Upload Arquivos
-    void UploadArquivos(InputFileChangeEventArgs e)
+    //Arquivos
+    private async Task UploadArquivos(InputFileChangeEventArgs e)
     {
         foreach (var arquivo in e.GetMultipleFiles())
         {
-            var fileContent = new StreamContent(arquivo.OpenReadStream(maxAllowedSize: 2097152));
+            var fileContent = arquivo.OpenReadStream(maxAllowedSize: 2097152);
 
-            fileContent.Headers.ContentType = new MediaTypeHeaderValue(arquivo.ContentType);
+            using var target = new MemoryStream();
+            await fileContent.CopyToAsync(target);
+            var dadosArquivo = target.ToArray();
 
             listaArquivos.Add( new NovoArquivo()
             {
                 NomeArquivo = arquivo.Name,
                 TipoArquivo = (arquivo.Name).Split(".").Last(),
                 CriacaoArquivo = DateTime.Now,
-                DadosArquivo = new byte[arquivo.Size]
+                DadosArquivo = dadosArquivo
             });
         }
     }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Data.Migrations
 {
     [DbContext(typeof(DataBase))]
-    [Migration("20211118203341_Initial")]
+    [Migration("20211125190715_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,11 +56,11 @@ namespace Infra.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.BoeComplementado", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Boe")
                         .IsRequired()
@@ -125,6 +125,12 @@ namespace Infra.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InstrumentoUtilizado")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MotivacaoFinal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MotivacaoInicial")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NomeEnvolvido")
@@ -277,12 +283,6 @@ namespace Infra.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocalMorte")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MotivacaoFinal")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MotivacaoInicial")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIC")

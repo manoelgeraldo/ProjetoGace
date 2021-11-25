@@ -108,26 +108,17 @@
 
     private async Task<TableData<ExibirRegistro>> ServerReload(TableState state)
     {
-        //Busca o token no localStorage
         var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
-
-        //Cria um objeto request
         var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/v1/Registro/lista-de-registros");
-
-        //Adiciona authorization no header
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
-
-        //Envia o request
         var response = await httpClient.SendAsync(request);
-
-        //Converte o http response
+        
         IEnumerable<ExibirRegistro> data = JsonSerializer.Deserialize<IEnumerable<ExibirRegistro>>
         (
             await response.Content.ReadAsStringAsync(),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
         );
 
-        //Busca os itens
         data = data.Where(registro =>
         {
             if (string.IsNullOrWhiteSpace(procurar))
@@ -145,10 +136,8 @@
             return false;
         }).ToArray();
 
-        //Total de itens
         totalRegistros = data.Count();
 
-        //Ordena os itens
         switch (state.SortLabel)
         {
             case "id":
@@ -174,7 +163,6 @@
                 break;
         }
 
-        //Configura a quantidade de página;
         pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
         return new TableData<ExibirRegistro>() { TotalItems = totalRegistros, Items = pagedData };
 
@@ -198,11 +186,12 @@
 
         if (result.Cancelled)
         {
-            snackbar.Add("Registro não foi Excluído!", Severity.Info);
+            snackbar.Add("Registro não foi excluído!", Severity.Info);
         }
         else
         {
             StateHasChanged();
+            snackbar.Add("Registro excluído!", Severity.Success);
         }
     }
 

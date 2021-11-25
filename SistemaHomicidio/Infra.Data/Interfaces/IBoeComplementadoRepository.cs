@@ -14,6 +14,6 @@ namespace Infra.Data.Interfaces
         Task<BoeComplementado> AdicionarBoeComplementado(BoeComplementado boeComplementado);
         Task<BoeComplementado> EditarBoeComplementado(BoeComplementado boeComplementado);
         Task<BoeComplementado> ExcluirBoeComplementado(int id);
-        Task<BoeComplementado> ObterBoeComplementadoPeloRegistroId(int id);
+        Task<List<BoeComplementado>> ObterBoeComplementadoPeloRegistroId(int id);
     }
 }

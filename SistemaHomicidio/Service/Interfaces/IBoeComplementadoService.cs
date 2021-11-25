@@ -14,6 +14,6 @@ namespace Service.Interfaces
         Task<ExibirBoeComplementado> AdicionarBoeComplementado(NovoBoe NovoBoeComplementado);
         Task<ExibirBoeComplementado> EditarBoeComplementado(AlterarBoe AlteraBoeComplementado);
         Task<ExibirBoeComplementado> ExcluirBoeComplementado(int id);
-        Task<ExibirBoeComplementado> ObterBoeComplementadoPorRegistroID(int id);
+        Task<List<ExibirBoeComplementado>> ObterBoeComplementadoPorRegistroID(int id);
     }
 }

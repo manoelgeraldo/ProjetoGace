@@ -146,7 +146,9 @@ namespace Infra.Data.Migrations
                     RelacaoIntraFamiliarVitimaAutor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InstrumentoUtilizado = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NomeInstrumentoUtilizado = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Flagrante = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Flagrante = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MotivacaoInicial = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MotivacaoFinal = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -332,8 +334,6 @@ namespace Infra.Data.Migrations
                     IML = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumeroDeclaracaoObito = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GDL = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MotivacaoInicial = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MotivacaoFinal = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SituacaoVitimaAcidente = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TransporteVitima = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TransporteAutor = table.Column<string>(type: "nvarchar(max)", nullable: true)

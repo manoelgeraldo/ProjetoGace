@@ -47,8 +47,9 @@
                             </MudSelect>
                             <ValidationMessage For="@(()=> editarRegistro.Intencionalidade)" />
                         </MudItem>
+                        <!--Status do Registro-->
                         <MudItem xs="12" sm="6" md="1">
-                            <MudSwitch @bind-Checked="editarRegistro.StatusRegistro" Color="Color.Primary" />
+                            <MudSwitch @bind-Checked="editarRegistro.StatusRegistro" Color="Color.Primary" Class="status"/>
                         </MudItem>
                         <!--BOEComplementado-->
                         <MudItem xs="12" sm="6">
@@ -57,8 +58,8 @@
                                     <ToolBarContent>
                                         <MudText Typo="Typo.subtitle2">BOE Complementados</MudText>
                                         <MudSpacer />
-                                        <MudTooltip Text="Adicionar">
-                                            <MudFab @onclick="ExibirBOEComplementado" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Medium" Class="ma-2" />
+                                        <MudTooltip Text="Adicionar" Arrow="true" Placement="Placement.Left">
+                                            <MudFab @onclick="AdicionarBOEComplementado" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Medium" Class="ma-2" />
                                         </MudTooltip>
                                     </ToolBarContent>
                                     <HeaderContent>
@@ -70,10 +71,10 @@
                                         <MudTd DataLabel="Nº BOE">@listaBOEComplementados.Boe</MudTd>
                                         <MudTd DataLabel="Data Registro">@listaBOEComplementados.DataRegistro.Value.ToString("d")</MudTd>
                                         <MudTd DataLabel="Ações">
-                                            <MudTooltip Text="Alterar">
+                                            <MudTooltip Text="Alterar" Arrow="true" Placement="Placement.Left">
                                                 <MudIconButton @onclick="(()=> EditarBOEComplementado(listaBOEComplementados))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
                                             </MudTooltip>
-                                            <MudTooltip Text="Excluir">
+                                            <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
                                                 <MudIconButton @onclick="(()=> ExcluirBOEComplementado(listaBOEComplementados))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
                                             </MudTooltip>
                                         </MudTd>
@@ -323,7 +324,7 @@
                                         <ToolBarContent>
                                             <MudText Typo="Typo.subtitle2">Lista de Envolvidos</MudText>
                                             <MudSpacer />
-                                            <MudTooltip Text="Adicionar">
+                                            <MudTooltip Text="Adicionar" Arrow="true" Placement="Placement.Left">
                                                 <MudFab @onclick="ExibirEnvolvido" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Medium" Class="ma-2" />
                                             </MudTooltip>
                                         </ToolBarContent>
@@ -340,10 +341,10 @@
                                             <MudTd DataLabel="Nome">@listaEnvolvidos.NomeEnvolvido</MudTd>
                                             <MudTd DataLabel="Data de Nascimento">@listaEnvolvidos.DataNascimento.Value.ToString("d")</MudTd>
                                             <MudTd DataLabel="Ações">
-                                                <MudTooltip Text="Alterar">
+                                                <MudTooltip Text="Alterar" Arrow="true" Placement="Placement.Left">
                                                     <MudIconButton OnClick="(()=> EditarEnvolvido(listaEnvolvidos))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" aria-label="editar"></MudIconButton>
                                                 </MudTooltip>
-                                                <MudTooltip Text="Excluir">
+                                                <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
                                                     <MudIconButton OnClick="(()=> ExcluirEnvolvido(listaEnvolvidos))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" aria-label="delete"></MudIconButton>
                                                 </MudTooltip>
                                             </MudTd>
@@ -556,43 +557,59 @@
                     <!--Arquivos-->
                     <MudTabPanel Text="Arquivos">
                         <MudText>
-                            <MudPaper @ondragenter="@(()=>_dragEnterStyle="drag-enter")"
-                                      @ondragleave="@(()=>_dragEnterStyle=null)"
-                                      @ondragend="@(()=>_dragEnterStyle=null)"
-                                      Class=@("drag-drop-zone "+ _dragEnterStyle)>
-
-                                <InputFile OnChange="UploadArquivos" multiple class="drag-drop-input" />
-
-                                @if (listaArquivos.Count() == 0)
-                                {
-                                    <MudText Typo="Typo.h3">Arraste e solte ou clique aqui!</MudText>
-                                }
-                                else
-                                {
-                                    <MudList Style="padding:2em;width:100%;" Dense="true">
-                                        @foreach (var arquivo in listaArquivos)
-                                        {
-                                            <MudListItem @key="@arquivo">
-                                                <MudChip Color="Color.Dark"
-                                                         Style="width:60px; overflow:hidden;"
-                                                         OnClose="ExcluirArquivo"
-                                                         Label="true"
-                                                         Text="@arquivo.TipoArquivo"/>
-                                                @arquivo.NomeArquivo
-                                            </MudListItem>}
-                                    </MudList>
-                                }
-                            </MudPaper>
-                            <!--Botão-->
-                            <MudGrid Justify="Justify.Center" Spacing="4" Class="py-4">
-                                <MudItem>
-                                    <MudButton OnClick="@listaArquivos.Clear" 
-                                               Disabled="@(!listaArquivos.Any())" 
-                                               Color="Color.Error" 
-                                               Variant="Variant.Filled"
-                                               FullWidth="true">
-                                               Excluir Tudo
-                                    </MudButton>
+                            <MudGrid>
+                                <MudItem xs="12">
+                                    <InputFile id="upload" OnChange="UploadArquivos" multiple hidden/>
+                                    <MudTable Items="@listaArquivos" Dense="true" Hover="true" Striped="true" Height="400px">
+                                        <ToolBarContent>
+                                            <MudText Typo="Typo.subtitle2">Lista de Arquivos</MudText>
+                                            <MudSpacer />
+                                            <MudTooltip Text="Adicionar" Arrow="true" Placement="Placement.Left">
+                                                <MudIconButton for="upload" HtmlTag="label" Color="Color.Primary" Icon="@Icons.Material.Filled.UploadFile" Size="Size.Large" Class="ma-2" />
+                                            </MudTooltip>
+                                            <MudTooltip Text="Limpar Tudo" Arrow="true" Placement="Placement.Right">
+                                                <MudIconButton OnClick="@listaArquivos.Clear" Disabled="@(!listaArquivos.Any())" Icon="@Icons.Filled.ClearAll" Color="Color.Error" Size="Size.Large" Class="ma-2" />
+                                            </MudTooltip>
+                                        </ToolBarContent>
+                                        <HeaderContent>
+                                            <MudTh>Nome do Arquivo</MudTh>
+                                            <MudTh>Tipo</MudTh>
+                                            <MudTh>Adicionado em</MudTh>
+                                            <MudTh>Ações</MudTh>
+                                        </HeaderContent>
+                                        <RowTemplate Context="listaArquivos">
+                                            <MudTd DataLabel="Nome do Arquivo">@listaArquivos.NomeArquivo</MudTd>
+                                            <MudTd DataLabel="Tipo">
+                                                @switch(@listaArquivos.TipoArquivo)
+                                                {
+                                                    case "pdf":
+                                                        <MudChip Icon="@Icons.Custom.FileFormats.FilePdf" Class="chipTransparente" IconColor="Color.Error" IconSize="Size.Large"/>
+                                                        break;
+                                                    case "docx" or "doc":
+                                                        <MudChip Icon="@Icons.Custom.FileFormats.FileWord" Class="chipTransparente" IconColor="Color.Info" Size="Size.Large"/>
+                                                        break;
+                                                    case "xlsx" or "xls":
+                                                        <MudChip Icon="@Icons.Custom.FileFormats.FileExcel" Class="chipTransparente" IconColor="Color.Tertiary" Size="Size.Large"/>
+                                                        break;
+                                                    case "png" or "jpg" or "jpeg":
+                                                        <MudChip Icon="@Icons.Custom.FileFormats.FileImage" Class="chipTransparente" IconColor="Color.Primary" Size="Size.Large"/>
+                                                        break;
+                                                    default:
+                                                        <MudChip Icon="@Icons.Custom.FileFormats.FileDocument" Class="chipTransparente" IconColor="Color.Default" Size="Size.Large"/>
+                                                        break;
+                                                }
+                                            </MudTd>
+                                            <MudTd DataLabel="Adicionado em">@listaArquivos.CriacaoArquivo.Value.ToString("g")</MudTd>
+                                            <MudTd DataLabel="Ações">
+                                                <MudTooltip Text="Baixar" Arrow="true" Placement="Placement.Top">
+                                                    <MudIconButton @onclick="(()=> BaixarArquivo(listaArquivos))" Icon="@Icons.Filled.FileDownload" Color="Color.Primary" />
+                                                </MudTooltip>
+                                                <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
+                                                    <MudIconButton @onclick="(()=> ExcluirArquivo(listaArquivos))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                                                </MudTooltip>
+                                            </MudTd>
+                                        </RowTemplate>
+                                    </MudTable>
                                 </MudItem>
                             </MudGrid>
                         </MudText>
@@ -659,6 +676,7 @@
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
         );
 
+        listaArquivos = editarRegistro.Arquivos;
         listaBOEComplementados = editarRegistro.BoeComplementados;
         listaEnvolvidos = editarRegistro.Envolvidos;
     }
@@ -667,6 +685,7 @@
     {
         editarRegistro.Envolvidos = listaEnvolvidos;
         editarRegistro.BoeComplementados = listaBOEComplementados;
+        editarRegistro.Arquivos = listaArquivos;
 
         var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
 
@@ -702,7 +721,12 @@
         }
         else
         {
-            listaEnvolvidos.Add((NovoEnvolvido)(Convert.ChangeType(result.Data, typeof(NovoEnvolvido))));
+            var envolvido = (NovoEnvolvido)(Convert.ChangeType(result.Data, typeof(NovoEnvolvido)));
+
+            envolvido.RegistroId = Id;
+
+            listaEnvolvidos.Add(envolvido);
+
             StateHasChanged();
             snackbar.Add("Envolvido adicionado!", Severity.Success);
         }
@@ -733,7 +757,7 @@
         snackbar.Add("Envolvido removido!", Severity.Warning);
     }
 
-    async Task ExibirBOEComplementado()
+    async Task AdicionarBOEComplementado()
     {
         var formModal = Modal.Show<BOEComplementado>("Adicionar BOE Complementado");
         var result = await formModal.Result;
@@ -744,10 +768,35 @@
         }
         else
         {
-            listaBOEComplementados.Add((NovoBoe)(Convert.ChangeType(result.Data, typeof(NovoBoe))));
+            var boeComplementado = (NovoBoe)(Convert.ChangeType(result.Data, typeof(NovoBoe)));
+
+            boeComplementado.RegistroId = Id;
+
+            //boeComplementado = await AdicionarNovoBOEComplentado(boeComplementado);
+
+            listaBOEComplementados.Add(boeComplementado);
+
             StateHasChanged();
+
             snackbar.Add("BOE Complementado adicionado!", Severity.Success);
         }
+    }
+
+    private async Task<NovoBoe> AdicionarNovoBOEComplentado(NovoBoe boeComplementado)
+    {
+        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44343/api/v1/BoeComplementado/novo-boe-complementado");
+        request.Content = new StringContent(JsonSerializer.Serialize(boeComplementado, new JsonSerializerOptions { Converters = { new TimeSpanJsonConverter() } }), Encoding.UTF8, "application/json");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
+        var response = await httpClient.SendAsync(request);
+
+        var novoBOEComplementado = JsonSerializer.Deserialize<NovoBoe>
+        (
+            await response.Content.ReadAsStringAsync(),
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+        );
+
+        return novoBOEComplementado;
     }
 
     async Task EditarBOEComplementado(NovoBoe novoBOEComplementado)
@@ -873,32 +922,40 @@
         return localFato.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    //Upload Arquivos
-    string _dragEnterStyle;
-
-    void UploadArquivos(InputFileChangeEventArgs e)
+    //Arquivos
+    private async Task UploadArquivos(InputFileChangeEventArgs e)
     {
-        foreach (var arquivo in e.GetMultipleFiles(maximumFileCount: 5))
+        foreach (var arquivo in e.GetMultipleFiles())
         {
-            var fileContent = new StreamContent(arquivo.OpenReadStream(maxAllowedSize: 2097152));
+            var fileContent = arquivo.OpenReadStream(maxAllowedSize: 2097152);
 
-            fileContent.Headers.ContentType = new MediaTypeHeaderValue(arquivo.ContentType);
+            using var target = new MemoryStream();
+            await fileContent.CopyToAsync(target);
+            var dadosArquivo = target.ToArray();
 
             listaArquivos.Add( new NovoArquivo()
             {
+                RegistroId = Id,
                 NomeArquivo = arquivo.Name,
                 TipoArquivo = (arquivo.Name).Split(".").Last(),
                 CriacaoArquivo = DateTime.Now,
-                DadosArquivo = new byte[arquivo.Size]
+                DadosArquivo = dadosArquivo
             });
         }
     }
 
-    void ExcluirArquivo(MudChip chip)
+    private async Task BaixarArquivo(NovoArquivo arquivo)
     {
-        var arquivo = listaArquivos.SingleOrDefault(x => x.NomeArquivo == chip.Text);
-        listaArquivos.Remove(arquivo);
+        var fileStream = new MemoryStream(arquivo.DadosArquivo);
+
+        var fileName = arquivo.NomeArquivo;
+
+        using var streamRef = new DotNetStreamReference(stream: fileStream);
+
+        await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
     }
+
+    void ExcluirArquivo(NovoArquivo arquivo) => listaArquivos.Remove(arquivo);
 }
 
 <style>
@@ -909,32 +966,6 @@
     .tabelaBOEcomplementado {
         height: 160px;
         overflow: scroll;
-    }
-
-    .drag-drop-zone {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all .4s;
-        min-height: 400px;
-    }
-
-    .drag-drop-input {
-        position: absolute;
-        width: 100%;
-        height: 90%;
-        opacity: 0;
-        cursor: pointer;
-        z-index: 2;
-    }
-
-    .drag-enter {
-        box-shadow: var(--mud-elevation-10);
-    }
-
-    .list {
-        padding: 2em;
-        min-width: 100%;
     }
 
     .blazored-modal-header{

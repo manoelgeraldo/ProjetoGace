@@ -31,9 +31,9 @@ namespace Infra.Data.Repositories
             return await _db.BoeComplementados.SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<BoeComplementado> ObterBoeComplementadoPeloRegistroId(int id)
+        public async Task<List<BoeComplementado>> ObterBoeComplementadoPeloRegistroId(int id)
         {
-            return await _db.BoeComplementados.SingleOrDefaultAsync(x => x.RegistroId == id);
+            return await _db.BoeComplementados.Where(x => x.RegistroId == id).ToListAsync();
         }
 
         public async Task<BoeComplementado> AdicionarBoeComplementado(BoeComplementado boeComplementado)

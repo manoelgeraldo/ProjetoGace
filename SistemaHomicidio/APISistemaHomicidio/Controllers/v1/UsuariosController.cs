@@ -61,7 +61,7 @@ namespace APISistemaHomicidio.Controllers.v1
         /// Adiciona um novo usuário.
         /// </summary>
         [HttpPost]
-        [Authorize(Roles = "Gestor")]
+        //[Authorize(Roles = "Gestor")]
         [Route("novo-usuario")]
         public async Task<IActionResult> Post(NovoUsuario usuario)
         {

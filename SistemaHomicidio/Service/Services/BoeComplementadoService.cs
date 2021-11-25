@@ -54,10 +54,10 @@ namespace Service.Services
             return _mapper.Map<ExibirBoeComplementado>(boeComplementado);
         }
 
-        public async Task<ExibirBoeComplementado> ObterBoeComplementadoPorRegistroID(int id)
+        public async Task<List<ExibirBoeComplementado>> ObterBoeComplementadoPorRegistroID(int id)
         {
             var boeComplementado = await _boeComplementadoRepository.ObterBoeComplementadoPeloRegistroId(id);
-            return _mapper.Map<ExibirBoeComplementado>(boeComplementado);
+            return _mapper.Map<List<ExibirBoeComplementado>>(boeComplementado);
         }
     }
 }
