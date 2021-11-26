@@ -60,7 +60,7 @@
                                         <MudText Typo="Typo.subtitle2">BOE Complementados</MudText>
                                         <MudSpacer />
                                         <MudTooltip Text="Adicionar" Arrow="true" Placement="Placement.Left">
-                                            <MudFab @onclick="ExibirBOEComplementado" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Medium" Class="ma-2" />
+                                            <MudFab @onclick="AdicionarBOEComplementado" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Medium" Class="ma-2" />
                                         </MudTooltip>
                                     </ToolBarContent>
                                     <HeaderContent>
@@ -327,7 +327,7 @@
                                             <MudText Typo="Typo.subtitle2">Lista de Envolvidos</MudText>
                                             <MudSpacer />
                                             <MudTooltip Text="Adicionar" Arrow="true" Placement="Placement.Left">
-                                                <MudFab @onclick="ExibirEnvolvido" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Medium" Class="ma-2" />
+                                                <MudFab @onclick="AdicionarEnvolvido" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Medium" Class="ma-2" />
                                             </MudTooltip>
                                         </ToolBarContent>
                                         <HeaderContent>
@@ -649,19 +649,28 @@
         Arquivos = new List<NovoArquivo>()
     };
 
-    protected async Task SalvarRegistro()
+    void AdicionarListasNoRegistro()
     {
         novoRegistro.Envolvidos = listaEnvolvidos;
         novoRegistro.BoeComplementados = listaBOEComplementados;
         novoRegistro.Arquivos = listaArquivos;
+    }
 
-        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+    private async Task<ExibirUsuario> ObterUsuarioLogadoNoSistema()
+    {
+        return await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+    }
 
-        novoRegistro.UsuarioRegistro = usuario.Nome;
+    protected async Task SalvarRegistro()
+    {
+        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
+        novoRegistro.UsuarioRegistro = usuarioLogado.Nome;
+
+        await AdicionarListasNoRegistro();
 
         var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44343/api/v1/Registro/novo-registro");
         request.Content = new StringContent(JsonSerializer.Serialize(novoRegistro, new JsonSerializerOptions { Converters = { new TimeSpanJsonConverter() } }), Encoding.UTF8, "application/json");
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
         var response = await httpClient.SendAsync(request);
 
         if (response.IsSuccessStatusCode)
@@ -686,7 +695,7 @@
     }
 
     //Envolvido
-    async Task ExibirEnvolvido()
+    async Task AdicionarEnvolvido()
     {
         var formModal = Modal.Show<Envolvido>("Adicionar Envolvido");
         var result = await formModal.Result;
@@ -698,8 +707,8 @@
         else
         {
             listaEnvolvidos.Add((NovoEnvolvido)(Convert.ChangeType(result.Data, typeof(NovoEnvolvido))));
-            StateHasChanged();
             snackbar.Add("Envolvido adicionado!", Severity.Success);
+            StateHasChanged();
         }
     }
 
@@ -717,8 +726,8 @@
         }
         else
         {
-            StateHasChanged();
             snackbar.Add("Envolvido alterado!", Severity.Info);
+            StateHasChanged();
         }
     }
 
@@ -729,7 +738,7 @@
     }
 
     //BOEComplementado
-    async Task ExibirBOEComplementado()
+    async Task AdicionarBOEComplementado()
     {
         var formModal = Modal.Show<BOEComplementado>("Adicionar BOE Complementado");
         var result = await formModal.Result;
@@ -741,8 +750,8 @@
         else
         {
             listaBOEComplementados.Add((NovoBoe)(Convert.ChangeType(result.Data, typeof(NovoBoe))));
-            StateHasChanged();
             snackbar.Add("BOE Complementado adicionado!", Severity.Success);
+            StateHasChanged();
         }
     }
 
@@ -760,8 +769,8 @@
         }
         else
         {
-            StateHasChanged();
             snackbar.Add("BOE Complementado alterado!", Severity.Info);
+            StateHasChanged();
         }
     }
 
@@ -774,10 +783,19 @@
     //Municípios
     private async Task<IEnumerable<Municipio_Diretoria_AIS_BPM>> Municipios(string value)
     {
-        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
 
+        var municipios = ObterListaDeMunicipios(usuarioLogado);
+
+        if (string.IsNullOrEmpty(value))
+            return municipios;
+        return municipios.Where(x => x.Municipio.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    private async Task<List<Municipio_Diretoria_AIS_BPM>> ObterListaDeMunicipios(ExibirUsuario usuarioLogado)
+    {
         var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/v1/Municipio_Diretoria_AIS_BPM");
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
         var response = await httpClient.SendAsync(request);
 
         var municipios = JsonSerializer.Deserialize<List<Municipio_Diretoria_AIS_BPM>>
@@ -786,9 +804,7 @@
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
         );
 
-        if (string.IsNullOrEmpty(value))
-            return municipios;
-        return municipios.Where(x => x.Municipio.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        return municipios;
     }
 
     //Local do Fato
