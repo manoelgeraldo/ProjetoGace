@@ -127,32 +127,8 @@ namespace Infra.Data.Repositories
         }
         #endregion
 
-        private async Task<Registro> AdicionarBOEComplementadoAoEditarRegistro(Registro registro)
-        {
-            foreach (var boeComplementado in registro.BoeComplementados)
-            {
-                if (boeComplementado.Id == 0)
-                {
-                    var boeAdicionado = await AdicionarBoeComplementado(boeComplementado).ConfigureAwait(false);
-                    registro.BoeComplementados.Remove(boeComplementado);
-                    registro.BoeComplementados.Add(boeAdicionado);
-                }
-            }
-
-            return registro;
-        }
-
-        public async Task<BoeComplementado> AdicionarBoeComplementado(BoeComplementado boeComplementado)
-        {
-            await _db.BoeComplementados.AddAsync(boeComplementado).ConfigureAwait(false);
-            await _db.SaveChangesAsync().ConfigureAwait(false);
-            return boeComplementado;
-        }
-
         public async Task<Registro> EditarRegistro(Registro registro)
         {
-            //registro = await AdicionarBOEComplementadoAoEditarRegistro(registro).ConfigureAwait(false);
-            
             var verificaRegistro = await ObterRegistroPorID(registro.Id).ConfigureAwait(false);
 
             if (verificaRegistro != null)

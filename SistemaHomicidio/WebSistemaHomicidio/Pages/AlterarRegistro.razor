@@ -325,7 +325,7 @@
                                             <MudText Typo="Typo.subtitle2">Lista de Envolvidos</MudText>
                                             <MudSpacer />
                                             <MudTooltip Text="Adicionar" Arrow="true" Placement="Placement.Left">
-                                                <MudFab @onclick="ExibirEnvolvido" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Medium" Class="ma-2" />
+                                                <MudFab @onclick="AdicionarEnvolvido" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Medium" Class="ma-2" />
                                             </MudTooltip>
                                         </ToolBarContent>
                                         <HeaderContent>
@@ -662,12 +662,24 @@
         }
     }
 
+    private async Task<ExibirUsuario> ObterUsuarioLogadoNoSistema()
+    {
+        return await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+    }
+
     protected async Task BuscaRegistro()
     {
-        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
 
+        editarRegistro = await ObterRegistroPeloId(usuarioLogado);
+
+        AdicionaArquivoBOEComplementadoEnvolvidoNasListas(editarRegistro);
+    }
+
+    private async Task<EditarRegistro> ObterRegistroPeloId(ExibirUsuario usuarioLogado)
+    {
         var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/v1/Registro/buscar-registro/" + Id);
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
         var response = await httpClient.SendAsync(request);
 
         editarRegistro = JsonSerializer.Deserialize<EditarRegistro>
@@ -676,25 +688,34 @@
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
         );
 
+        return editarRegistro;
+    }
+
+    void AdicionaArquivoBOEComplementadoEnvolvidoNasListas(EditarRegistro editarRegistro)
+    {
         listaArquivos = editarRegistro.Arquivos;
         listaBOEComplementados = editarRegistro.BoeComplementados;
         listaEnvolvidos = editarRegistro.Envolvidos;
     }
 
-    protected async Task EditarRegistro()
+    void AdicionarOIdEAsListasNoRegistro()
     {
+        editarRegistro.Id = Id;
         editarRegistro.Envolvidos = listaEnvolvidos;
         editarRegistro.BoeComplementados = listaBOEComplementados;
         editarRegistro.Arquivos = listaArquivos;
+    }
 
-        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+    protected async Task EditarRegistro()
+    {
+        AdicionarOIdEAsListasNoRegistro();
 
-        editarRegistro.Id = Id;
-        editarRegistro.UsuarioRegistro = usuario.Nome;
+        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
+        editarRegistro.UsuarioRegistro = usuarioLogado.Nome;
 
         var request = new HttpRequestMessage(HttpMethod.Put, "https://localhost:44343/api/v1/Registro/alterar-registro/" + Id);
         request.Content = new StringContent(JsonSerializer.Serialize(editarRegistro, new JsonSerializerOptions { Converters = { new TimeSpanJsonConverter() } }), Encoding.UTF8, "application/json");
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
         var response = await httpClient.SendAsync(request);
 
         if (response.IsSuccessStatusCode)
@@ -710,7 +731,7 @@
 
     void Home() => navigationManager.NavigateTo("/");
 
-    async Task ExibirEnvolvido()
+    async Task AdicionarEnvolvido()
     {
         var formModal = Modal.Show<Envolvido>("Adicionar Envolvido");
         var result = await formModal.Result;
@@ -772,31 +793,12 @@
 
             boeComplementado.RegistroId = Id;
 
-            //boeComplementado = await AdicionarNovoBOEComplentado(boeComplementado);
-
             listaBOEComplementados.Add(boeComplementado);
 
             StateHasChanged();
 
             snackbar.Add("BOE Complementado adicionado!", Severity.Success);
         }
-    }
-
-    private async Task<NovoBoe> AdicionarNovoBOEComplentado(NovoBoe boeComplementado)
-    {
-        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44343/api/v1/BoeComplementado/novo-boe-complementado");
-        request.Content = new StringContent(JsonSerializer.Serialize(boeComplementado, new JsonSerializerOptions { Converters = { new TimeSpanJsonConverter() } }), Encoding.UTF8, "application/json");
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
-        var response = await httpClient.SendAsync(request);
-
-        var novoBOEComplementado = JsonSerializer.Deserialize<NovoBoe>
-        (
-            await response.Content.ReadAsStringAsync(),
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-        );
-
-        return novoBOEComplementado;
     }
 
     async Task EditarBOEComplementado(NovoBoe novoBOEComplementado)
@@ -848,10 +850,7 @@
 
     private async Task<IEnumerable<string>> MotivacaoCrime(string value)
     {
-        // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(3);
-
-        // if text is null or empty, show complete list
         if (string.IsNullOrEmpty(value))
             return motivacaoCrime;
         return motivacaoCrime.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
@@ -859,10 +858,10 @@
 
     private async Task<IEnumerable<Municipio_Diretoria_AIS_BPM>> Municipios(string value)
     {
-        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
 
         var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/v1/Municipio_Diretoria_AIS_BPM");
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
         var response = await httpClient.SendAsync(request);
 
         var municipios = JsonSerializer.Deserialize<List<Municipio_Diretoria_AIS_BPM>>
@@ -871,7 +870,6 @@
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
         );
 
-        // if text is null or empty, show complete list
         if (string.IsNullOrEmpty(value))
             return municipios;
         return municipios.Where(x => x.Municipio.Contains(value, StringComparison.InvariantCultureIgnoreCase));
@@ -913,10 +911,7 @@
 
     private async Task<IEnumerable<string>> LocalFato(string value)
     {
-        // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(3);
-
-        // if text is null or empty, show complete list
         if (string.IsNullOrEmpty(value))
             return localFato;
         return localFato.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
