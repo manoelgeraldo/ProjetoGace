@@ -666,7 +666,7 @@
         var usuarioLogado = await ObterUsuarioLogadoNoSistema();
         novoRegistro.UsuarioRegistro = usuarioLogado.Nome;
 
-        await AdicionarListasNoRegistro();
+        AdicionarListasNoRegistro();
 
         var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44343/api/v1/Registro/novo-registro");
         request.Content = new StringContent(JsonSerializer.Serialize(novoRegistro, new JsonSerializerOptions { Converters = { new TimeSpanJsonConverter() } }), Encoding.UTF8, "application/json");
@@ -785,15 +785,6 @@
     {
         var usuarioLogado = await ObterUsuarioLogadoNoSistema();
 
-        var municipios = ObterListaDeMunicipios(usuarioLogado);
-
-        if (string.IsNullOrEmpty(value))
-            return municipios;
-        return municipios.Where(x => x.Municipio.Contains(value, StringComparison.InvariantCultureIgnoreCase));
-    }
-
-    private async Task<List<Municipio_Diretoria_AIS_BPM>> ObterListaDeMunicipios(ExibirUsuario usuarioLogado)
-    {
         var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/v1/Municipio_Diretoria_AIS_BPM");
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
         var response = await httpClient.SendAsync(request);
@@ -804,7 +795,9 @@
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
         );
 
-        return municipios;
+        if (string.IsNullOrEmpty(value))
+            return municipios;
+        return municipios.Where(x => x.Municipio.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
     //Local do Fato

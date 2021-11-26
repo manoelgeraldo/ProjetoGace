@@ -2,11 +2,11 @@
 @attribute [Authorize]
 
 <div class="DivCard justify-content-center align-items-center">
-    <MudText Typo="Typo.caption">Altere seu Nome e/ou Senha</MudText>
     <EditForm Model="@usuario" OnValidSubmit="Alterar">
         <DataAnnotationsValidator />
         <MudContainer Class="mt-16 px-8">
             <MudGrid>
+                <MudText Typo="Typo.caption">Altere seu Nome e/ou Senha</MudText>
                 <MudPaper Class="pa-2 mx-2" Elevation="3">
                     <MudItem xs="12" sm="12">
                         <MudTextField Label="Nome"

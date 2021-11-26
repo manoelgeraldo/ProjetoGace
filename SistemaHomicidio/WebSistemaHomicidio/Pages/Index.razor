@@ -7,19 +7,19 @@
         <!--Gráfico 01-->
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="100%"></MudChart>
+                <MudChart ChartType="ChartType.Bar" ChartSeries="@DadosComparativosEntreTentativaEConsumado" XAxisLabels="@XAxisLabels" Width="100%" Height="100%"></MudChart>
             </MudPaper>
         </MudItem>
         <!--Gráfico 02-->
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="100%"></MudChart>
+                <MudChart ChartType="ChartType.Line" ChartSeries="@DadosComparativosEntreTentativaEConsumado" XAxisLabels="@XAxisLabels" Width="100%" Height="100%"></MudChart>
             </MudPaper>
         </MudItem>
         <!--Gráfico 03-->
         <MudItem xs="12" sm="12" md="4">
             <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Donut" Width="50%" Height="50%" InputData="@data" InputLabels="@labels"></MudChart>
+                <MudChart ChartType="ChartType.Donut" Width="50%" Height="50%" InputData="@DadosComparativoStatusRegistro" InputLabels="@labels"></MudChart>
             </MudPaper>
         </MudItem>
         <!--Tabela de Registros-->
@@ -52,8 +52,17 @@
                     <RowTemplate>
                         @foreach (var envolvido in @context.Envolvidos)
                         {
-                            <MudTd DataLabel="Id">@context.Id</MudTd>
-                            <MudTd DataLabel="Tipo">@context.TipoDeRegistro</MudTd>
+                            <MudTd DataLabel="Id">@envolvido.Id</MudTd>
+                            <MudTd DataLabel="Tipo">
+                                @if(@context.TipoDeRegistro == "TENTATIVA")
+                                {
+                                    <MudChip Color="Color.Success">@context.TipoDeRegistro</MudChip>
+                                }
+                                else
+                                {
+                                    <MudChip Color="Color.Error">@context.TipoDeRegistro</MudChip>   
+                                }
+                            </MudTd>
                             <MudTd DataLabel="Nº BOE">@context.BOE</MudTd>
                             <MudTd DataLabel="Data">@context.DataRegistroBOE.Value.ToString("d")</MudTd>
                             <MudTd DataLabel="Envolvido">@envolvido.NomeEnvolvido</MudTd>
@@ -100,11 +109,11 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    private IEnumerable<ExibirRegistro> pagedData;
     private MudTable<ExibirRegistro> table;
-
-    private int totalRegistros;
+    public IEnumerable<ExibirRegistro> registros;
     private string procurar = null;
+    public double[] DadosComparativoStatusRegistro = new double[] { };
+    public List<ChartSeries> DadosComparativosEntreTentativaEConsumado = new List<ChartSeries> { };
 
     private async Task<TableData<ExibirRegistro>> ServerReload(TableState state)
     {
@@ -112,14 +121,19 @@
         var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/v1/Registro/lista-de-registros");
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
         var response = await httpClient.SendAsync(request);
-        
-        IEnumerable<ExibirRegistro> data = JsonSerializer.Deserialize<IEnumerable<ExibirRegistro>>
+
+        registros = JsonSerializer.Deserialize<IEnumerable<ExibirRegistro>>
         (
             await response.Content.ReadAsStringAsync(),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
         );
 
-        data = data.Where(registro =>
+        GerarGraficoStatusRegistro();
+        GerarGraficoComparativoTentativaConsumado();
+        StateHasChanged();
+
+        //Procurar
+        registros = registros.Where(registro =>
         {
             if (string.IsNullOrWhiteSpace(procurar))
                 return true;
@@ -136,36 +150,35 @@
             return false;
         }).ToArray();
 
-        totalRegistros = data.Count();
-
+        //Ordenamento
         switch (state.SortLabel)
         {
             case "id":
-                data = data.OrderByDirection(state.SortDirection, o => o.Id);
+                registros = registros.OrderByDirection(state.SortDirection, o => o.Id);
                 break;
             case "tipoDeRegistro":
-                data = data.OrderByDirection(state.SortDirection, o => o.TipoDeRegistro);
+                registros = registros.OrderByDirection(state.SortDirection, o => o.TipoDeRegistro);
                 break;
             case "boe":
-                data = data.OrderByDirection(state.SortDirection, o => o.BOE);
+                registros = registros.OrderByDirection(state.SortDirection, o => o.BOE);
                 break;
             case "dataRegistro":
-                data = data.OrderByDirection(state.SortDirection, o => o.DataRegistroBOE);
+                registros = registros.OrderByDirection(state.SortDirection, o => o.DataRegistroBOE);
                 break;
             case "statusRegistro":
-                data = data.OrderByDirection(state.SortDirection, o => o.StatusRegistro);
+                registros = registros.OrderByDirection(state.SortDirection, o => o.StatusRegistro);
                 break;
             case "fato":
-                data = data.OrderByDirection(state.SortDirection, o => o.Fato.MunicipioFato);
+                registros = registros.OrderByDirection(state.SortDirection, o => o.Fato.MunicipioFato);
                 break;
             case "envolvido":
-                data = data.OrderByDirection(state.SortDirection, o => o.Envolvidos);
+                registros = registros.OrderByDirection(state.SortDirection, o => o.Envolvidos);
                 break;
         }
 
-        pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        var totalRegistros = registros.Count();
+        var pagedData = registros.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
         return new TableData<ExibirRegistro>() { TotalItems = totalRegistros, Items = pagedData };
-
     }
 
     private void OnProcurar(string text)
@@ -196,15 +209,83 @@
     }
 
     //Gráfico1-2
-    public List<ChartSeries> Series = new List<ChartSeries>()
-    {
-        new ChartSeries() { Name = "Tentativa", Data = new double[] { 40, 20, 25, 27, 46, 60, 48, 80, 15 } },
-        new ChartSeries() { Name = "Consumado", Data = new double[] { 19, 24, 35, 13, 28, 15, 13, 16, 31 } },
-    };
-    
     public string[] XAxisLabels = { "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set" };
-    
+
+    private void GerarGraficoComparativoTentativaConsumado()
+    {
+        var totalTentativaJaneiro = registros.Where(x => x.DataRegistroBOE.Value.Month == 1).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaFevereiro = registros.Where(x => x.DataRegistroBOE.Value.Month == 2).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaMarco = registros.Where(x => x.DataRegistroBOE.Value.Month == 3).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaAbril = registros.Where(x => x.DataRegistroBOE.Value.Month == 4).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaMaio = registros.Where(x => x.DataRegistroBOE.Value.Month == 5).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaJunho = registros.Where(x => x.DataRegistroBOE.Value.Month == 6).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaJulho = registros.Where(x => x.DataRegistroBOE.Value.Month == 7).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaAgosto = registros.Where(x => x.DataRegistroBOE.Value.Month == 8).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaSetembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 9).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaOutubro = registros.Where(x => x.DataRegistroBOE.Value.Month == 10).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaNovembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 11).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        var totalTentativaDezembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 12).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+
+        var totalConsumadoJaneiro = registros.Where(x => x.DataRegistroBOE.Value.Month == 1).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoFevereiro = registros.Where(x => x.DataRegistroBOE.Value.Month == 2).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoMarco = registros.Where(x => x.DataRegistroBOE.Value.Month == 3).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoAbril = registros.Where(x => x.DataRegistroBOE.Value.Month == 4).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoMaio = registros.Where(x => x.DataRegistroBOE.Value.Month == 5).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoJunho = registros.Where(x => x.DataRegistroBOE.Value.Month == 6).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoJulho = registros.Where(x => x.DataRegistroBOE.Value.Month == 7).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoAgosto = registros.Where(x => x.DataRegistroBOE.Value.Month == 8).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoSetembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 9).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoOutubro = registros.Where(x => x.DataRegistroBOE.Value.Month == 10).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoNovembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 11).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        var totalConsumadoDezembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 12).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+
+        DadosComparativosEntreTentativaEConsumado = new List<ChartSeries>()
+        {
+            new ChartSeries() 
+            { Name = "Tentativa", 
+              Data = new double[] 
+              { 
+                totalTentativaJaneiro,
+                totalTentativaFevereiro,
+                totalTentativaMarco,
+                totalTentativaAbril,
+                totalTentativaMaio, 
+                totalTentativaJunho,
+                totalTentativaJulho,
+                totalTentativaAgosto,
+                totalTentativaSetembro, 
+                totalTentativaOutubro,
+                totalTentativaNovembro, 
+                totalTentativaDezembro
+              }
+            },
+            new ChartSeries() 
+            { Name = "Consumado", 
+              Data = new double[]
+              {
+                totalConsumadoJaneiro,
+                totalConsumadoFevereiro,
+                totalConsumadoMarco,
+                totalConsumadoAbril,
+                totalConsumadoMaio, 
+                totalConsumadoJunho,
+                totalConsumadoJulho,
+                totalConsumadoAgosto,
+                totalConsumadoSetembro, 
+                totalConsumadoOutubro,
+                totalConsumadoNovembro, 
+                totalConsumadoDezembro  
+              }
+            }
+        };
+    }
+
     // Gráfico3;
-    public double[] data = { 50, 25 };
+    private void GerarGraficoStatusRegistro()
+    {
+        var totalConsistido = registros.Where(x => x.StatusRegistro == true).Count();
+        var totalNaoConsistido = registros.Where(x => x.StatusRegistro == false).Count();
+        DadosComparativoStatusRegistro = new double[] { totalConsistido, totalNaoConsistido };
+    }
     public string[] labels = { "Consistido", "Não Consistido" };
 }

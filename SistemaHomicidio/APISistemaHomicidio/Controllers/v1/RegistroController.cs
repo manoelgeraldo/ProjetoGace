@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace APISistemaHomicidio.Controllers.v1
@@ -32,12 +29,12 @@ namespace APISistemaHomicidio.Controllers.v1
         public async Task<IActionResult> Get()
         {
             var ExibirTodosResgistros = await _registroService.ExibirTodosRegistros().ConfigureAwait(false);
-            
-            if (ExibirTodosResgistros.Count > 0)
+
+            return ExibirTodosResgistros.Count switch
             {
-                return Ok(ExibirTodosResgistros);
-            }
-            return NotFound("Base sem Registros");
+                > 0 => Ok(ExibirTodosResgistros),
+                _ => NotFound("Base sem Registros"),
+            };
         }
 
         /// <summary>
@@ -56,7 +53,6 @@ namespace APISistemaHomicidio.Controllers.v1
             {
                 return NotFound();
             }
-            
             return Ok(registro);
         }
 

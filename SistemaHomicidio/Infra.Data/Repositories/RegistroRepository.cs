@@ -2,10 +2,7 @@
 using Infra.Data.Contexto;
 using Infra.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infra.Data.Repositories
@@ -98,7 +95,6 @@ namespace Infra.Data.Repositories
                 Criminal = envolvido.Criminal,
                 Endereco = envolvido.Endereco,
                 Saude = envolvido.Saude
-
             });
         }
 
@@ -109,7 +105,6 @@ namespace Infra.Data.Repositories
                 RegistroId = boeComplementado.RegistroId,
                 Boe = boeComplementado.Boe,
                 DataRegistro = boeComplementado.DataRegistro
-
             });
         }
 
@@ -150,11 +145,10 @@ namespace Infra.Data.Repositories
         private static void EditarEnvolvidoDoRegistro(Registro verificaRegistro, Registro registro)
         {
             verificaRegistro.Envolvidos.Clear();
-            foreach(var envolvido in registro.Envolvidos)
+            foreach (var envolvido in registro.Envolvidos)
             {
                 verificaRegistro.Envolvidos.Add(envolvido);
             }
-
         }
         private static void EditarArquivoDoRegistro(Registro verificaRegistro, Registro registro)
         {
@@ -163,12 +157,11 @@ namespace Infra.Data.Repositories
             {
                 verificaRegistro.Arquivos.Add(arquivo);
             }
-
         }
         private static void EditarBoeComplementadoDoRegistro(Registro verificaRegistro, Registro registro)
         {
             verificaRegistro.BoeComplementados.Clear();
-            
+
             foreach (var boeComplementar in registro.BoeComplementados)
             {
                 verificaRegistro.BoeComplementados.Add(boeComplementar);
