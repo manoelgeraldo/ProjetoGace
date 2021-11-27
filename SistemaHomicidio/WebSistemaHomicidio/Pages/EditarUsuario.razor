@@ -6,27 +6,31 @@
         <DataAnnotationsValidator />
         <MudContainer Class="mt-16 px-8">
             <MudGrid>
-                <MudText Typo="Typo.caption">Altere seu Nome e/ou Senha</MudText>
-                <MudPaper Class="pa-2 mx-2" Elevation="3">
-                    <MudItem xs="12" sm="12">
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Altere seu Nome e/ou Senha</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudItem xs="12" sm="12">
                         <MudTextField Label="Nome"
                                         Variant="Variant.Outlined"
                                         @bind-Value="@usuario.Nome"
                                         For="@(()=> usuario.Nome)"/>
-                    </MudItem>
-                    <MudItem xs="12" sm="12">
-                        <MudTextField Label="Senha"
-                                        Variant="Variant.Outlined"
-                                        @bind-Value="@usuario.Senha"
-                                        For="@(()=> usuario.Senha)"/>
-                    </MudItem>
-                    <MudItem>
-                        <MudPaper Class="pa-2 mx-2" Elevation="0">
-                            <MudButton OnClick="Cancelar">Cancelar</MudButton>
-                            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Alterar</MudButton>
-                        </MudPaper>
-                    </MudItem>
-                </MudPaper>
+                        </MudItem>
+                        <MudItem xs="12" sm="12">
+                            <MudTextField Label="Senha"
+                                            Variant="Variant.Outlined"
+                                            @bind-Value="@usuario.Senha"
+                                            For="@(()=> usuario.Senha)"/>
+                        </MudItem>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton OnClick="Cancelar">Cancelar</MudButton>
+                        <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Alterar</MudButton>
+                    </MudCardActions>
+                </MudCard>
             </MudGrid>
         </MudContainer>
     </EditForm>

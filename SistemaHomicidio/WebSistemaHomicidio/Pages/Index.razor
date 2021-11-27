@@ -7,19 +7,19 @@
         <!--Gráfico 01-->
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Bar" ChartSeries="@DadosComparativosEntreTentativaEConsumado" XAxisLabels="@XAxisLabels" Width="100%" Height="100%"></MudChart>
+                <MudChart ChartType="ChartType.Bar"  ChartSeries="@DadosComparativosEntreTentativaEConsumado" XAxisLabels="@LabelMesesGraficos" Width="100%" Height="100%"></MudChart>
             </MudPaper>
         </MudItem>
         <!--Gráfico 02-->
         <MudItem xs="12" sm="6" md="4">
             <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Line" ChartSeries="@DadosComparativosEntreTentativaEConsumado" XAxisLabels="@XAxisLabels" Width="100%" Height="100%"></MudChart>
+                <MudChart ChartType="ChartType.Line" ChartSeries="@DadosComparativosEntreTentativaEConsumado" XAxisLabels="@LabelMesesGraficos" Width="100%" Height="100%"></MudChart>
             </MudPaper>
         </MudItem>
         <!--Gráfico 03-->
         <MudItem xs="12" sm="12" md="4">
             <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Donut" Width="50%" Height="50%" InputData="@DadosComparativoStatusRegistro" InputLabels="@labels"></MudChart>
+                <MudChart ChartType="ChartType.Donut" Width="50%" Height="50%" InputData="@DadosComparativoStatusRegistro" InputLabels="@labelGraficoStatusRegistro"></MudChart>
             </MudPaper>
         </MudItem>
         <!--Tabela de Registros-->
@@ -56,11 +56,11 @@
                             <MudTd DataLabel="Tipo">
                                 @if(@context.TipoDeRegistro == "TENTATIVA")
                                 {
-                                    <MudChip Color="Color.Success">@context.TipoDeRegistro</MudChip>
+                                    <MudChip Style="background-color: #2979FF">@context.TipoDeRegistro</MudChip>
                                 }
                                 else
                                 {
-                                    <MudChip Color="Color.Error">@context.TipoDeRegistro</MudChip>   
+                                    <MudChip Style="background-color: #1DE9B6">@context.TipoDeRegistro</MudChip>   
                                 }
                             </MudTd>
                             <MudTd DataLabel="Nº BOE">@context.BOE</MudTd>
@@ -115,18 +115,31 @@
     public double[] DadosComparativoStatusRegistro = new double[] { };
     public List<ChartSeries> DadosComparativosEntreTentativaEConsumado = new List<ChartSeries> { };
 
-    private async Task<TableData<ExibirRegistro>> ServerReload(TableState state)
+    public async Task<ExibirUsuario> ObterUsuarioLogadoNoSistema()
     {
-        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+        return await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+    }
+
+    private async Task<IEnumerable<ExibirRegistro>> ObterTodosRegistros(ExibirUsuario usuarioLogado)
+    {
         var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/v1/Registro/lista-de-registros");
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
         var response = await httpClient.SendAsync(request);
 
-        registros = JsonSerializer.Deserialize<IEnumerable<ExibirRegistro>>
+        var registros = JsonSerializer.Deserialize<IEnumerable<ExibirRegistro>>
         (
             await response.Content.ReadAsStringAsync(),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
         );
+
+        return registros;
+    }
+
+    private async Task<TableData<ExibirRegistro>> ServerReload(TableState state)
+    {
+        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
+        
+        registros = await ObterTodosRegistros(usuarioLogado);
 
         GerarGraficoStatusRegistro();
         GerarGraficoComparativoTentativaConsumado();
@@ -209,7 +222,7 @@
     }
 
     //Gráfico1-2
-    public string[] XAxisLabels = { "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set" };
+    public string[] LabelMesesGraficos = { "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" };
 
     private void GerarGraficoComparativoTentativaConsumado()
     {
@@ -287,5 +300,9 @@
         var totalNaoConsistido = registros.Where(x => x.StatusRegistro == false).Count();
         DadosComparativoStatusRegistro = new double[] { totalConsistido, totalNaoConsistido };
     }
-    public string[] labels = { "Consistido", "Não Consistido" };
+    public string[] labelGraficoStatusRegistro = { "Consistido", "Não Consistido" };
 }
+
+<style>
+    
+</style>

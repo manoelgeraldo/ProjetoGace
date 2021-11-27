@@ -649,16 +649,16 @@
         Arquivos = new List<NovoArquivo>()
     };
 
+    public async Task<ExibirUsuario> ObterUsuarioLogadoNoSistema()
+    {
+        return await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+    }
+
     void AdicionarListasNoRegistro()
     {
         novoRegistro.Envolvidos = listaEnvolvidos;
         novoRegistro.BoeComplementados = listaBOEComplementados;
         novoRegistro.Arquivos = listaArquivos;
-    }
-
-    private async Task<ExibirUsuario> ObterUsuarioLogadoNoSistema()
-    {
-        return await localStorage.GetItemAsync<ExibirUsuario>("usuario");
     }
 
     protected async Task SalvarRegistro()
