@@ -67,15 +67,25 @@
         }
     }
 
-    private async void Entrar()
+    private async Task<ExibirUsuario> ObterUsuarioAutorizado(HttpResponseMessage response)
     {
-        verificando = true;
-        var response = await httpClient.PostAsJsonAsync("https://localhost:44343/api/Usuarios/login", model);
         var loginResult = JsonSerializer.Deserialize<ExibirUsuario>
         (
             await response.Content.ReadAsStringAsync(),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
         );
+        return loginResult;
+    }
+
+    async void ArmazenarUsuarioAutorizadoNoLocalStorage(ExibirUsuario loginResult)
+    {
+        await localStorage.SetItemAsync("usuario", loginResult);
+    }
+
+    private async void Entrar()
+    {
+        verificando = true;
+        var response = await httpClient.PostAsJsonAsync("https://localhost:44343/api/Usuarios/login", model);
 
         switch (response.StatusCode)
         {
@@ -85,7 +95,8 @@
                 snackbar.Add("Você não possui autorização para acessar o sistema!", Severity.Info);
                 break;
             case HttpStatusCode.OK:
-                await localStorage.SetItemAsync("usuario", loginResult);
+                var loginResult = await ObterUsuarioAutorizado(response);
+                ArmazenarUsuarioAutorizadoNoLocalStorage(loginResult);
                 await Authentication.Login(model);
                 var returnUrl = navigationManager.QueryString("returnUrl") ?? "/";
                 navigationManager.NavigateTo(returnUrl);
