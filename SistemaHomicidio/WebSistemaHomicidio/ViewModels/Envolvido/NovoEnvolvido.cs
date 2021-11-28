@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebSistemaHomicidio.ViewModels.Envolvido
 {
@@ -6,14 +7,26 @@ namespace WebSistemaHomicidio.ViewModels.Envolvido
     {
         public int Id { get; set; }
         public int RegistroId { get; set; }
+
+        [Display(Name = "Nº Sequencial")]
+        [Required(ErrorMessage = "Informe o {0}!")]
         public int SequencialEnvolvido { get; set; }
+
+        [Display(Name = "Tipo de Envolvimento")]
+        [Required(ErrorMessage = "Informe o {0}!")]
         public string TipoEnvolvido { get; set; }
         public string Autoria { get; set; }
         public string Turista { get; set; }
+
+        [Display(Name = "Nome do Envolvido")]
+        [Required(ErrorMessage = "Informe o {0}!")]
         public string NomeEnvolvido { get; set; }
         public string NomeSocial { get; set; }
         public string Vulgo { get; set; }
         public string NomeGenitora { get; set; }
+
+        [Display(Name = "Data de Nascimento")]
+        [Required(ErrorMessage = "Informe a {0}!")]
         public DateTime? DataNascimento { get; set; }
         public int? IdadeAparente { get; set; }
         public int? IdadeExata { get; set; }

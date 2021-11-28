@@ -21,6 +21,7 @@
                                     <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.TipoEnvolvido">
                                         <MudRadio Option="@("VITIMA")" Color="Color.Primary">Vítima</MudRadio>
                                         <MudRadio Option="@("IMPULTADO")" Color="Color.Primary">Impultado</MudRadio>
+                                        <ValidationMessage For="@(()=> novoEnvolvido.TipoEnvolvido)" />
                                     </MudRadioGroup>
                                 </MudField>
                             </MudItem>
@@ -56,6 +57,7 @@
                                 <MudTextField Label="Nome"
                                               Variant="Variant.Outlined"
                                               Adornment="Adornment.End" 
+                                              For="@(()=> novoEnvolvido.NomeEnvolvido)"
                                               @bind-Value="@novoEnvolvido.NomeEnvolvido"/>
                             </MudItem>
                             <!--Nome Social-->
@@ -86,6 +88,7 @@
                                                DateFormat="dd/MM/yyyy"
                                                AllowKeyboardInput="true"
                                                MaxDate="DateTime.Now"
+                                               For="@(()=> novoEnvolvido.DataNascimento)"
                                                @bind-Date="@novoEnvolvido.DataNascimento" />
                             </MudItem>
                             <!--Idade Exata-->
