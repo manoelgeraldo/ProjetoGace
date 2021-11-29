@@ -8,13 +8,6 @@
                 <MudText>
                     <MudPaper Class="pa-5 mx-2" Elevation="3">
                         <MudGrid>
-                            <!--Nº Sequencial-->
-                            <MudItem xs="12" sm="6" md="1">
-                                <MudTextField Label="Nº"
-                                              Variant="Variant.Outlined"
-                                              Adornment="Adornment.End"
-                                              @bind-Value="@novoEnvolvido.SequencialEnvolvido"/>
-                            </MudItem>
                             <!--Tipo de Envolvimento-->
                             <MudItem xs="12" sm="6" md="4">
                                 <MudField Label="Tipo de Envolvimento" Variant="Variant.Outlined" InnerPadding="false">
@@ -26,7 +19,7 @@
                                 </MudField>
                             </MudItem>
                             <!--Autoria-->
-                            <MudItem xs="12" sm="6" md="3">
+                            <MudItem xs="12" sm="6" md="4">
                                 <MudField Label="Autoria" Variant="Variant.Outlined" InnerPadding="false">
                                     <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Autoria">
                                         <MudRadio Option="@("CONHECIDA")" Color="Color.Primary">Conhecida</MudRadio>

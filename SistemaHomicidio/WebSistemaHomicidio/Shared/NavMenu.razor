@@ -19,7 +19,7 @@
             }   
         }
     </MudNavGroup>
-    <MudNavLink Icon="@Icons.Material.Outlined.ExitToApp" OnClick="Sair">Sair</MudNavLink>
+    <MudNavLink Icon="@Icons.Material.Outlined.ExitToApp" Href="/SIMIP/logout">Sair</MudNavLink>
 </MudNavMenu>
 @code {
     private bool collapseNavMenu = true;
@@ -30,6 +30,4 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
-
-    async Task Sair()=> await Authentication.Logout();
 }

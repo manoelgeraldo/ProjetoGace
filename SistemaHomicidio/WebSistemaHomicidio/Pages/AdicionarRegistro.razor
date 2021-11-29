@@ -174,13 +174,16 @@
                                                          Variant="Variant.Outlined"
                                                          @bind-Value="@novoRegistro.Fato.MunicipioFato"
                                                          SearchFunc="@Municipios"
-                                                         ToStringFunc="@(e => e == null ? null : $"{ e.Municipio }")" />
+                                                         ToStringFunc="@(e => e == null ? null : $"{ e.Municipio }")" 
+                                                         For="@(()=> novoRegistro.Fato.MunicipioFato)"
+                                                         SelectValueOnTab="true"/>
                                     </MudItem>
                                     <!--Bairro-->
                                     <MudItem xs="12" sm="6" md="4">
-                                        <MudTextField @bind-Value="@novoRegistro.Fato.BairroFato"
-                                                      Label="Bairro"
-                                                      Variant="Variant.Outlined" />
+                                        <MudTextField Label="Bairro"
+                                                      Variant="Variant.Outlined"
+                                                      @bind-Value="@novoRegistro.Fato.BairroFato"
+                                                      For="@(()=> novoRegistro.Fato.BairroFato)"/>
                                     </MudItem>
                                     <!--Logradouro-->
                                     <MudItem xs="12" sm="6" md="6">
@@ -259,7 +262,6 @@
                                                           Variant="Variant.Outlined"
                                                           Text="@novoRegistro.Fato.MunicipioFato.AIS" />
                                         }
-                                    
                                     </MudItem>
                                     <!--PMPE-->
                                     <MudItem xs="12" sm="6" md="4">
@@ -519,7 +521,7 @@
 
                                         </MudPaper>
                                     </MudItem>
-                                    <!--Nº Of./CI Remessa-->
+                                    <!--Nº Of/CI Remessa-->
                                     <MudItem xs="12" sm="6" md="6">
                                         <MudTextField @bind-Value="@novoRegistro.Inquerito.NumOfRemessa"
                                                       Label="Nº Of./Ci Remessa"
@@ -627,6 +629,60 @@
             </MudItem>
         </MudGrid>
     </MudContainer>
+    @*<aside class="mud-drawer mud-drawer-fixed mud-drawer-pos-right 
+                  mud-drawer--open mud-drawer-lg mud-drawer-clipped-always 
+                  mud-theme-transparent mud-elevation-0 mud-drawer-responsive pt-6" 
+                  style="" _bl_de7c0470-a72a-4fc9-90c7-55428e22d616="">
+        <div class="mud-drawer-content" _bl_7c0e3a58-cd5e-4198-b26a-12d1b97238c6="">
+            <div class="page-content-navigation">
+                <h6 class="mud-typography mud-typography-h6 mud-inherit-text mud-typography-gutterbottom">
+                    Contents
+                </h6>
+                <div class="mud-navmenu pl-4">
+                    <div class="mud-nav-item mud-ripple page-content-navigation-navlink">
+                        <div class="mud-nav-link" activeclass="active">
+                            <div class="mud-nav-link-text">API</div>
+                        </div>
+                    </div>
+                    <div class="mud-nav-item mud-ripple page-content-navigation-navlink">
+                        <div class="mud-nav-link" activeclass="active">
+                            <div class="mud-nav-link-text">Basic</div>
+                        </div>
+                    </div>
+                    <div class="mud-nav-item mud-ripple page-content-navigation-navlink">
+                        <div class="mud-nav-link" activeclass="active">
+                            <div class="mud-nav-link-text">Item Dots</div>
+                        </div>
+                    </div>
+                    <div class="mud-nav-item mud-ripple page-content-navigation-navlink">
+                        <div class="mud-nav-link" activeclass="active">
+                            <div class="mud-nav-link-text">Orientation and Position</div>
+                        </div>
+                    </div>
+                    <div class="mud-nav-item mud-ripple page-content-navigation-navlink">
+                        <div class="mud-nav-link" activeclass="active">
+                            <div class="mud-nav-link-text">Opposite</div>
+                        </div>
+                    </div>
+                    <div class="mud-nav-item mud-ripple page-content-navigation-navlink">
+                        <div class="mud-nav-link" activeclass="active">
+                            <div class="mud-nav-link-text">Item Modifiers</div>
+                        </div>
+                    </div>
+                    <div class="mud-nav-item mud-ripple page-content-navigation-navlink">
+                        <div class="mud-nav-link" activeclass="active">
+                            <div class="mud-nav-link-text">Item Align</div>
+                        </div>
+                    </div>
+                    <div class="mud-nav-item mud-ripple page-content-navigation-navlink">
+                        <div class="mud-nav-link" activeclass="active">
+                            <div class="mud-nav-link-text">Timeline Align</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>*@
 </EditForm>
 
 
@@ -706,9 +762,26 @@
         }
         else
         {
-            listaEnvolvidos.Add((NovoEnvolvido)(Convert.ChangeType(result.Data, typeof(NovoEnvolvido))));
+            var novoEnvolvido = (NovoEnvolvido)(Convert.ChangeType(result.Data, typeof(NovoEnvolvido)));
+            AdicionarNumeroSequencial();
+            novoEnvolvido.SequencialEnvolvido = sequencial;
+            listaEnvolvidos.Add(novoEnvolvido);
             snackbar.Add("Envolvido adicionado!", Severity.Success);
             StateHasChanged();
+        }
+    }
+    int sequencial;
+    void AdicionarNumeroSequencial()
+    {
+        if(listaEnvolvidos.Count() == 0)
+        {
+            sequencial = 1;
+        }
+        else
+        {
+            var qtd =  listaEnvolvidos.Count();
+            qtd++;
+            sequencial = qtd; 
         }
     }
 

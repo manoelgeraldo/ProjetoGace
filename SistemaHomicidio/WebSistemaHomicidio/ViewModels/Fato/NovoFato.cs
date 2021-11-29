@@ -15,7 +15,13 @@ namespace WebSistemaHomicidio.ViewModels.Fato
         public string CausaJuridicaFato { get; set; }
         public string StatusMotivacaoFato { get; set; }
         public string RegiaoFato { get; set; }
+
+        [Display(Name = "Município")]
+        [Required(ErrorMessage = "Informe o {0}!")]
         public Municipio_Diretoria_AIS_BPM MunicipioFato { get; set; }
+
+        [Display(Name = "Bairro")]
+        [Required(ErrorMessage = "Informe o {0}!")]
         public string BairroFato { get; set; }
         public string LogradouroFato { get; set; }
         public string NumeroLogradouroFato { get; set; }

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using WebSistemaHomicidio.Interfaces;
 using WebSistemaHomicidio.ViewModels.Usuario;
 
-
 namespace WebSistemaHomicidio.Services
 {
     public class AuthenticationService : IAuthenticationService
