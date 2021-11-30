@@ -731,6 +731,7 @@
 
     void Home() => navigationManager.NavigateTo("/");
 
+    //Envolvido
     async Task AdicionarEnvolvido()
     {
         var formModal = Modal.Show<Envolvido>("Adicionar Envolvido");
@@ -742,14 +743,26 @@
         }
         else
         {
-            var envolvido = (NovoEnvolvido)(Convert.ChangeType(result.Data, typeof(NovoEnvolvido)));
-
-            envolvido.RegistroId = Id;
-
-            listaEnvolvidos.Add(envolvido);
-
-            StateHasChanged();
+            var novoEnvolvido = (NovoEnvolvido)(Convert.ChangeType(result.Data, typeof(NovoEnvolvido)));
+            AdicionarNumeroSequencial();
+            novoEnvolvido.SequencialEnvolvido = sequencial;
+            listaEnvolvidos.Add(novoEnvolvido);
             snackbar.Add("Envolvido adicionado!", Severity.Success);
+            StateHasChanged();
+        }
+    }
+    int sequencial;
+    void AdicionarNumeroSequencial()
+    {
+        if(listaEnvolvidos.Count() == 0)
+        {
+            sequencial = 1;
+        }
+        else
+        {
+            var qtd =  listaEnvolvidos.Count();
+            qtd++;
+            sequencial = qtd; 
         }
     }
 
@@ -778,6 +791,7 @@
         snackbar.Add("Envolvido removido!", Severity.Warning);
     }
 
+    //BOEComplementado
     async Task AdicionarBOEComplementado()
     {
         var formModal = Modal.Show<BOEComplementado>("Adicionar BOE Complementado");
@@ -826,6 +840,7 @@
         snackbar.Add("BOE Complementado removido!", Severity.Warning);
     }
 
+    //Motivação Crime
     private string[] motivacaoCrime =
     {
         "A DEFINIR", "ACERTO DE CONTAS", "BALA PERDIDA", "BRIGA (INTRA)FAMILIAR CONTRA MULHER",
@@ -856,6 +871,7 @@
         return motivacaoCrime.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
+    //Município
     private async Task<IEnumerable<Municipio_Diretoria_AIS_BPM>> Municipios(string value)
     {
         var usuarioLogado = await ObterUsuarioLogadoNoSistema();
@@ -909,6 +925,8 @@
         "VIA PUBLICA"
     };
 
+
+    //Local Fato
     private async Task<IEnumerable<string>> LocalFato(string value)
     {
         await Task.Delay(3);

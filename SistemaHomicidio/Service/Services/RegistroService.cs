@@ -25,33 +25,33 @@ namespace Service.Services
 
         public async Task<List<ExibirRegistro>> ExibirTodosRegistros()
         {
-            var registros = await _registroRepository.ExibirTodosRegistros();
+            var registros = await _registroRepository.ExibirTodosRegistros().ConfigureAwait(false);
             return _mapper.Map<List<ExibirRegistro>>(registros);
         }
 
         public async Task<AlterarRegistro> ExibirRegistroPorId(int id)
         {
-            var registro = await _registroRepository.ObterRegistroPorID(id);
+            var registro = await _registroRepository.ObterRegistroPorID(id).ConfigureAwait(false);
             return _mapper.Map<AlterarRegistro>(registro);
         }
 
         public async Task<ExibirRegistro> AdicionarRegistro(NovoRegistro novoRegistro)
         {
             var registro = _mapper.Map<Registro>(novoRegistro);
-            registro = await _registroRepository.AdicionarRegistro(registro);
+            registro = await _registroRepository.AdicionarRegistro(registro).ConfigureAwait(false);
             return _mapper.Map<ExibirRegistro>(registro);
         }
 
         public async Task<ExibirRegistro> EditarRegistro(AlterarRegistro alterarRegistro)
         {
             var registro = _mapper.Map<Registro>(alterarRegistro);
-            registro = await _registroRepository.EditarRegistro(registro);
+            registro = await _registroRepository.EditarRegistro(registro).ConfigureAwait(false);
             return _mapper.Map<ExibirRegistro>(registro);
         }
 
         public async Task<ExibirRegistro> ExcluirRegistro(int id)
         {
-            var registro = await _registroRepository.ExcluirRegistro(id);
+            var registro = await _registroRepository.ExcluirRegistro(id).ConfigureAwait(false);
             return _mapper.Map<ExibirRegistro>(registro);
         }
     }

@@ -20,17 +20,9 @@ namespace Infra.Data.Repositories
 
         public async Task<List<Registro>> ExibirTodosRegistros()
         {
-            return await _db.Registros.AsNoTracking()
-                                      .Include(f => f.Fato)
+            return await _db.Registros.Include(f => f.Fato)
                                       .Include(e => e.Envolvidos)
-                                        .ThenInclude(e => e.Endereco)
-                                      .Include(e => e.Envolvidos)
-                                        .ThenInclude(s => s.Saude)
-                                      .Include(e => e.Envolvidos)
-                                        .ThenInclude(c => c.Criminal)
-                                      .Include(b => b.BoeComplementados)
-                                      .Include(a => a.Arquivos)
-                                      .Include(i => i.Inquerito)
+                                      .AsNoTracking()
                                       .ToListAsync()
                                       .ConfigureAwait(false);
         }

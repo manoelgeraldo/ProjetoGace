@@ -73,9 +73,9 @@
                 <MudDrawerHeader Class="mudblazor-brand" LinkToIndex="true">
                     <MudCard Elevation="0" Square="true">
                         <MudCardHeader>
-                            <CardHeaderAvatar>
+                            @*<CardHeaderAvatar>
                                 <MudAvatar Image="imagens/anubis.png" />
-                            </CardHeaderAvatar>
+                            </CardHeaderAvatar>*@
                             <CardHeaderContent>
                                 <MudText Typo="Typo.body2">
                                     @Authentication.Usuario.Nome
@@ -99,7 +99,6 @@
             StateHasChanged();
             Authentication.Logout();
         }
-
     }
 
     <MudMainContent Class="mudblazor-main-content">
@@ -111,20 +110,23 @@
                 <MudPaper Class="rodape_2 d-flex align-center justify-center py-2" Elevation="1">
                     <MudText>
                         <MudText Typo="Typo.button">
-                            © 2021 Gerência de Análise Criminal e Estatística/SDS  -
+                            © 2021 Gerência de Análise Criminal e Estatística/SDS  - 
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            Desenvolvido por 
                         </MudText>
                         <MudMenu Direction="Direction.Top"
                                  OffsetX="true"
                                  Dense="true"
                                  ActivationEvent="@MouseEvent.MouseOver">
                             <ActivatorContent>
-                                <MudText Typo="Typo.button"
+                                <MudText Typo="Typo.caption"
                                          Color="Color.Primary">
-                                    Desenvolvedor
+                                    Manoel Geraldo
                                 </MudText>
                             </ActivatorContent>
                             <ChildContent>
-                                <MudListItem Text="Manoel Geraldo"
+                                <MudListItem Text="Ver Perfil"
                                              Icon="@Icons.Custom.Brands.LinkedIn"
                                              IconColor="Color.Info"
                                              Href="https://www.linkedin.com/in/manoelgeraldo/" />
