@@ -175,8 +175,7 @@
                                                          @bind-Value="@novoRegistro.Fato.MunicipioFato"
                                                          SearchFunc="@Municipios"
                                                          ToStringFunc="@(e => e == null ? null : $"{ e.Municipio }")" 
-                                                         For="@(()=> novoRegistro.Fato.MunicipioFato)"
-                                                         SelectValueOnTab="true"/>
+                                                         For="@(()=> novoRegistro.Fato.MunicipioFato)"/>
                                     </MudItem>
                                     <!--Bairro-->
                                     <MudItem xs="12" sm="6" md="4">

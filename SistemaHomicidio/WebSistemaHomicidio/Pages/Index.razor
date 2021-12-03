@@ -2,7 +2,7 @@
 @attribute [Authorize]
 
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+<MudContainer Class="mt-16 px-8">
     <MudGrid>
         <!--Gráfico 01-->
         <MudItem xs="12" sm="6" md="4">
@@ -24,9 +24,9 @@
         </MudItem>
         <!--Tabela de Registros-->
         <MudItem xs="12">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 100%;">
+            <MudPaper Class="pa-2 mx-2" Elevation="0">
                 <MudTable ServerData="@(new Func<TableState, Task<TableData<ExibirRegistro>>>(ServerReload))"
-                          Dense="true" Hover="true" @ref="table" FixedHeader="true" Height="400px" Striped="true">
+                    Dense="true" Hover="true" @ref="table" FixedHeader="true" Height="400px" Striped="true" HorizontalScrollbar="true">
                     <ToolBarContent>
                         <MudText Typo="Typo.h6">Lista de Registros</MudText>
                         <MudSpacer />
@@ -41,19 +41,19 @@
                     </ToolBarContent>
                     <HeaderContent>
                         <MudTh><MudTableSortLabel SortLabel="id" T="ExibirRegistro">Id</MudTableSortLabel></MudTh>
-                        <MudTh><MudTableSortLabel SortLabel="tipoDeRegistro" T="ExibirRegistro">Tipo</MudTableSortLabel></MudTh>
+                        <MudTh Style="text-align:center"><MudTableSortLabel SortLabel="tipoDeRegistro" T="ExibirRegistro">Tipo</MudTableSortLabel></MudTh>
                         <MudTh><MudTableSortLabel SortLabel="boe" T="ExibirRegistro">Nº BOE</MudTableSortLabel></MudTh>
                         <MudTh><MudTableSortLabel SortLabel="dataRegistro" T="ExibirRegistro">Data</MudTableSortLabel></MudTh>
                         <MudTh><MudTableSortLabel SortLabel="envolvido" T="ExibirRegistro">Nome do Envolvido</MudTableSortLabel></MudTh>
                         <MudTh><MudTableSortLabel SortLabel="fato" T="ExibirRegistro">Município</MudTableSortLabel></MudTh>
-                        <MudTh><MudTableSortLabel SortLabel="statusRegistro" T="ExibirRegistro">Status</MudTableSortLabel></MudTh>
-                        <MudTh>Ações</MudTh>
+                        <MudTh Style="text-align:center"><MudTableSortLabel SortLabel="statusRegistro" T="ExibirRegistro">Status</MudTableSortLabel></MudTh>
+                        <MudTh Style="text-align:center">Ações</MudTh>
                     </HeaderContent>
                     <RowTemplate>
                         @foreach (var envolvido in @context.Envolvidos)
                         {
                             <MudTd DataLabel="Id">@context.Id</MudTd>
-                            <MudTd DataLabel="Tipo">
+                            <MudTd DataLabel="Tipo" Style="text-align:center">
                                 @if(@context.TipoDeRegistro == "TENTATIVA")
                                 {
                                     <MudChip Style="background-color: #2979FF">@context.TipoDeRegistro</MudChip>
@@ -67,7 +67,7 @@
                             <MudTd DataLabel="Data">@context.DataRegistroBOE.Value.ToString("d")</MudTd>
                             <MudTd DataLabel="Envolvido">@envolvido.NomeEnvolvido</MudTd>
                             <MudTd DataLabel="Município">@(context.Fato == null ? "N/A" : context.Fato.MunicipioFato)</MudTd>
-                            <MudTd DataLabel="Status">
+                            <MudTd DataLabel="Status" Style="text-align:center">
                                 @if (!@context.StatusRegistro)
                                 {
                                     <MudAvatar Size="Size.Small" Style="background-color: #1DE9B6" />
@@ -78,6 +78,30 @@
                                 }
                             </MudTd>
                             <MudTd DataLabel="Ações">
+                                <MudTooltip Placement="Placement.Left">
+                                    <ChildContent>
+                                        <MudIconButton Icon="@Icons.Material.Filled.Info"/>
+                                    </ChildContent>
+                                    <TooltipContent>
+                                        <MudText Typo="Typo.caption">
+                                            Registrado em: 
+                                        </MudText>
+                                        <MudDivider DividerType="DividerType.FullWidth"/>
+                                        <MudText Typo="Typo.body2">@context.DataLancamento</MudText>
+                                        <MudDivider DividerType="DividerType.FullWidth"/>
+                                        <MudText Typo="Typo.caption">
+                                            Atualizado em: 
+                                        </MudText>
+                                        <MudDivider DividerType="DividerType.FullWidth"/>
+                                        <MudText Typo="Typo.body2">@context.DataAtualizacao</MudText>
+                                        <MudDivider DividerType="DividerType.FullWidth"/>
+                                        <MudText Typo="Typo.caption">
+                                            Último usuário: 
+                                        </MudText>
+                                        <MudDivider DividerType="DividerType.FullWidth"/>
+                                        <MudText Typo="Typo.body2">@context.UsuarioRegistro</MudText>
+                                    </TooltipContent>
+                                </MudTooltip>
                                 <MudTooltip Text="Editar">
                                     <MudIconButton OnClick="@(()=> Editar(context.Id))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
                                 </MudTooltip>
@@ -135,17 +159,8 @@
         return registros;
     }
 
-    private async Task<TableData<ExibirRegistro>> ServerReload(TableState state)
+    private IEnumerable<ExibirRegistro> Procurar(IEnumerable<ExibirRegistro> registros)
     {
-        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
-
-        registros = await ObterTodosRegistros(usuarioLogado);
-
-        GerarGraficoStatusRegistro();
-        GerarGraficoComparativoTentativaConsumado();
-        StateHasChanged();
-
-        //Procurar
         registros = registros.Where(registro =>
         {
             if (string.IsNullOrWhiteSpace(procurar))
@@ -162,6 +177,22 @@
                 return true;
             return false;
         }).ToArray();
+
+        return registros;
+    }
+
+    private async Task<TableData<ExibirRegistro>> ServerReload(TableState state)
+    {
+        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
+
+        registros = await ObterTodosRegistros(usuarioLogado);
+
+        GerarGraficoStatusRegistro();
+        GerarGraficoComparativoTentativaConsumado();
+        StateHasChanged();
+
+        //Procurar
+        registros = Procurar(registros);
 
         //Ordenamento
         switch (state.SortLabel)

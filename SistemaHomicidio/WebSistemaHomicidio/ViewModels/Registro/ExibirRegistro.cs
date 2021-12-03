@@ -9,7 +9,7 @@ using WebSistemaHomicidio.ViewModels.Inquerito;
 
 namespace WebSistemaHomicidio.ViewModels.Registro
 {
-    public class ExibirRegistro 
+    public class ExibirRegistro
     {
         public int Id { get; set; }
 
@@ -33,6 +33,10 @@ namespace WebSistemaHomicidio.ViewModels.Registro
         public bool StatusRegistro { get; set; }
 
         public string ObservacaoRegistro { get; set; }
+
+        public DateTime DataLancamento { get; set; }
+
+        public DateTime? DataAtualizacao { get; set; }
 
         public string UsuarioRegistro { get; set; }
 

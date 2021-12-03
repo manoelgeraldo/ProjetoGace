@@ -46,6 +46,11 @@ namespace Infra.CrossCutting.ViewModels
         /// </summary>
         /// /// <example>TESTANDO API</example>
         public string ObservacaoRegistro { get; set; }
+
+        public DateTime DataLancamento { get; set; }
+
+        public DateTime? DataAtualizacao { get; set; }
+
         public string UsuarioRegistro { get; set; }
 
         public ExibirFato Fato { get; set; }

@@ -9,8 +9,8 @@
                     <MudPaper Class="pa-5 mx-2" Elevation="3">
                         <MudGrid>
                             <!--Tipo de Envolvimento-->
-                            <MudItem xs="12" sm="6" md="4">
-                                <MudField Label="Tipo de Envolvimento" Variant="Variant.Outlined" InnerPadding="false">
+                            <MudItem xs="12" sm="6" md="3">
+                                <MudField Label="Tipo de Envolvimento" Variant="Variant.Outlined" InnerPadding="false" Class="container">
                                     <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.TipoEnvolvido">
                                         <MudRadio Option="@("VITIMA")" Color="Color.Primary">Vítima</MudRadio>
                                         <MudRadio Option="@("IMPULTADO")" Color="Color.Primary">Impultado</MudRadio>
@@ -19,16 +19,16 @@
                                 </MudField>
                             </MudItem>
                             <!--Autoria-->
-                            <MudItem xs="12" sm="6" md="4">
+                            <MudItem xs="12" sm="6" md="3">
                                 <MudField Label="Autoria" Variant="Variant.Outlined" InnerPadding="false">
-                                    <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Autoria">
+                                    <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Autoria" >
                                         <MudRadio Option="@("CONHECIDA")" Color="Color.Primary">Conhecida</MudRadio>
                                         <MudRadio Option="@("DESCONHECIDA")" Color="Color.Primary">Desconhecida</MudRadio>
                                     </MudRadioGroup>
                                 </MudField>
                             </MudItem>
                             <!--Prisão Em Flagrante-->
-                            <MudItem xs="12" sm="6" md="2">
+                            <MudItem xs="12" sm="6" md="3">
                                 <MudField Label="Prisão Em Flagrante" Variant="Variant.Outlined" InnerPadding="false">
                                     <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.Flagrante">
                                         <MudRadio Option="@("SIM")" Color="Color.Primary">Sim</MudRadio>
@@ -80,16 +80,18 @@
                                                DisableToolbar="true"
                                                DateFormat="dd/MM/yyyy"
                                                AllowKeyboardInput="true"
+                                               MinDate="DateTime.Now.AddYears(-100)"
                                                MaxDate="DateTime.Now"
-                                               For="@(()=> novoEnvolvido.DataNascimento)"
-                                               @bind-Date="@novoEnvolvido.DataNascimento" />
+                                               Date="@novoEnvolvido.DataNascimento"
+                                               DateChanged="@((e) => { dataNascimento = Convert.ToDateTime(e.Value.ToString()); CalcularIdade(); })"/>
                             </MudItem>
                             <!--Idade Exata-->
                             <MudItem xs="12" sm="6" md="2">
                                 <MudTextField Label="Idade Exata"
                                               Variant="Variant.Outlined"
-                                              Adornment="Adornment.End" 
-                                              @bind-Value="@novoEnvolvido.IdadeExata"/>
+                                              Adornment="Adornment.End"
+                                              @bind-Value="@novoEnvolvido.IdadeExata"
+                                              Text="@idadeExata"/>
                             </MudItem>
                             <!--Idade Aparente-->
                             <MudItem xs="12" sm="6" md="2">
@@ -628,6 +630,24 @@
         Criminal = new NovoCriminal()
     };
 
+    string idadeExata;
+    DateTime dataNascimento = new DateTime();
+
+    void CalcularIdade()
+    {
+        var dataHoje = DateTime.Now;
+        var anoHoje = dataHoje.Year;
+        var anoNascimento = dataNascimento.Year;
+        var idade = anoHoje - anoNascimento;
+        if (dataHoje.DayOfYear < dataNascimento.DayOfYear)
+        {
+            idade = idade - 1;
+        }
+        novoEnvolvido.DataNascimento = dataNascimento;
+        novoEnvolvido.IdadeExata = idade;
+        idadeExata = idade.ToString();
+    }
+
     void Salvar() => ModalInstance.CloseAsync(ModalResult.Ok<NovoEnvolvido>(novoEnvolvido));
 
     void Cancelar() => ModalInstance.CancelAsync();
@@ -999,3 +1019,7 @@
         return motivacaoCrime.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 }
+
+<style>
+
+</style>

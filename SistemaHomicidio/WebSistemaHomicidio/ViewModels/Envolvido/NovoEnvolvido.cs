@@ -24,9 +24,6 @@ namespace WebSistemaHomicidio.ViewModels.Envolvido
         public string NomeSocial { get; set; }
         public string Vulgo { get; set; }
         public string NomeGenitora { get; set; }
-
-        [Display(Name = "Data de Nascimento")]
-        [Required(ErrorMessage = "Informe a {0}!")]
         public DateTime? DataNascimento { get; set; }
         public int? IdadeAparente { get; set; }
         public int? IdadeExata { get; set; }
