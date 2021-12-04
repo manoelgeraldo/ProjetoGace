@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MudBlazor;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WebSistemaHomicidio.ViewModels.Arquivo;
@@ -39,6 +40,10 @@ namespace WebSistemaHomicidio.ViewModels.Registro
         public DateTime? DataAtualizacao { get; set; }
 
         public string UsuarioRegistro { get; set; }
+
+        public bool Exibir { get; set; }
+
+        public string Icon { get; set; } = Icons.Material.Filled.AddCircle;
 
         public ExibirFato Fato { get; set; }
 

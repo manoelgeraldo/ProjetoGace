@@ -36,81 +36,114 @@
                                       Adornment="Adornment.Start"
                                       AdornmentIcon="@Icons.Material.Filled.Search"
                                       IconSize="Size.Medium"
-                                      Class="mt-0">
+                                      Class="mt-0 pb-2" Clearable="true">
                         </MudTextField>
                     </ToolBarContent>
                     <HeaderContent>
-                        <MudTh><MudTableSortLabel SortLabel="id" T="ExibirRegistro">Id</MudTableSortLabel></MudTh>
+                        <MudTh></MudTh>
+                        <MudTh Style="text-align:center"><MudTableSortLabel SortLabel="id" T="ExibirRegistro">Id</MudTableSortLabel></MudTh>
                         <MudTh Style="text-align:center"><MudTableSortLabel SortLabel="tipoDeRegistro" T="ExibirRegistro">Tipo</MudTableSortLabel></MudTh>
-                        <MudTh><MudTableSortLabel SortLabel="boe" T="ExibirRegistro">Nº BOE</MudTableSortLabel></MudTh>
-                        <MudTh><MudTableSortLabel SortLabel="dataRegistro" T="ExibirRegistro">Data</MudTableSortLabel></MudTh>
-                        <MudTh><MudTableSortLabel SortLabel="envolvido" T="ExibirRegistro">Nome do Envolvido</MudTableSortLabel></MudTh>
+                        <MudTh Style="text-align:center"><MudTableSortLabel SortLabel="boe" T="ExibirRegistro">Nº BOE</MudTableSortLabel></MudTh>
+                        <MudTh Style="text-align:center"><MudTableSortLabel SortLabel="dataRegistro" T="ExibirRegistro">Data</MudTableSortLabel></MudTh>
                         <MudTh><MudTableSortLabel SortLabel="fato" T="ExibirRegistro">Município</MudTableSortLabel></MudTh>
-                        <MudTh Style="text-align:center"><MudTableSortLabel SortLabel="statusRegistro" T="ExibirRegistro">Status</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortLabel="statusRegistro" T="ExibirRegistro">Status</MudTableSortLabel></MudTh>
                         <MudTh Style="text-align:center">Ações</MudTh>
                     </HeaderContent>
                     <RowTemplate>
-                        @foreach (var envolvido in @context.Envolvidos)
-                        {
-                            <MudTd DataLabel="Id">@context.Id</MudTd>
-                            <MudTd DataLabel="Tipo" Style="text-align:center">
-                                @if(@context.TipoDeRegistro == "TENTATIVA")
-                                {
-                                    <MudChip Style="background-color: #2979FF">@context.TipoDeRegistro</MudChip>
-                                }
-                                else
-                                {
-                                    <MudChip Style="background-color: #1DE9B6">@context.TipoDeRegistro</MudChip>   
-                                }
-                            </MudTd>
-                            <MudTd DataLabel="Nº BOE">@context.BOE</MudTd>
-                            <MudTd DataLabel="Data">@context.DataRegistroBOE.Value.ToString("d")</MudTd>
-                            <MudTd DataLabel="Envolvido">@envolvido.NomeEnvolvido</MudTd>
-                            <MudTd DataLabel="Município">@(context.Fato == null ? "N/A" : context.Fato.MunicipioFato)</MudTd>
-                            <MudTd DataLabel="Status" Style="text-align:center">
-                                @if (!@context.StatusRegistro)
-                                {
-                                    <MudAvatar Size="Size.Small" Style="background-color: #1DE9B6" />
-                                }
-                                else
-                                {
-                                    <MudAvatar Size="Size.Small" Style="background-color: #2979FF" />
-                                }
-                            </MudTd>
-                            <MudTd DataLabel="Ações">
-                                <MudTooltip Placement="Placement.Left">
-                                    <ChildContent>
-                                        <MudIconButton Icon="@Icons.Material.Filled.Info"/>
-                                    </ChildContent>
-                                    <TooltipContent>
-                                        <MudText Typo="Typo.caption">
-                                            Registrado em: 
-                                        </MudText>
-                                        <MudDivider DividerType="DividerType.FullWidth"/>
-                                        <MudText Typo="Typo.body2">@context.DataLancamento</MudText>
-                                        <MudDivider DividerType="DividerType.FullWidth"/>
-                                        <MudText Typo="Typo.caption">
-                                            Atualizado em: 
-                                        </MudText>
-                                        <MudDivider DividerType="DividerType.FullWidth"/>
-                                        <MudText Typo="Typo.body2">@context.DataAtualizacao</MudText>
-                                        <MudDivider DividerType="DividerType.FullWidth"/>
-                                        <MudText Typo="Typo.caption">
-                                            Último usuário: 
-                                        </MudText>
-                                        <MudDivider DividerType="DividerType.FullWidth"/>
-                                        <MudText Typo="Typo.body2">@context.UsuarioRegistro</MudText>
-                                    </TooltipContent>
-                                </MudTooltip>
-                                <MudTooltip Text="Editar">
-                                    <MudIconButton OnClick="@(()=> Editar(context.Id))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
-                                </MudTooltip>
-                                <MudTooltip Text="Excluir">
-                                    <MudIconButton OnClick="@(()=> Excluir(context.Id))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
-                                </MudTooltip>
-                            </MudTd>
-                        }
+                        <MudTd DataLabel="">
+                            <MudIcon Icon="@context.Icon" @onclick="@(()=> ExibirEnvolvidoEMudarIcon(@context.Id))"/>
+                        </MudTd>
+                        <MudTd DataLabel="Id">@context.Id</MudTd>
+                        <MudTd DataLabel="Tipo">
+                            @if(@context.TipoDeRegistro == "TENTATIVA")
+                            {
+                                <MudChip Style="background-color: #2979FF">@context.TipoDeRegistro</MudChip>
+                            }
+                            else
+                            {
+                                <MudChip Style="background-color: #1DE9B6">@context.TipoDeRegistro</MudChip>   
+                            }
+                        </MudTd>
+                        <MudTd DataLabel="Nº BOE">@context.BOE</MudTd>
+                        <MudTd DataLabel="Data">@context.DataRegistroBOE.Value.ToString("d")</MudTd>
+                        <MudTd DataLabel="Município">@(context.Fato == null ? "N/A" : context.Fato.MunicipioFato)</MudTd>
+                        <MudTd DataLabel="Status">
+                            @if (!@context.StatusRegistro)
+                            {
+                                <MudAvatar Size="Size.Small" Style="background-color: #1DE9B6" />
+                            }
+                            else
+                            {
+                                <MudAvatar Size="Size.Small" Style="background-color: #2979FF" />
+                            }
+                        </MudTd>
+                        <MudTd DataLabel="Ações">
+                            <MudTooltip Placement="Placement.Left">
+                                <ChildContent>
+                                    <MudIconButton Icon="@Icons.Material.Filled.Info"/>
+                                </ChildContent>
+                                <TooltipContent>
+                                    <MudText Typo="Typo.caption">
+                                        Registrado em: 
+                                    </MudText>
+                                    <MudDivider DividerType="DividerType.FullWidth"/>
+                                    <MudText Typo="Typo.body2">@context.DataLancamento</MudText>
+                                    <MudDivider DividerType="DividerType.FullWidth"/>
+                                    <MudText Typo="Typo.caption">
+                                        Atualizado em: 
+                                    </MudText>
+                                    <MudDivider DividerType="DividerType.FullWidth"/>
+                                    <MudText Typo="Typo.body2">@context.DataAtualizacao</MudText>
+                                    <MudDivider DividerType="DividerType.FullWidth"/>
+                                    <MudText Typo="Typo.caption">
+                                        Último usuário: 
+                                    </MudText>
+                                    <MudDivider DividerType="DividerType.FullWidth"/>
+                                    <MudText Typo="Typo.body2">@context.UsuarioRegistro</MudText>
+                                </TooltipContent>
+                            </MudTooltip>
+                            <MudTooltip Text="Editar">
+                                <MudIconButton OnClick="@(()=> Editar(context.Id))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
+                            </MudTooltip>
+                            <MudTooltip Text="Excluir">
+                                <MudIconButton OnClick="@(()=> Excluir(context.Id))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                            </MudTooltip>
+                        </MudTd>
                     </RowTemplate>
+                    <ChildRowContent>
+                        @if(@context.Exibir)
+                        {
+                            <td colspan="6">
+                                <MudTable Items="@context.Envolvidos" Context="EnvolvidoContext" 
+                                   Dense="true" FixedHeader="true" Hover="true">
+                                   <ColGroup>
+		                                <col />
+		                                <col />
+		                                <col style="width: 100px;"/>
+                                        <col />
+		                                <col />
+		                                <col style="width: 100px;"/>
+	                                </ColGroup>
+	                                <HeaderContent>
+		                                <MudTh Style="text-align:center">Nº</MudTh>
+		                                <MudTh>Envolvimento</MudTh>
+		                                <MudTh>Nome do Envolvido</MudTh>
+                                        <MudTh Style="text-align:center">Data de Nascimento</MudTh>
+		                                <MudTh Style="text-align:center">Idade</MudTh>
+		                                <MudTh>Nome da Mãe</MudTh>
+	                                </HeaderContent>
+	                                <RowTemplate>
+		                                <MudTd DataLabel="Nº" Style="text-align:center">@EnvolvidoContext.SequencialEnvolvido</MudTd>
+		                                <MudTd DataLabel="Envolvimento">@EnvolvidoContext.TipoEnvolvido</MudTd>
+		                                <MudTd DataLabel="Nome do Envolvido" Style="width: 100%;">@EnvolvidoContext.NomeEnvolvido</MudTd>
+                                        <MudTd DataLabel="Data de Nascimento" Style="text-align:center">@EnvolvidoContext.DataNascimento.Value.ToString("d")</MudTd>
+                                        <MudTd DataLabel="Idade" Style="text-align:center">@EnvolvidoContext.IdadeExata</MudTd>
+                                        <MudTd DataLabel="Nome da Mãe" Style="width: 100%;">@EnvolvidoContext.NomeGenitora</MudTd>
+	                                </RowTemplate>
+	                            </MudTable>
+                            </td>
+                        }
+                    </ChildRowContent>
                     <NoRecordsContent>
                         <MudText>Não encontrado!</MudText>
                     </NoRecordsContent>
@@ -139,6 +172,22 @@
     public double[] DadosComparativoStatusRegistro = new double[] { };
     public List<ChartSeries> DadosComparativosEntreTentativaEConsumado = new List<ChartSeries> { };
 
+    private void ExibirEnvolvidoEMudarIcon(int id)
+    {
+        var icon = registros.FirstOrDefault(x => x.Id == id).Icon;
+
+        if (icon == Icons.Material.Filled.AddCircle)
+        {
+            registros.FirstOrDefault(x => x.Id == id).Icon = Icons.Material.Filled.ArrowCircleDown;
+            registros.FirstOrDefault(x => x.Id == id).Exibir = true;
+        }
+        else
+        {
+            registros.FirstOrDefault(x => x.Id == id).Icon = Icons.Material.Filled.AddCircle;
+            registros.FirstOrDefault(x => x.Id == id).Exibir = false;
+        }
+    }
+
     public async Task<ExibirUsuario> ObterUsuarioLogadoNoSistema()
     {
         return await localStorage.GetItemAsync<ExibirUsuario>("usuario");
@@ -156,7 +205,7 @@
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
         );
 
-        return registros;
+        return registros.OrderByDescending(x=>x.DataRegistroBOE);
     }
 
     private IEnumerable<ExibirRegistro> Procurar(IEnumerable<ExibirRegistro> registros)
@@ -172,8 +221,6 @@
             if (registro.DataRegistroBOE.ToString().Contains(procurar, StringComparison.OrdinalIgnoreCase))
                 return true;
             if ($"{registro.Id} {registro.Fato.MunicipioFato}".Contains(procurar, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (registro.Envolvidos.ToString().Contains(procurar, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }).ToArray();
