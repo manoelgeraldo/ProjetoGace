@@ -113,16 +113,16 @@
                     <ChildRowContent>
                         @if(@context.Exibir)
                         {
-                            <td colspan="6">
+                            <td colspan="8">
                                 <MudTable Items="@context.Envolvidos" Context="EnvolvidoContext" 
                                    Dense="true" FixedHeader="true" Hover="true">
                                    <ColGroup>
 		                                <col />
 		                                <col />
-		                                <col style="width: 100px;"/>
+		                                <col />
                                         <col />
 		                                <col />
-		                                <col style="width: 100px;"/>
+		                                <col />
 	                                </ColGroup>
 	                                <HeaderContent>
 		                                <MudTh Style="text-align:center">Nº</MudTh>
@@ -135,10 +135,10 @@
 	                                <RowTemplate>
 		                                <MudTd DataLabel="Nº" Style="text-align:center">@EnvolvidoContext.SequencialEnvolvido</MudTd>
 		                                <MudTd DataLabel="Envolvimento">@EnvolvidoContext.TipoEnvolvido</MudTd>
-		                                <MudTd DataLabel="Nome do Envolvido" Style="width: 100%;">@EnvolvidoContext.NomeEnvolvido</MudTd>
+		                                <MudTd DataLabel="Nome do Envolvido">@EnvolvidoContext.NomeEnvolvido</MudTd>
                                         <MudTd DataLabel="Data de Nascimento" Style="text-align:center">@EnvolvidoContext.DataNascimento.Value.ToString("d")</MudTd>
                                         <MudTd DataLabel="Idade" Style="text-align:center">@EnvolvidoContext.IdadeExata</MudTd>
-                                        <MudTd DataLabel="Nome da Mãe" Style="width: 100%;">@EnvolvidoContext.NomeGenitora</MudTd>
+                                        <MudTd DataLabel="Nome da Mãe">@EnvolvidoContext.NomeGenitora</MudTd>
 	                                </RowTemplate>
 	                            </MudTable>
                             </td>
@@ -221,6 +221,8 @@
             if (registro.DataRegistroBOE.ToString().Contains(procurar, StringComparison.OrdinalIgnoreCase))
                 return true;
             if ($"{registro.Id} {registro.Fato.MunicipioFato}".Contains(procurar, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (registro.Envolvidos.ToString().Contains(procurar, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }).ToArray();
@@ -380,7 +382,3 @@
     }
     public string[] labelGraficoStatusRegistro = { "Consistido", "Não Consistido" };
 }
-
-<style>
-    
-</style>

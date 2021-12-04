@@ -1,0 +1,185 @@
+﻿@page "/SIMIP/usuarios"
+@attribute [Authorize]
+
+ <EditForm Model="@novoUsuario" OnValidSubmit="AdicionarUsuario">
+    <DataAnnotationsValidator />
+    <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+        <MudGrid>
+            <!-- Campos de preenchimento-->
+            <MudItem xs="12">
+                <MudPaper Class="pa-2 mx-2" Elevation="0">
+                    <MudGrid>
+                        <!-- Nome -->
+                        <MudItem xs="12" sm="6" md="5">
+                            <MudTextField @bind-Value="@novoUsuario.Nome"
+                                            Label="Nome e SobreNome"
+                                            Variant="Variant.Outlined"
+                                            For="@(()=> novoUsuario.Nome)"/>
+                        </MudItem>
+                        <!-- Login -->
+                        <MudItem xs="12" sm="6" md="2">
+                            <MudTextField @bind-Value="@novoUsuario.Login"
+                                            Label="CPF"
+                                            Variant="Variant.Outlined"
+                                            MaxLength="11"
+                                            HelperText="Apenas os números."
+                                            For="@(()=> novoUsuario.Login)"/>
+                        </MudItem>
+                        <!-- Senha -->
+                        <MudItem xs="12" sm="6" md="2">
+                            <MudTextField @bind-Value="@novoUsuario.Senha"
+                                            Label="Senha"
+                                            MaxLength="7"
+                                            Variant="Variant.Outlined"
+                                            HelperText="7 caracteres."
+                                            For="@(()=> novoUsuario.Senha)"/>
+                        </MudItem>
+                        <!-- Função -->
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudSelect T="string" Label="Função" HelperText="@FuncaoSelecionada" Variant="Variant.Outlined" @bind-Value="@descricaoFuncao">
+                                @foreach (var funcao in Authentication.Usuario.Funcoes)
+                                {
+                                    @if(funcao.Descricao == "Gestor")
+                                    {
+                                        <MudSelectItem Value="@("Gestor")"/>
+                                        <MudSelectItem Value="@("Administrador")"/>
+                                        <MudSelectItem Value="@("Operador")"/>
+                                    }
+                                    else
+                                    {
+                                        <MudSelectItem Value="@("Administrador")"/>
+                                        <MudSelectItem Value="@("Operador")"/>
+                                    }
+                                }
+                            </MudSelect>
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+            </MudItem>
+            <!-- Tabela de Usuários -->
+            <MudItem xs="12">
+                <MudPaper Class="pa-2 mx-2" Elevation="0">
+                    <MudTable Items="@usuarios" Dense="true" Hover="true" Striped="true">
+                        <ToolBarContent>
+                            <MudText Typo="Typo.subtitle2">Lista de Usuários</MudText>
+                            <MudSpacer />
+                            <MudTooltip Text="Adicionar" Arrow="true" Placement="Placement.Left">
+                                <MudFab ButtonType="ButtonType.Submit" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Small" IconSize="Size.Medium" Class="ma-2" />
+                            </MudTooltip>
+                        </ToolBarContent>
+                        <HeaderContent>
+                            <MudTh>Nome</MudTh>
+                            <MudTh>Login</MudTh>
+                            <MudTh>Função</MudTh>
+                            <MudTh>Ações</MudTh>
+                        </HeaderContent>
+                        <RowTemplate Context="usuarios">
+                            <MudTd DataLabel="Nome">@usuarios.Nome</MudTd>
+                            <MudTd DataLabel="Login">@usuarios.Login</MudTd>
+                            @foreach (var funcao in @usuarios.Funcoes)
+                            {
+                                <MudTd DataLabel="Função">@funcao.Descricao</MudTd>   
+                            }
+                            <MudTd DataLabel="Ações">
+                                <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
+                                    <MudIconButton @onclick="(()=> ExcluirUsuario(usuarios))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                                </MudTooltip>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</EditForm>
+
+
+@code {
+    string FuncaoSelecionada;
+    string descricaoFuncao;
+
+    public ReferenciaFuncao funcao = new ReferenciaFuncao() { };
+
+    public List<Usuario> usuarios { get; set; } = new List<Usuario> { };
+
+    public List<ReferenciaFuncao> listaFuncoes { get; set; } = new List<ReferenciaFuncao> { };
+
+    public NovoUsuario novoUsuario = new NovoUsuario()
+    {
+        Funcoes = new List<ReferenciaFuncao>()
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
+        await ObterTodosUsuarios(usuarioLogado);
+    }
+
+    public async Task<ExibirUsuario> ObterUsuarioLogadoNoSistema()
+    {
+        return await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+    }
+
+    private async Task<List<Usuario>> ObterTodosUsuarios(ExibirUsuario usuarioLogado)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/Usuarios/lista-de-usuarios");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
+        var response = await httpClient.SendAsync(request);
+
+        usuarios = JsonSerializer.Deserialize<List<Usuario>>
+        (
+            await response.Content.ReadAsStringAsync(),
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
+        );
+
+        return usuarios;
+    }
+
+    void FuncaoDescricao(string descricao)
+    {
+        switch(descricao)
+        {
+            case "Gestor":
+                funcao.Id = 1;
+                break;
+            case "Administrador":
+                funcao.Id = 2;
+                break;
+            case "Operador":
+                funcao.Id = 3;
+                break;
+        }
+    }
+
+    void AdicionarFuncaoNaListaFuncoes(ReferenciaFuncao funcao)
+    {   
+        listaFuncoes.Add(funcao);
+        novoUsuario.Funcoes = listaFuncoes;
+    }
+
+    private async Task AdicionarUsuario()
+    {
+        FuncaoDescricao(descricaoFuncao);
+        AdicionarFuncaoNaListaFuncoes(funcao);
+        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44343/api/Usuarios/novo-usuario");
+        request.Content = new StringContent(JsonSerializer.Serialize(novoUsuario, new JsonSerializerOptions { Converters = { new TimeSpanJsonConverter() } }), Encoding.UTF8, "application/json");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
+        var response = await httpClient.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            snackbar.Add("Usuário Cadastrado!", Severity.Success);
+            StateHasChanged();
+            await ObterTodosUsuarios(usuarioLogado);
+        }
+        else
+        {
+            snackbar.Add("O Usuário não foi Cadastrado!", Severity.Error);
+        }
+    }
+
+    private void ExcluirUsuario(Usuario usuario){}
+
+}

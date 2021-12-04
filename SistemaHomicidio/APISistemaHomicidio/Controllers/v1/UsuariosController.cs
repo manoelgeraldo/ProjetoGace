@@ -49,7 +49,7 @@ namespace APISistemaHomicidio.Controllers.v1
         /// Exibe uma lista com todos os usuários.
         /// </summary>
         [HttpGet]
-        [Authorize(Roles ="Gestor")]
+        [Authorize(Roles = "Gestor, Administrador")]
         [Route("lista-de-usuarios")]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -61,7 +61,7 @@ namespace APISistemaHomicidio.Controllers.v1
         /// Adiciona um novo usuário.
         /// </summary>
         [HttpPost]
-        //[Authorize(Roles = "Gestor")]
+        [Authorize(Roles = "Gestor, Administrador")]
         [Route("novo-usuario")]
         public async Task<IActionResult> Post(NovoUsuario usuario)
         {
