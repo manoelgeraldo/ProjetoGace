@@ -95,7 +95,7 @@
 
 
 @code {
-    
+
     string descricaoFuncao;
 
     public ReferenciaFuncao funcao = new ReferenciaFuncao() { };
@@ -171,7 +171,8 @@
         if (response.IsSuccessStatusCode)
         {
             snackbar.Add("Usuário Cadastrado!", Severity.Success);
-            novoUsuario = new () { Funcoes = new List<ReferenciaFuncao>()};
+            novoUsuario = new ();
+            descricaoFuncao = null;
             StateHasChanged();
             await ObterTodosUsuarios(usuarioLogado);
         }

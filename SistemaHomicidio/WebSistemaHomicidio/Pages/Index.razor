@@ -282,7 +282,7 @@
 
     void Editar(int id) => navigationManager.NavigateTo($"/SIMIP/alterar-registro/{id}");
 
-    async Task Excluir(int id)
+    private async Task Excluir(int id)
     {
         var parameters = new ModalParameters();
         parameters.Add("id", id);
@@ -296,8 +296,8 @@
         }
         else
         {
-            StateHasChanged();
             snackbar.Add("Registro excluído!", Severity.Success);
+            await table.ReloadServerData();
         }
     }
 
