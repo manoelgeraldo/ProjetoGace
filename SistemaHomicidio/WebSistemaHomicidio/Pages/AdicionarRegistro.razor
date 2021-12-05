@@ -68,15 +68,15 @@
                                         <MudTh>Data Registro</MudTh>
                                         <MudTh>Ações</MudTh>
                                     </HeaderContent>
-                                    <RowTemplate Context="listaBOEComplementados">
-                                        <MudTd DataLabel="Nº BOE">@listaBOEComplementados.Boe</MudTd>
-                                        <MudTd DataLabel="Data Registro">@listaBOEComplementados.DataRegistro.Value.ToString("d")</MudTd>
+                                    <RowTemplate Context="BOEComplementado">
+                                        <MudTd DataLabel="Nº BOE">@BOEComplementado.Boe</MudTd>
+                                        <MudTd DataLabel="Data Registro">@BOEComplementado.DataRegistro.Value.ToString("d")</MudTd>
                                         <MudTd DataLabel="Ações">
                                             <MudTooltip Text="Alterar" Arrow="true" Placement="Placement.Left">
-                                                <MudIconButton @onclick="(()=> EditarBOEComplementado(listaBOEComplementados))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
+                                                <MudIconButton @onclick="(()=> EditarBOEComplementado(BOEComplementado))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
                                             </MudTooltip>
                                             <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
-                                                <MudIconButton @onclick="(()=> ExcluirBOEComplementado(listaBOEComplementados))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                                                <MudIconButton @onclick="(()=> ExcluirBOEComplementado(BOEComplementado))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
                                             </MudTooltip>
                                         </MudTd>
                                     </RowTemplate>
@@ -338,17 +338,17 @@
                                             <MudTh>Data de Nascimento</MudTh>
                                             <MudTh>Ações</MudTh>
                                         </HeaderContent>
-                                        <RowTemplate Context="listaEnvolvidos">
-                                            <MudTd DataLabel="Sequencial">@listaEnvolvidos.SequencialEnvolvido</MudTd>
-                                            <MudTd DataLabel="Tipo">@listaEnvolvidos.TipoEnvolvido</MudTd>
-                                            <MudTd DataLabel="Nome">@listaEnvolvidos.NomeEnvolvido</MudTd>
-                                            <MudTd DataLabel="Data de Nascimento">@listaEnvolvidos.DataNascimento.Value.ToString("d")</MudTd>
+                                        <RowTemplate Context="Envolvido">
+                                            <MudTd DataLabel="Sequencial">@Envolvido.SequencialEnvolvido</MudTd>
+                                            <MudTd DataLabel="Tipo">@Envolvido.TipoEnvolvido</MudTd>
+                                            <MudTd DataLabel="Nome">@Envolvido.NomeEnvolvido</MudTd>
+                                            <MudTd DataLabel="Data de Nascimento">@Envolvido.DataNascimento.Value.ToString("d")</MudTd>
                                             <MudTd DataLabel="Ações">
                                                 <MudTooltip Text="Alterar" Arrow="true" Placement="Placement.Left">
-                                                    <MudIconButton OnClick="(()=> EditarEnvolvido(listaEnvolvidos))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" aria-label="editar"></MudIconButton>
+                                                    <MudIconButton OnClick="(()=> EditarEnvolvido(Envolvido))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" aria-label="editar"></MudIconButton>
                                                 </MudTooltip>
                                                 <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
-                                                    <MudIconButton OnClick="(()=> ExcluirEnvolvido(listaEnvolvidos))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" aria-label="delete"></MudIconButton>
+                                                    <MudIconButton OnClick="(()=> ExcluirEnvolvido(Envolvido))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" aria-label="delete"></MudIconButton>
                                                 </MudTooltip>
                                             </MudTd>
                                         </RowTemplate>
@@ -846,9 +846,9 @@
         }
     }
 
-    void ExcluirBOEComplementado(NovoBoe boe)
+    void ExcluirBOEComplementado(NovoBoe boeComplementado)
     {
-        listaBOEComplementados.Remove(boe);
+        listaBOEComplementados.Remove(boeComplementado);
         snackbar.Add("BOE Complementado removido!", Severity.Warning);
     }
 

@@ -23,7 +23,8 @@ namespace Infra.Data.Repositories
         {
             return await context.Usuarios.Include(f => f.Funcoes)
                                          .AsNoTracking()
-                                         .ToListAsync();
+                                         .ToListAsync()
+                                         .ConfigureAwait(false);
         }
 
         public async Task<Usuario> GetAsync(string login)
@@ -31,18 +32,19 @@ namespace Infra.Data.Repositories
             return await context.Usuarios
                                 .Include(f => f.Funcoes)
                                 .AsNoTracking()
-                                .SingleOrDefaultAsync(p => p.Login == login);
+                                .SingleOrDefaultAsync(p => p.Login == login)
+                                .ConfigureAwait(false);
         }
 
         public async Task<Usuario> InsertAsync(Usuario usuario)
         {
-            var verificaUsuario = await context.Usuarios.SingleOrDefaultAsync(l => l.Login == usuario.Login);
+            var verificaUsuario = await context.Usuarios.SingleOrDefaultAsync(l => l.Login == usuario.Login).ConfigureAwait(false);
 
             if(verificaUsuario == null)
             {
-                await InsertUsuarioFuncaoAsync(usuario);
-                await context.Usuarios.AddAsync(usuario);
-                await context.SaveChangesAsync();
+                await InsertUsuarioFuncaoAsync(usuario).ConfigureAwait(false);
+                await context.Usuarios.AddAsync(usuario).ConfigureAwait(false);
+                await context.SaveChangesAsync().ConfigureAwait(false);
                 return usuario;
             }
 
@@ -54,7 +56,7 @@ namespace Infra.Data.Repositories
             var funcoesConsultas = new List<Funcao>();
             foreach (var funcao in usuario.Funcoes)
             {
-                var funcaoConsultada = await context.Funcoes.FindAsync(funcao.Id);
+                var funcaoConsultada = await context.Funcoes.FindAsync(funcao.Id).ConfigureAwait(false);
                 funcoesConsultas.Add(funcaoConsultada);
             }
             usuario.Funcoes = funcoesConsultas;
@@ -62,14 +64,27 @@ namespace Infra.Data.Repositories
 
         public async Task<Usuario> UpdateAsync(Usuario usuario)
         {
-            var usuarioConsultado = await context.Usuarios.FindAsync(usuario.Login);
+            var usuarioConsultado = await context.Usuarios.FindAsync(usuario.Login).ConfigureAwait(false);
             if (usuarioConsultado == null)
             {
                 return null;
             }
             context.Entry(usuarioConsultado).CurrentValues.SetValues(usuario);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync().ConfigureAwait(false);
             return usuarioConsultado;
+        }
+
+        public async Task<Usuario> DeleteAsync(string login)
+        {
+            var usuarioConsultado = await context.Usuarios.FindAsync(login).ConfigureAwait(false);
+
+            if (usuarioConsultado != null)
+            {
+                var usuarioExcluido = context.Usuarios.Remove(usuarioConsultado);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return usuarioExcluido.Entity;
+            }
+            return null;
         }
     }
 }

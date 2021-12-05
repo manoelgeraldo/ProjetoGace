@@ -21,5 +21,7 @@ namespace Service.Interfaces
         Task<ExibirUsuario> UpdateUsuarioAsync(AlterarUsuario alterarUsuario);
 
         Task<ExibirUsuario> ValidaUsuarioEGeraTokenAsync(UsuarioLogin login);
+
+        Task<ExibirUsuario> ExcluirUsuario(string login);
     }
 }

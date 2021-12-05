@@ -144,5 +144,12 @@
             Altera um usuário existente.
             </summary>
         </member>
+        <member name="M:APISistemaHomicidio.Controllers.v1.UsuariosController.Delete(System.String)">
+            <summary>
+            Exclui um usuário.
+            </summary>
+            <param name="login">Id do registro</param>
+            <remarks>Ao excluir um usuário o mesmo será removido permanentemente da base!</remarks>
+        </member>
     </members>
 </doc>

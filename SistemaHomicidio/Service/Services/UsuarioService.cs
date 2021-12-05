@@ -55,7 +55,7 @@ namespace Service.Services
 
         public async Task<ExibirUsuario> UpdateUsuarioAsync(AlterarUsuario alterarUsuario)
         {
-            var usuario = await repository.GetAsync(alterarUsuario.Login);
+            var usuario = await repository.GetAsync(alterarUsuario.Login).ConfigureAwait(false);
             usuario.Nome = alterarUsuario.Nome;
             usuario.Senha = alterarUsuario.Senha;
             ConverteSenhaEmHash(usuario);
@@ -99,6 +99,12 @@ namespace Service.Services
                 default:
                     throw new InvalidOperationException();
             }
+        }
+
+        public async Task<ExibirUsuario> ExcluirUsuario(string login)
+        {
+            var usuario = await repository.DeleteAsync(login).ConfigureAwait(false);
+            return mapper.Map<ExibirUsuario>(usuario);
         }
     }
 }

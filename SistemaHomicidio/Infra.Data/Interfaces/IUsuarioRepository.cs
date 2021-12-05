@@ -13,5 +13,7 @@ namespace Infra.Data.Interfaces
         Task<Usuario> InsertAsync(Usuario usuario);
 
         Task<Usuario> UpdateAsync(Usuario usuario);
+
+        Task<Usuario> DeleteAsync(string login);
     }
 }

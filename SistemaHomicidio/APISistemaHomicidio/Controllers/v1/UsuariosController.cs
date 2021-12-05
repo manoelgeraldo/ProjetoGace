@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Infra.CrossCutting.ViewModels.Usuario;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
 using System.Threading.Tasks;
@@ -89,6 +90,26 @@ namespace APISistemaHomicidio.Controllers.v1
                 return NotFound();
             }
             return Ok("Usuário alterado com sucesso!");
+        }
+
+        /// <summary>
+        /// Exclui um usuário.
+        /// </summary>
+        /// <param name="login">Id do registro</param>
+        /// <remarks>Ao excluir um usuário o mesmo será removido permanentemente da base!</remarks>
+        [Authorize(Roles = "Gestor, Administrador")]
+        [HttpDelete("excluir-usuario/{login}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Delete(string login)
+        {
+            var usuarioExcluido = await manager.ExcluirUsuario(login).ConfigureAwait(false);
+            if (usuarioExcluido is null)
+            {
+                return NotFound();
+            }
+            return NoContent();
         }
     }
 }
