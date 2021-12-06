@@ -222,7 +222,7 @@
                 return true;
             if ($"{registro.Id} {registro.Fato.MunicipioFato}".Contains(procurar, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (registro.Envolvidos.ToString().Contains(procurar, StringComparison.OrdinalIgnoreCase))
+            if (registro.Envolvidos.Where(x => x.NomeEnvolvido.Contains(procurar, StringComparison.OrdinalIgnoreCase)).Any())
                 return true;
             return false;
         }).ToArray();
