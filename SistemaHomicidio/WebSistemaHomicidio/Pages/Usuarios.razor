@@ -1,7 +1,7 @@
 ﻿@page "/SIMIP/usuarios"
 @attribute [Authorize]
 
- <EditForm Model="@novoUsuario" OnValidSubmit="AdicionarUsuario">
+ <EditForm OnValidSubmit="AdicionarUsuario" class="editForm">
     <DataAnnotationsValidator />
     <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
         <MudGrid>
@@ -202,3 +202,9 @@
     }
 
 }
+
+<style>
+    .editForm{
+        padding-bottom: 440px;
+    }
+</style>

@@ -11,7 +11,7 @@
                 <MudPaper Class="sombra pa-5 mx-2" Elevation="3">
                     <MudGrid>
                         <!-- Nº BOE-->
-                        <MudItem xs="12" sm="6" md="3">
+                        <MudItem xs="12" sm="6" md="2">
                             <MudTextField @bind-Value="@novoRegistro.BOE"
                                           Label="Nº BOE"
                                           Variant="Variant.Outlined"
@@ -29,7 +29,7 @@
                                            For="@(()=> novoRegistro.DataRegistroBOE)" />
                         </MudItem>
                         <!-- Tipo de Registro-->
-                        <MudItem xs="12" sm="6" md="3">
+                        <MudItem xs="12" sm="6" md="4">
                             <MudField Label="Tipo de Registro" Variant="Variant.Outlined" InnerPadding="false" Class="align-items-center">
                                 <MudRadioGroup @bind-SelectedOption="@novoRegistro.TipoDeRegistro">
                                     <MudRadio Option="@("TENTATIVA")" Color="Color.Primary">Tentativa</MudRadio>
@@ -50,7 +50,10 @@
                         </MudItem>
                         <!--Status do Registro-->
                         <MudItem xs="12" sm="6" md="1">
-                            <MudSwitch @bind-Checked="novoRegistro.StatusRegistro" Color="Color.Primary" Class="status"/>
+                            <MudGrid Justify="Justify.Center" Style="align-content: center;">
+                                <MudText Typo="Typo.caption">Status</MudText>
+                                <MudSwitch @bind-Checked="novoRegistro.StatusRegistro" Color="Color.Primary" Class="status"/>
+                            </MudGrid>
                         </MudItem>
                         <!--BOEComplementado-->
                         <MudItem xs="12" sm="6">
@@ -139,7 +142,7 @@
                                         </MudField>
                                     </MudItem>
                                     <!--Natureza-->
-                                    <MudItem xs="12" sm="6" md="8">
+                                    <MudItem xs="12" sm="6" md="4">
                                         <MudSelect T="string" Label="Natureza" Variant="Variant.Outlined" @bind-value="@novoRegistro.Fato.NaturezaBoe">
                                             <MudSelectItem Value="@("HOMICIDIO")" />
                                             <MudSelectItem Value="@("FEMINICIDIO")" />
@@ -169,7 +172,7 @@
                                         </MudSelect>
                                     </MudItem>
                                     <!--Município-->
-                                    <MudItem xs="12" sm="6" md="8">
+                                    <MudItem xs="12" sm="6" md="4">
                                         <MudAutocomplete T="Municipio_Diretoria_AIS_BPM" Label="Município"
                                                          Variant="Variant.Outlined"
                                                          @bind-Value="@novoRegistro.Fato.MunicipioFato"
@@ -178,14 +181,14 @@
                                         <ValidationMessage For="@(()=> novoRegistro.Fato.MunicipioFato)" />
                                     </MudItem>
                                     <!--Bairro-->
-                                    <MudItem xs="12" sm="6" md="4">
+                                    <MudItem xs="12" sm="6" md="3">
                                         <MudTextField Label="Bairro"
                                                       Variant="Variant.Outlined"
                                                       @bind-Value="@novoRegistro.Fato.BairroFato"
                                                       For="@(()=> novoRegistro.Fato.BairroFato)"/>
                                     </MudItem>
                                     <!--Logradouro-->
-                                    <MudItem xs="12" sm="6" md="6">
+                                    <MudItem xs="12" sm="6" md="3">
                                         <MudTextField @bind-Value="@novoRegistro.Fato.LogradouroFato"
                                                       Label="Logradouro"
                                                       Variant="Variant.Outlined" />
@@ -215,14 +218,14 @@
                                                       Variant="Variant.Outlined" />
                                     </MudItem>
                                     <!--Local do Fato-->
-                                    <MudItem xs="12" sm="6" md="6">
+                                    <MudItem xs="12" sm="6" md="4">
                                         <MudAutocomplete T="string" Label="Local do Fato"
                                                          @bind-Value="@novoRegistro.Fato.LocalFato"
                                                          Variant="Variant.Outlined"
                                                          SearchFunc="@LocalFato" />
                                     </MudItem>
                                     <!--Zona-->
-                                    <MudItem xs="12" sm="6" md="6">
+                                    <MudItem xs="12" sm="6" md="4">
                                         <MudField Label="Zona" Variant="Variant.Outlined" InnerPadding="false">
                                             <MudRadioGroup @bind-SelectedOption="@novoRegistro.Fato.ZonaFato">
                                                 <MudRadio Option="@("URBANA")" Color="Color.Primary">Urbana</MudRadio>
@@ -247,7 +250,7 @@
                                         }
                                     </MudItem>
                                     <!--AIS-->
-                                    <MudItem xs="12" sm="6" md="4">
+                                    <MudItem xs="12" sm="6" md="3">
                                         @if (@novoRegistro.Fato.MunicipioFato is null)
                                         {
                                         <MudTextField @bind-Value="@novoRegistro.Fato.AisFato"
@@ -263,7 +266,7 @@
                                         }
                                     </MudItem>
                                     <!--PMPE-->
-                                    <MudItem xs="12" sm="6" md="4">
+                                    <MudItem xs="12" sm="6" md="3">
                                         @if (@novoRegistro.Fato.MunicipioFato is null)
                                         {
                                         <MudTextField @bind-Value="@novoRegistro.Fato.UnidadePMFato"
@@ -279,7 +282,7 @@
                                         }
                                     </MudItem>
                                     <!--PCPE-->
-                                    <MudItem xs="12" sm="6" md="12">
+                                    <MudItem xs="12" sm="6" md="6">
                                         <MudTextField @bind-Value="@novoRegistro.Fato.UnidadePCFato"
                                                       Label="Unidade PCPE"
                                                       Variant="Variant.Outlined" />
