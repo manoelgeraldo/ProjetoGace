@@ -117,7 +117,7 @@
                                         <MudRadio Option="@("MASCULINO")" Color="Color.Primary">Masculino</MudRadio>
                                         <MudRadio Option="@("FEMININO")" Color="Color.Primary">Feminino</MudRadio>
                                         <MudRadio Option="@("DESCONHECIDO")" Color="Color.Primary">Desconhecido</MudRadio>
-                                        <MudRadio Option="@("NAO INFORMADO")" Color="Color.Primary">Desconhecido</MudRadio>
+                                        <MudRadio Option="@("NAO INFORMADO")" Color="Color.Primary">Não informado</MudRadio>
                                     </MudRadioGroup>
                                 </MudField>
                             </MudItem>
@@ -507,7 +507,7 @@
                                               @bind-Value="novoEnvolvido.Saude.GDL"/>
                             </MudItem>
                             <!--Unidade de Saúde-->
-                            <MudItem xs="12" sm="6" md="6">
+                            <MudItem xs="12" sm="6" md="7">
                                 <MudSelect T="string" Label="Unidade de Saúde do Estado" Variant="Variant.Outlined" 
                                            @bind-Value="novoEnvolvido.Saude.UnidadeHospitalar">
                                     <MudSelectItem Value="@("HOSPITAL DA RESTAURACAO")" />
@@ -609,12 +609,12 @@
                             </MudItem>
                             <!--Situação Carcerária-->
                             <MudItem xs="12" sm="6">
-                                <MudTextField T="string" Label="Situação Carcerária" Variant="Variant.Outlined" Lines="6" 
+                                <MudTextField T="string" Label="Situação Carcerária" Variant="Variant.Outlined" Lines="10" 
                                               @bind-Value="@novoEnvolvido.Criminal.SituacaoCarceraria"/>
                             </MudItem>
                             <!--Tipo de Procedimento-->
                             <MudItem xs="12" sm="6">
-                                <MudTextField T="string" Label="Tipo de Procedimento" Variant="Variant.Outlined" Lines="6" 
+                                <MudTextField T="string" Label="Tipo de Procedimento" Variant="Variant.Outlined" Lines="10" 
                                               @bind-Value="@novoEnvolvido.Criminal.TipoProcedimento"/>
                             </MudItem>
                         </MudGrid>

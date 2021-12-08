@@ -10,7 +10,7 @@
         <MudNavLink Icon="@Icons.Material.Outlined.TableChart" Href="/SIMIP/dashboard">Dicionário de Dados</MudNavLink>
     </MudNavGroup>
     <MudNavGroup Icon="@Icons.Material.Outlined.MiscellaneousServices" Title="Configurações">
-        <MudNavLink Icon="@Icons.Material.Outlined.Person" Href="/SIMIP/alterar-usuario">Usuário</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.Password" Href="/SIMIP/alterar-usuario">Alterar Senha</MudNavLink>
         @foreach (var funcao in Authentication.Usuario.Funcoes)
         {
             @if (funcao.Descricao == "Gestor" || funcao.Descricao == "Administrador")
