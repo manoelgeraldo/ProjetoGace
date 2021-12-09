@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebSistemaHomicidio.ViewModels.Arquivo;
 using WebSistemaHomicidio.ViewModels.Boe;
 using WebSistemaHomicidio.ViewModels.Envolvido;
@@ -38,6 +35,8 @@ namespace WebSistemaHomicidio.ViewModels.Registro
         public string ObservacaoRegistro { get; set; }
 
         public string UsuarioRegistro { get; set; }
+
+        public bool Excluido { get; set; }
 
         public AlterarFato Fato { get; set; }
 

@@ -1,9 +1,5 @@
-﻿using Domain.Entities;
-using Infra.CrossCutting.ViewModels.Usuario;
-using System;
+﻿using Infra.CrossCutting.ViewModels.Usuario;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Service.Interfaces

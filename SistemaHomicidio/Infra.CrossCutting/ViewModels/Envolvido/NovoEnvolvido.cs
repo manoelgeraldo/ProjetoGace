@@ -1,10 +1,5 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infra.CrossCutting.ViewModels.Envolvido
 {
@@ -71,7 +66,7 @@ namespace Infra.CrossCutting.ViewModels.Envolvido
         /// </summary>
         /// <example>21</example>.
         public int? IdadeAparente { get; set; }
-        
+
         /// <summary>
         /// Informe a idade aparente.
         /// </summary>

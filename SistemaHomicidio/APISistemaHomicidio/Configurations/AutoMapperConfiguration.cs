@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Service.Mappings;
 using Service.Mappings.Auxiliares;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace APISistemaHomicidio.Configurations
 {

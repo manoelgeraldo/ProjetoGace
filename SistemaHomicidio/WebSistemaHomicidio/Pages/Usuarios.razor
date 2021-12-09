@@ -81,9 +81,21 @@
                                 <MudTd DataLabel="Função">@funcao.Descricao</MudTd>   
                             }
                             <MudTd DataLabel="Ações">
-                                <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
-                                    <MudIconButton @onclick="(()=> ExcluirUsuario(usuario))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
-                                </MudTooltip>
+                                @foreach (var funcao in @usuario.Funcoes)
+                                {
+                                    @if(funcao.Descricao == "Gestor" || @usuario.Nome == Authentication.Usuario.Nome)
+                                    {
+                                        <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
+                                            <MudIconButton @onclick="(()=> ExcluirUsuario(usuario))" Disabled="true" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                                        </MudTooltip>
+                                    }
+                                    else
+                                    {
+                                        <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
+                                            <MudIconButton @onclick="(()=> ExcluirUsuario(usuario))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                                        </MudTooltip>
+                                    }
+                                }
                             </MudTd>
                         </RowTemplate>
                     </MudTable>

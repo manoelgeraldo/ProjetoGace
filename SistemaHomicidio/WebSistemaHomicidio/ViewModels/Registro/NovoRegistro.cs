@@ -13,7 +13,7 @@ namespace WebSistemaHomicidio.ViewModels.Registro
     {
         public int Id { get; set; }
 
-        [Display(Name ="Data Registro")]
+        [Display(Name = "Data Registro")]
         [Required(ErrorMessage = "Informe uma {0}!")]
         public DateTime? DataRegistroBOE { get; set; }
 
@@ -22,7 +22,7 @@ namespace WebSistemaHomicidio.ViewModels.Registro
         [StringLength(13, MinimumLength = 13, ErrorMessage = "O {0} deve ter apenas 13 caracteres!")]
         public string BOE { get; set; }
 
-        [Display(Name ="Tipo de Registro")]
+        [Display(Name = "Tipo de Registro")]
         [Required(ErrorMessage = "Informe o {0}!")]
         public string TipoDeRegistro { get; set; }
 

@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Infra.CrossCutting.ViewModels.Usuario;
+﻿using Infra.CrossCutting.ViewModels.Usuario;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -67,8 +66,8 @@ namespace APISistemaHomicidio.Controllers.v1
         public async Task<IActionResult> Post(NovoUsuario usuario)
         {
             var usuarioInserido = await manager.InsertAsync(usuario).ConfigureAwait(false);
-            
-            if(usuarioInserido != null)
+
+            if (usuarioInserido != null)
             {
                 return CreatedAtAction(nameof(Get), new { login = usuario.Login }, usuarioInserido);
             }
@@ -85,7 +84,7 @@ namespace APISistemaHomicidio.Controllers.v1
         public async Task<IActionResult> Put(AlterarUsuario alterarUsuario)
         {
             var usuarioAlterado = await manager.UpdateUsuarioAsync(alterarUsuario).ConfigureAwait(false);
-            if(usuarioAlterado is null)
+            if (usuarioAlterado is null)
             {
                 return NotFound();
             }

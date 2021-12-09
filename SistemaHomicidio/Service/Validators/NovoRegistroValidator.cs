@@ -1,10 +1,6 @@
 ﻿using FluentValidation;
 using Infra.CrossCutting.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Validators
 {
@@ -16,7 +12,7 @@ namespace Service.Validators
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("{PropertyName} - Campo obrigatório!")
                 .LessThanOrEqualTo(DateTime.Now.Date);
-           
+
             RuleFor(b => b.BOE)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("{PropertyName} - Campo obrigatório!")

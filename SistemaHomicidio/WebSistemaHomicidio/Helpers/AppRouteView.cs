@@ -2,11 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using WebSistemaHomicidio.Interfaces;
 
 namespace WebSistemaHomicidio.Helpers
@@ -22,7 +18,7 @@ namespace WebSistemaHomicidio.Helpers
         protected override void Render(RenderTreeBuilder builder)
         {
             var authorize = Attribute.GetCustomAttribute(RouteData.PageType, typeof(AuthorizeAttribute)) != null;
-            if(authorize && Authentication.Usuario == null)
+            if (authorize && Authentication.Usuario == null)
             {
                 var returnUrl = WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery);
                 NavigationManager.NavigateTo($"login?returnUrl={returnUrl}");

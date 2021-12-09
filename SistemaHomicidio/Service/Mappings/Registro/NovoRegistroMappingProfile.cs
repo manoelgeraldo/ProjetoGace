@@ -5,7 +5,6 @@ using Infra.CrossCutting.ViewModels.Arquivo;
 using Infra.CrossCutting.ViewModels.Boe;
 using Infra.CrossCutting.ViewModels.Envolvido;
 using System;
-using System.Globalization;
 
 namespace Service.Mappings
 {
@@ -28,11 +27,11 @@ namespace Service.Mappings
                 .ForMember(d => d.UnidadePMFato, o => o.MapFrom(x => x.MunicipioFato.BPM));
 
             CreateMap<NovoEnvolvido, Envolvido>();
-            
+
             CreateMap<NovoInquerito, Inquerito>();
-            
+
             CreateMap<NovoArquivo, Arquivo>();
-            
+
             CreateMap<NovoBoe, BoeComplementado>()
                 .ForMember(d => d.DataRegistro, o => o.MapFrom(x => x.DataRegistro.Value.Date));
 

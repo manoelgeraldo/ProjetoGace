@@ -1,9 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -26,7 +24,7 @@ namespace WebSistemaHomicidio.Services
         {
             this.httpClient = httpClient;
             this.navigationManager = navigationManager;
-            this.localStorage = localStorage;;
+            this.localStorage = localStorage; ;
         }
 
         public async Task<T> Get<T>(string uri)
@@ -54,7 +52,7 @@ namespace WebSistemaHomicidio.Services
             var response = await httpClient.SendAsync(request);
 
             // Auto logout no caso de Status 401
-            if(response.StatusCode == HttpStatusCode.Unauthorized)
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 navigationManager.NavigateTo("logout");
                 return default;

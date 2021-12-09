@@ -53,6 +53,8 @@ namespace Infra.CrossCutting.ViewModels
 
         public string UsuarioRegistro { get; set; }
 
+        public bool Excluido { get; set; }
+
         public ExibirFato Fato { get; set; }
         public List<NovoEnvolvido> Envolvidos { get; set; }
         public NovoInquerito Inquerito { get; set; }

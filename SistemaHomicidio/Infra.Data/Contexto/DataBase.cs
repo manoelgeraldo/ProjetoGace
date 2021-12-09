@@ -1,12 +1,6 @@
 ﻿using Domain.Entities;
-using Infra.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infra.Data.Contexto
 {
@@ -16,13 +10,13 @@ namespace Infra.Data.Contexto
 
         #region//Tabelas Principais
         public DbSet<Registro> Registros { get; set; }
-        public  DbSet<Fato> Fatos { get; set; }
-        public  DbSet<Envolvido> Envolvidos { get; set; }
-        public  DbSet<EnvolvidoEndereco> Enderecos { get; set; }
-        public  DbSet<EnvolvidoCriminal> Criminal { get; set; }
-        public  DbSet<EnvolvidoSaude> Saude { get; set; }
-        public  DbSet<Inquerito> Inqueritos { get; set; }
-        public  DbSet<Arquivo> Arquivos { get; set; }
+        public DbSet<Fato> Fatos { get; set; }
+        public DbSet<Envolvido> Envolvidos { get; set; }
+        public DbSet<EnvolvidoEndereco> Enderecos { get; set; }
+        public DbSet<EnvolvidoCriminal> Criminal { get; set; }
+        public DbSet<EnvolvidoSaude> Saude { get; set; }
+        public DbSet<Inquerito> Inqueritos { get; set; }
+        public DbSet<Arquivo> Arquivos { get; set; }
         public DbSet<BoeComplementado> BoeComplementados { get; set; }
         #endregion
 

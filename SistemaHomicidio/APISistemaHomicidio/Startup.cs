@@ -30,7 +30,7 @@ namespace APISistemaHomicidio
             services.AddDataBaseConfiguration(Configuration);
 
             services.AddDependencyInjectionConfiguration();
-            
+
             services.AddFluentValidationConfiguration();
 
             services.AddAutoMapperConfiguration();

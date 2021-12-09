@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using System;
-using System.Text.Json;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WebSistemaHomicidio.Helpers;
 using WebSistemaHomicidio.Interfaces;
@@ -25,7 +25,7 @@ namespace WebSistemaHomicidio
                 var apiUrl = new Uri(builder.Configuration["apiUrl"]);
                 return new HttpClient() { BaseAddress = apiUrl };
             });
-            
+
             builder.Services
                 .AddScoped<IAuthenticationService, AuthenticationService>()
                 .AddScoped<IHttpService, HttpService>();

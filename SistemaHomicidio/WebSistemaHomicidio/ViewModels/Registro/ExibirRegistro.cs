@@ -45,6 +45,8 @@ namespace WebSistemaHomicidio.ViewModels.Registro
 
         public string Icon { get; set; } = Icons.Material.Filled.AddCircle;
 
+        public bool Excluido { get; set; }
+
         public ExibirFato Fato { get; set; }
 
         public List<NovoEnvolvido> Envolvidos { get; set; }

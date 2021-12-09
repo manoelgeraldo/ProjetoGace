@@ -21,12 +21,37 @@
 
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
+    private async Task<ExibirUsuario> ObterUsuarioLogadoNoSistema()
+    {
+        return await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+    }
+
+    private async Task<EditarRegistro> ObterRegistroPeloId(ExibirUsuario usuarioLogado)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44343/api/v1/Registro/buscar-registro/" + Id);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
+        var response = await httpClient.SendAsync(request);
+
+        var registroEncontrado = JsonSerializer.Deserialize<EditarRegistro>
+        (
+            await response.Content.ReadAsStringAsync(),
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
+        );
+
+        return registroEncontrado;
+    }
+
     private async Task Excluir()
     {
-        var usuario = await localStorage.GetItemAsync<ExibirUsuario>("usuario");
+        var usuarioLogado = await ObterUsuarioLogadoNoSistema();
 
-        var request = new HttpRequestMessage(HttpMethod.Delete, "https://localhost:44343/api/v1/Registro/excluir-registro/" + Id);
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
+        var registroEncontrado = await ObterRegistroPeloId(usuarioLogado);
+
+        registroEncontrado.Excluido = true;
+
+        var request = new HttpRequestMessage(HttpMethod.Put, "https://localhost:44343/api/v1/Registro/alterar-registro/" + Id);
+        request.Content = new StringContent(JsonSerializer.Serialize(registroEncontrado, new JsonSerializerOptions { Converters = { new TimeSpanJsonConverter() } }), Encoding.UTF8, "application/json");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuarioLogado.Token);
         var response = await httpClient.SendAsync(request);
 
         if (response.IsSuccessStatusCode)

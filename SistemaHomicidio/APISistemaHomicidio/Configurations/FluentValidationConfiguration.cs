@@ -4,12 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Service.Validators;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace APISistemaHomicidio.Configurations
 {
@@ -23,10 +19,7 @@ namespace APISistemaHomicidio.Configurations
                     x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     x.SerializerSettings.Converters.Add(new StringEnumConverter());
                 })
-                .AddJsonOptions(p =>
-                {
-                    p.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                })
+                .AddJsonOptions(p => p.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
                 .AddFluentValidation(p =>
                 {
                     p.RegisterValidatorsFromAssemblyContaining<NovoRegistroValidator>();

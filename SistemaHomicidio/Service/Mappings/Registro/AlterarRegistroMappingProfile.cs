@@ -2,16 +2,11 @@
 using Domain.Entities;
 using Infra.CrossCutting.ViewModels;
 using Infra.CrossCutting.ViewModels.Arquivo;
-using Infra.CrossCutting.ViewModels.Auxiliares;
 using Infra.CrossCutting.ViewModels.Boe;
 using Infra.CrossCutting.ViewModels.Envolvido;
 using Infra.CrossCutting.ViewModels.Fato;
 using Infra.CrossCutting.ViewModels.Inquerito;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Mappings
 {

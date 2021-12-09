@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Infra.CrossCutting.ViewModels.Auxiliares
+﻿namespace Infra.CrossCutting.ViewModels.Auxiliares
 {
     public class Exibir_Municipio_Diretoria_AIS_BPM
     {

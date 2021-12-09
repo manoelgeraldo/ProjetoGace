@@ -2,10 +2,7 @@
 using Infra.Data.Contexto;
 using Infra.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infra.Data.Repositories
@@ -40,7 +37,7 @@ namespace Infra.Data.Repositories
         {
             var verificaUsuario = await context.Usuarios.SingleOrDefaultAsync(l => l.Login == usuario.Login).ConfigureAwait(false);
 
-            if(verificaUsuario == null)
+            if (verificaUsuario == null)
             {
                 await InsertUsuarioFuncaoAsync(usuario).ConfigureAwait(false);
                 await context.Usuarios.AddAsync(usuario).ConfigureAwait(false);

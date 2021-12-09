@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -18,6 +15,7 @@ namespace Domain.Entities
         public string ObservacaoRegistro { get; set; }
         public bool StatusRegistro { get; set; }
         public string UsuarioRegistro { get; set; }
+        public bool Excluido { get; set; }
 
         //Navegação
         public Fato Fato { get; set; }

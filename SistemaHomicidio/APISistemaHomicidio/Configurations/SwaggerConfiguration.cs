@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
@@ -15,9 +14,9 @@ namespace APISistemaHomicidio.Configurations
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo 
-                { 
-                    Title = "SistemaHomicidio", 
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "SistemaHomicidio",
                     Version = "v1",
                     Description = "Esta API moderniza o processo de coleta e a otimização no tratamento dos dados usados pela Gerência de Análise Criminal e Estatística (GACE) da Secretária de Defesa Social de Pernambuco (SDS/PE) dos Crimes Violentos Letais e Intencionais (CVLIs) do estado.",
                     Contact = new OpenApiContact
@@ -60,7 +59,6 @@ namespace APISistemaHomicidio.Configurations
                     Type = "string",
                     Example = new OpenApiString("00:00:00")
                 });
-
             });
         }
 

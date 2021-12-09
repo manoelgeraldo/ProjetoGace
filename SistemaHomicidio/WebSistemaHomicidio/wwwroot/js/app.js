@@ -6,6 +6,15 @@ window.masks = () => {
         mask: '00E0000000000'
     });
 
+    var latMask = IMask(
+        document.getElementById('lat-mask'), {
+        mask: '0.00000'
+    });
+
+    var longMask = IMask(
+        document.getElementById('long-mask'), {
+        mask: '00.00000'
+    });
 };
 
 //Dowloads de Arquivos

@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/SIMIP/registros-excluidos"
 @attribute [Authorize]
 
 
@@ -105,8 +105,8 @@
                             <MudTooltip Text="Editar">
                                 <MudIconButton OnClick="@(()=> Editar(context.Id))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
                             </MudTooltip>
-                            <MudTooltip Text="Excluir">
-                                <MudIconButton OnClick="@(()=> Excluir(context.Id))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                            <MudTooltip Text="Restaurar">
+                                <MudIconButton OnClick="@(()=> Excluir(context.Id))" Icon="@Icons.Material.Filled.RestoreFromTrash" Color="Color.Error" />
                             </MudTooltip>
                         </MudTd>
                     </RowTemplate>
@@ -205,7 +205,7 @@
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
         );
 
-        return registros.Where(x => x.Excluido != true).OrderByDescending(x=>x.DataRegistroBOE);
+        return registros.Where(x => x.Excluido == true).OrderByDescending(x=>x.DataRegistroBOE);
     }
 
     private IEnumerable<ExibirRegistro> Procurar(IEnumerable<ExibirRegistro> registros)

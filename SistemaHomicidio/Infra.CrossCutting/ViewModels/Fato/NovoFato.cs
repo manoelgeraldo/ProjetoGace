@@ -23,15 +23,15 @@ namespace Infra.CrossCutting.ViewModels
         /// </summary>
         /// <example>NOITE</example>
         public string TurnoFato { get; set; }
-        
+
         /// <summary>
         /// Natureza do fato.
         /// </summary>
         /// <example>HOMICIDIO</example>
         public string NaturezaBoe { get; set; }
-        
+
         public string CausaJuridicaFato { get; set; }
-        
+
         /// <summary>
         /// Motivação inicial do BOE.
         /// </summary>

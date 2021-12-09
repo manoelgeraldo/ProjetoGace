@@ -5,9 +5,6 @@ using Infra.CrossCutting.ViewModels.Fato;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infra.CrossCutting.ViewModels
 {
@@ -50,6 +47,8 @@ namespace Infra.CrossCutting.ViewModels
         /// /// <example>TESTANDO API</example>
         public string ObservacaoRegistro { get; set; }
         public string UsuarioRegistro { get; set; }
+
+        public bool Excluido { get; set; }
 
         public AlterarFato Fato { get; set; }
         public List<NovoEnvolvido> Envolvidos { get; set; }
