@@ -22,6 +22,41 @@
                 <MudChart ChartType="ChartType.Donut" Width="50%" Height="50%" InputData="@DadosComparativoStatusRegistro" InputLabels="@labelGraficoStatusRegistro"></MudChart>
             </MudPaper>
         </MudItem>
+        <!--Lançamento Diário-->
+        <MudItem xs="12" sm="12" md="12">
+            <MudPaper Elevation="2" Class="pa-4">
+                <MudText Typo="Typo.h6"  Class="tituloLancamentoDiario">Lançamento Diário</MudText>
+                @if(ultimoRegistro.DataLancamento.Date < DateTime.Now.Date)
+                {
+                    <MudText Typo="Typo.body2" Style="text-align: center;">Não há registros lançados hoje!</MudText>
+                }
+                else
+                {
+                    <MudTimeline TimelineOrientation="TimelineOrientation.Horizontal">
+                        @foreach (var registro in registros.Where(x => x.DataLancamento.Date == ultimoRegistro.DataLancamento.Date))
+                        {
+                        
+                            <MudTimelineItem Color="Color.Success" Class="itemTimeline">
+                                @if(@registro.DataAtualizacao.HasValue)
+                                {
+                                    <MudText Typo="Typo.button">@registro.BOE</MudText>
+                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Registrado de @registro.DataLancamento.ToString("t")</MudText>
+                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Atualizado de @registro.DataAtualizacao.Value.ToString("t")</MudText>
+                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">@registro.UsuarioRegistro</MudText>
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.button">@registro.BOE</MudText>
+                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Registrado de @registro.DataLancamento.ToString("t")</MudText>
+                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">@registro.UsuarioRegistro</MudText>
+                                }
+                            </MudTimelineItem>
+                           
+                        }
+                   </MudTimeline>
+                }
+            </MudPaper>
+        </MudItem>
         <!--Tabela de Registros-->
         <MudItem xs="12">
             <MudPaper Class="pa-2 mx-2" Elevation="0">
@@ -168,6 +203,7 @@
 
     private MudTable<ExibirRegistro> table;
     public IEnumerable<ExibirRegistro> registros;
+    public ExibirRegistro ultimoRegistro = new ExibirRegistro { };
     private string procurar = null;
     public double[] DadosComparativoStatusRegistro = new double[] { };
     public List<ChartSeries> DadosComparativosEntreTentativaEConsumado = new List<ChartSeries> { };
@@ -205,6 +241,7 @@
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new TimeSpanJsonConverter() } }
         );
 
+        ultimoRegistro = registros.LastOrDefault(x => x.DataLancamento.Date <= DateTime.Now.Date);
         return registros.Where(x => x.Excluido != true).OrderByDescending(x=>x.DataRegistroBOE);
     }
 
@@ -382,3 +419,16 @@
     }
     public string[] labelGraficoStatusRegistro = { "Consistido", "Não Consistido" };
 }
+
+<style>
+
+    .tituloLancamentoDiario {
+        padding-bottom: 20px;
+        text-align: center;
+    }
+
+    .itemTimeline {
+        display: block;
+    }
+
+</style>
