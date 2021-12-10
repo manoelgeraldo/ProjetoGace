@@ -73,19 +73,19 @@
                 <MudDrawerHeader Class="mudblazor-brand" LinkToIndex="true">
                     <MudCard Elevation="0" Square="true">
                         <MudCardHeader>
-                            @*<CardHeaderAvatar>
-                                <MudAvatar Image="imagens/anubis.png" />
-                            </CardHeaderAvatar>*@
                             <CardHeaderContent>
-                                <MudText Typo="Typo.body2">
-                                    @Authentication.Usuario.Nome
-                                </MudText>
-                                <MudText Typo="Typo.caption">
-                                    @foreach (var item in @Authentication.Usuario.Funcoes)
-                                    {
-                                        @item.Descricao
-                                    }
-                                </MudText>
+                                @if (@Authentication.Usuario != null)
+                                {
+                                    <MudText Typo="Typo.body2">
+                                        @Authentication.Usuario.Nome
+                                    </MudText>
+                                    <MudText Typo="Typo.caption">
+                                        @foreach (var item in @Authentication.Usuario.Funcoes)
+                                        {
+                                            @item.Descricao
+                                        }
+                                    </MudText>   
+                                }
                             </CardHeaderContent>
                         </MudCardHeader>
                     </MudCard>

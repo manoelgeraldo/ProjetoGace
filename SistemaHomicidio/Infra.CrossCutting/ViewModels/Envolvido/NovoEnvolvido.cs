@@ -21,7 +21,7 @@ namespace Infra.CrossCutting.ViewModels.Envolvido
         public string TipoEnvolvido { get; set; }
 
         /// <summary>
-        /// Qaulificação do envolvido.
+        /// Qualificação do envolvido.
         /// </summary>
         /// <example>CONHECIDA</example>.
         public string Autoria { get; set; }
@@ -65,7 +65,7 @@ namespace Infra.CrossCutting.ViewModels.Envolvido
         /// Informe a idade aparente.
         /// </summary>
         /// <example>21</example>.
-        public int? IdadeAparente { get; set; }
+        public string IdadeAparente { get; set; }
 
         /// <summary>
         /// Informe a idade aparente.

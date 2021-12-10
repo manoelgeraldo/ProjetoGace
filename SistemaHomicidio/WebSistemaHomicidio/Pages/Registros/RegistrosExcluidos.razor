@@ -106,7 +106,7 @@
                                 <MudIconButton OnClick="@(()=> Editar(context.Id))" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
                             </MudTooltip>
                             <MudTooltip Text="Restaurar">
-                                <MudIconButton OnClick="@(()=> Excluir(context.Id))" Icon="@Icons.Material.Filled.RestoreFromTrash" Color="Color.Error" />
+                                <MudIconButton OnClick="@(()=> Restaurar(context.Id))" Icon="@Icons.Material.Filled.RestoreFromTrash" Color="Color.Error" />
                             </MudTooltip>
                         </MudTd>
                     </RowTemplate>
@@ -282,21 +282,21 @@
 
     void Editar(int id) => navigationManager.NavigateTo($"/SIMIP/alterar-registro/{id}");
 
-    private async Task Excluir(int id)
+    private async Task Restaurar(int id)
     {
         var parameters = new ModalParameters();
         parameters.Add("id", id);
 
-        var formModal = Modal.Show<ExcluirRegistro>("Excluir Registro", parameters);
+        var formModal = Modal.Show<RestaurarRegistro>("Restaurar Registro", parameters);
         var result = await formModal.Result;
 
         if (result.Cancelled)
         {
-            snackbar.Add("Registro não foi excluído!", Severity.Info);
+            snackbar.Add("Registro não foi restaurado!", Severity.Info);
         }
         else
         {
-            snackbar.Add("Registro excluído!", Severity.Success);
+            snackbar.Add("Registro foi restaurado!", Severity.Success);
             await table.ReloadServerData();
         }
     }

@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\NovaPasta1\**" />
+    <Content Remove="Pages\NovaPasta1\**" />
+    <EmbeddedResource Remove="Pages\NovaPasta1\**" />
+    <None Remove="Pages\NovaPasta1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.1.5" />
     <PackageReference Include="Blazored.Modal" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />

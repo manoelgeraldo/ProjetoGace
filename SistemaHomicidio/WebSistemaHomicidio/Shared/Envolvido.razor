@@ -105,10 +105,14 @@
                             </MudItem>
                             <!--Idade Aparente-->
                             <MudItem xs="12" sm="6" md="2">
-                                <MudTextField Label="Idade Aparente"
-                                              Variant="Variant.Outlined"
-                                              Adornment="Adornment.End" 
-                                              @bind-Value="@novoEnvolvido.IdadeAparente"/>
+                                <MudSelect T="string" Label="Idade Aparente" Variant="Variant.Outlined" @bind-Value="@novoEnvolvido.IdadeAparente">
+                                    <MudSelectItem Value="@("ADOLESCENTE (13 - 17 ANOS)")" />
+                                    <MudSelectItem Value="@("ADULTO - JOVEM (18 - 30 ANOS)")" />
+                                    <MudSelectItem Value="@("ADULTO (31 - 65 ANOS)")" />
+                                    <MudSelectItem Value="@("CRIANCA (1 - 12 ANOS)")" />
+                                    <MudSelectItem Value="@("IDOSO (ACIMA DE 65 ANOS)")" />
+                                    <MudSelectItem Value="@("RECEM-NASCIDO/LACTANTE")" />
+                                </MudSelect>
                             </MudItem>
                             <!--Sexo-->
                             <MudItem xs="12" sm="6" md="7">
@@ -277,13 +281,25 @@
                             <!--Instrumento Utilizado-->
                             <MudItem xs="12" sm="6" md="6">
                                 <MudSelect T="string" Label="Instrumento Utilizado" Variant="Variant.Outlined" @bind-Value="@novoEnvolvido.InstrumentoUtilizado">
-                                    <MudSelectItem Value="@("ARMA DE FOGO")" />
                                     <MudSelectItem Value="@("ARMA BRANCA")" />
-                                    <MudSelectItem Value="@("INSTRUMENTO CONTUDENTE")" />
+                                    <MudSelectItem Value="@("ARMA DE FOGO")" />
+                                    <MudSelectItem Value="@("CAMINHAO")" />
+                                    <MudSelectItem Value="@("CARRETA")" />
+                                    <MudSelectItem Value="@("MOTOCICLETA")" />
+                                    <MudSelectItem Value="@("ONIBUS")" />
+                                    <MudSelectItem Value="@("PASSEIO")" />
+                                    <MudSelectItem Value="@("TRATOR")" />
+                                    <MudSelectItem Value="@("UTILITARIO")" />
+                                    <MudSelectItem Value="@("BICICLETA")" />
+                                    <MudSelectItem Value="@("CORDA E/OU SIMILAR")" />
+                                    <MudSelectItem Value="@("FOGO")" />
+                                    <MudSelectItem Value="@("MEDICAMENTOS EM GERAL")" />
                                     <MudSelectItem Value="@("OUTROS TIPOS DE OBJETOS")" />
+                                    <MudSelectItem Value="@("INSTRUMENTO CONTUDENTE")" />
+                                    <MudSelectItem Value="@("VENENO OU SIMILAR")" />
                                 </MudSelect>
                             </MudItem>
-                            <!--Nome do Instrumento Utilizado-->
+                            <!--Tipo de Objeto Utilizado-->
                             <MudItem xs="12" sm="6" md="6">
                                 <MudAutocomplete T="string" Label="Tipos de Objetos" Variant="Variant.Outlined" @bind-Value="@novoEnvolvido.NomeInstrumentoUtilizado"
                                                     SearchFunc="@TiposDeObjetos" />

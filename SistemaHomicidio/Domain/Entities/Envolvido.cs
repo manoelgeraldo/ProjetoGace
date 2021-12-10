@@ -16,7 +16,7 @@ namespace Domain.Entities
         public string NomeGenitora { get; set; }
         public DateTime? DataNascimento { get; set; }
         public int? IdadeExata { get; set; }
-        public int? IdadeAparente { get; set; }
+        public string IdadeAparente { get; set; }
         public string Sexo { get; set; }
         public string IdentidadeGenero { get; set; }
         public string OrientacaoSexual { get; set; }

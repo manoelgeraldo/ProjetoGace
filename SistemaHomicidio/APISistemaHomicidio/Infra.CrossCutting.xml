@@ -30,7 +30,7 @@
         </member>
         <member name="P:Infra.CrossCutting.ViewModels.Envolvido.NovoEnvolvido.Autoria">
             <summary>
-            Qaulificação do envolvido.
+            Qualificação do envolvido.
             </summary>
             <example>CONHECIDA</example>.
         </member>
