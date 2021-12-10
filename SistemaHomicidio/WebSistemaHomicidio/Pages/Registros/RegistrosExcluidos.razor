@@ -6,20 +6,32 @@
     <MudGrid>
         <!--Gráfico 01-->
         <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Bar"  ChartSeries="@DadosComparativosEntreTentativaEConsumado" XAxisLabels="@LabelMesesGraficos" Width="100%" Height="100%"></MudChart>
+            <MudPaper  Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.Calculate" Color="Color.Info" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Total Geral</MudText>
+                    <MudText Typo="Typo.h5">@totalExcluidos</MudText>
+                </div>
             </MudPaper>
         </MudItem>
         <!--Gráfico 02-->
         <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Line" ChartSeries="@DadosComparativosEntreTentativaEConsumado" XAxisLabels="@LabelMesesGraficos" Width="100%" Height="100%"></MudChart>
+            <MudPaper  Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.Dangerous" Color="Color.Warning" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Total Tentativas</MudText>
+                    <MudText Typo="Typo.h5">@tentativasExcluidas</MudText>
+                </div>
             </MudPaper>
         </MudItem>
         <!--Gráfico 03-->
-        <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Donut" Width="50%" Height="50%" InputData="@DadosComparativoStatusRegistro" InputLabels="@labelGraficoStatusRegistro"></MudChart>
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper  Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.NoAccounts" Color="Color.Error" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Total Consumados</MudText>
+                    <MudText Typo="Typo.h5">@consumadosExcluidos</MudText>
+                </div>
             </MudPaper>
         </MudItem>
         <!--Tabela de Registros-->
@@ -28,7 +40,7 @@
                 <MudTable ServerData="@(new Func<TableState, Task<TableData<ExibirRegistro>>>(ServerReload))"
                     Dense="true" Hover="true" @ref="table" FixedHeader="true" Height="400px" Striped="true" HorizontalScrollbar="true">
                     <ToolBarContent>
-                        <MudText Typo="Typo.h6">Lista de Registros</MudText>
+                        <MudText Typo="Typo.h6">Registros Excluídos</MudText>
                         <MudSpacer />
                         <MudTextField T="string"
                                       ValueChanged="@(s => OnProcurar(s))"
@@ -54,27 +66,16 @@
                             <MudIcon Icon="@context.Icon" @onclick="@(()=> ExibirEnvolvidoEMudarIcon(@context.Id))"/>
                         </MudTd>
                         <MudTd DataLabel="Id">@context.Id</MudTd>
-                        <MudTd DataLabel="Tipo">
-                            @if(@context.TipoDeRegistro == "TENTATIVA")
-                            {
-                                <MudChip Style="background-color: #2979FF">@context.TipoDeRegistro</MudChip>
-                            }
-                            else
-                            {
-                                <MudChip Style="background-color: #1DE9B6">@context.TipoDeRegistro</MudChip>   
-                            }
-                        </MudTd>
+                        <MudTd DataLabel="Tipo">@context.TipoDeRegistro</MudTd>
                         <MudTd DataLabel="Nº BOE">@context.BOE</MudTd>
                         <MudTd DataLabel="Data">@context.DataRegistroBOE.Value.ToString("d")</MudTd>
                         <MudTd DataLabel="Município">@(context.Fato == null ? "N/A" : context.Fato.MunicipioFato)</MudTd>
                         <MudTd DataLabel="Status">
-                            @if (!@context.StatusRegistro)
+                            @if (@context.StatusRegistro)
                             {
-                                <MudAvatar Size="Size.Small" Style="background-color: #1DE9B6" />
-                            }
-                            else
-                            {
-                                <MudAvatar Size="Size.Small" Style="background-color: #2979FF" />
+                                <MudTooltip Text="Consistido" Placement="Placement.Right">
+                                    <MudIcon Icon="@Icons.Filled.Verified" Color="Color.Success"/>
+                                </MudTooltip>
                             }
                         </MudTd>
                         <MudTd DataLabel="Ações">
@@ -169,6 +170,9 @@
     private MudTable<ExibirRegistro> table;
     public IEnumerable<ExibirRegistro> registros;
     private string procurar = null;
+    private int totalExcluidos;
+    private int tentativasExcluidas;
+    private int consumadosExcluidos;
     public double[] DadosComparativoStatusRegistro = new double[] { };
     public List<ChartSeries> DadosComparativosEntreTentativaEConsumado = new List<ChartSeries> { };
 
@@ -236,8 +240,7 @@
 
         registros = await ObterTodosRegistros(usuarioLogado);
 
-        GerarGraficoStatusRegistro();
-        GerarGraficoComparativoTentativaConsumado();
+        GerarTotalExcluidos(registros);
         StateHasChanged();
 
         //Procurar
@@ -301,84 +304,10 @@
         }
     }
 
-    //Gráfico1-2
-    public string[] LabelMesesGraficos = { "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" };
-
-    private void GerarGraficoComparativoTentativaConsumado()
+    void GerarTotalExcluidos(IEnumerable<ExibirRegistro> registros)
     {
-        var totalTentativaJaneiro = registros.Where(x => x.DataRegistroBOE.Value.Month == 1).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaFevereiro = registros.Where(x => x.DataRegistroBOE.Value.Month == 2).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaMarco = registros.Where(x => x.DataRegistroBOE.Value.Month == 3).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaAbril = registros.Where(x => x.DataRegistroBOE.Value.Month == 4).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaMaio = registros.Where(x => x.DataRegistroBOE.Value.Month == 5).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaJunho = registros.Where(x => x.DataRegistroBOE.Value.Month == 6).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaJulho = registros.Where(x => x.DataRegistroBOE.Value.Month == 7).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaAgosto = registros.Where(x => x.DataRegistroBOE.Value.Month == 8).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaSetembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 9).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaOutubro = registros.Where(x => x.DataRegistroBOE.Value.Month == 10).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaNovembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 11).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-        var totalTentativaDezembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 12).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
-
-        var totalConsumadoJaneiro = registros.Where(x => x.DataRegistroBOE.Value.Month == 1).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoFevereiro = registros.Where(x => x.DataRegistroBOE.Value.Month == 2).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoMarco = registros.Where(x => x.DataRegistroBOE.Value.Month == 3).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoAbril = registros.Where(x => x.DataRegistroBOE.Value.Month == 4).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoMaio = registros.Where(x => x.DataRegistroBOE.Value.Month == 5).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoJunho = registros.Where(x => x.DataRegistroBOE.Value.Month == 6).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoJulho = registros.Where(x => x.DataRegistroBOE.Value.Month == 7).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoAgosto = registros.Where(x => x.DataRegistroBOE.Value.Month == 8).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoSetembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 9).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoOutubro = registros.Where(x => x.DataRegistroBOE.Value.Month == 10).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoNovembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 11).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-        var totalConsumadoDezembro = registros.Where(x => x.DataRegistroBOE.Value.Month == 12).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
-
-        DadosComparativosEntreTentativaEConsumado = new List<ChartSeries>()
-        {
-            new ChartSeries() 
-            { Name = "Tentativa", 
-              Data = new double[] 
-              { 
-                totalTentativaJaneiro,
-                totalTentativaFevereiro,
-                totalTentativaMarco,
-                totalTentativaAbril,
-                totalTentativaMaio, 
-                totalTentativaJunho,
-                totalTentativaJulho,
-                totalTentativaAgosto,
-                totalTentativaSetembro, 
-                totalTentativaOutubro,
-                totalTentativaNovembro, 
-                totalTentativaDezembro
-              }
-            },
-            new ChartSeries() 
-            { Name = "Consumado", 
-              Data = new double[]
-              {
-                totalConsumadoJaneiro,
-                totalConsumadoFevereiro,
-                totalConsumadoMarco,
-                totalConsumadoAbril,
-                totalConsumadoMaio, 
-                totalConsumadoJunho,
-                totalConsumadoJulho,
-                totalConsumadoAgosto,
-                totalConsumadoSetembro, 
-                totalConsumadoOutubro,
-                totalConsumadoNovembro, 
-                totalConsumadoDezembro  
-              }
-            }
-        };
+        totalExcluidos = registros.Count();
+        tentativasExcluidas = registros.Where(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        consumadosExcluidos = registros.Where(x => x.TipoDeRegistro == "CONSUMADO").Count();
     }
-
-    // Gráfico3;
-    private void GerarGraficoStatusRegistro()
-    {
-        var totalConsistido = registros.Where(x => x.StatusRegistro == true).Count();
-        var totalNaoConsistido = registros.Where(x => x.StatusRegistro == false).Count();
-        DadosComparativoStatusRegistro = new double[] { totalConsistido, totalNaoConsistido };
-    }
-    public string[] labelGraficoStatusRegistro = { "Consistido", "Não Consistido" };
 }

@@ -629,7 +629,7 @@
                 <MudButton OnClick="Home" Variant="Variant.Filled" Color="Color.Secondary" FullWidth="true">Cancelar</MudButton>
             </MudItem>
             <MudItem xs="6">
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Salvar</MudButton>
+                <MudButton OnClick="SalvarRegistro" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Salvar</MudButton>
             </MudItem>
         </MudGrid>
     </MudContainer>
@@ -720,7 +720,9 @@
             StateHasChanged();
         }
     }
+    
     int sequencial;
+    
     void AdicionarNumeroSequencial()
     {
         if(listaEnvolvidos.Count() == 0)

@@ -4,66 +4,141 @@
 
 <MudContainer Class="mt-16 px-8">
     <MudGrid>
-        <!--Gráfico 01-->
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Bar"  ChartSeries="@DadosComparativosEntreTentativaEConsumado" XAxisLabels="@LabelMesesGraficos" Width="100%" Height="100%"></MudChart>
+        <!--Total de Registros-->
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper  Class="d-flex flex-row pt-6 pb-4" Style="height:150px;">
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Class="totais">Total de Registros</MudText>
+                    </MudItem>
+                    @*<MudItem xs="4">
+                        <MudIcon Icon="@Icons.Material.Filled.Calculate" Class="mx-2" Color="Color.Info" Style="width:54px; height:54px;"></MudIcon>
+                    </MudItem>*@
+                    <MudItem xs="12" Class="totais">
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Geral</MudText>
+                        <MudText Typo="Typo.h5">@totalRegistros</MudText>
+                    </MudItem>
+                </MudGrid>
             </MudPaper>
         </MudItem>
-        <!--Gráfico 02-->
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Line" ChartSeries="@DadosComparativosEntreTentativaEConsumado" XAxisLabels="@LabelMesesGraficos" Width="100%" Height="100%"></MudChart>
+        <!--Total de Tentativas-->
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper  Class="d-flex flex-row pt-6 pb-4" Style="height:150px;">
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Class="totais">Total de Tentativas</MudText>
+                    </MudItem>
+                    @*<MudItem xs="4">
+                        <MudIcon Icon="@Icons.Material.Filled.Dangerous" Class="mx-2" Color="Color.Warning" Style="width:54px; height:54px;"></MudIcon>
+                    </MudItem>*@
+                    <MudItem xs="6" Class="totais">
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Ano</MudText>
+                        <MudText Typo="Typo.h5">@totalTentativas</MudText>
+                    </MudItem>
+                    <MudItem xs="6" Class="totais">
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Mês Atual</MudText>
+                        <MudText Typo="Typo.h5">@totalMensalTentativas</MudText>
+                    </MudItem>
+                </MudGrid>
             </MudPaper>
         </MudItem>
-        <!--Gráfico 03-->
-        <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 250px;">
-                <MudChart ChartType="ChartType.Donut" Width="50%" Height="50%" InputData="@DadosComparativoStatusRegistro" InputLabels="@labelGraficoStatusRegistro"></MudChart>
+        <!--Total de Consumados-->
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper  Class="d-flex flex-row pt-6 pb-4" Style="height:150px;">
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Class="totais">Total de Consumados</MudText>
+                    </MudItem>
+                    @*<MudItem xs="4">
+                        <MudIcon Icon="@Icons.Material.Filled.NoAccounts" Class="mx-2" Color="Color.Error" Style="width:54px; height:54px;"></MudIcon>
+                    </MudItem>*@
+                    <MudItem xs="6" Class="totais">
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Ano</MudText>
+                        <MudText Typo="Typo.h5">@totalConsumados</MudText>
+                    </MudItem>
+                    <MudItem xs="6" Class="totais">
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Mês Atual</MudText>
+                        <MudText Typo="Typo.h5">@totalMensalConsumados</MudText>
+                    </MudItem>
+                </MudGrid>
             </MudPaper>
         </MudItem>
-        <!--Lançamento Diário-->
+        <!--Status dos Registros-->
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper  Class="d-flex flex-row pt-6 pb-4" Style="height:150px;">
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Class="totais">Status dos Registros</MudText>
+                    </MudItem>
+                    @*<MudItem xs="4">
+                        <MudIcon Icon="@Icons.Material.Filled.Verified" Class="mx-2" Color="Color.Success" Style="width:54px; height:54px;"></MudIcon>
+                    </MudItem>*@
+                    <MudItem xs="6" Class="totais">
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Consistidos</MudText>
+                        <MudText Typo="Typo.h5">@totalConsistido</MudText>
+                    </MudItem>
+                    <MudItem xs="6" Class="totais">
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Não Consistidos</MudText>
+                        <MudText Typo="Typo.h5">@totalNaoConsistido</MudText>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </MudItem>
+        <!--Lançamentos Diários-->
         <MudItem xs="12" sm="12" md="12">
             <MudPaper Elevation="2" Class="pa-4">
-                <MudText Typo="Typo.h6"  Class="tituloLancamentoDiario">Lançamento Diário</MudText>
-                @if(ultimoRegistro.DataLancamento.Date < DateTime.Now.Date)
-                {
-                    <MudText Typo="Typo.body2" Style="text-align: center;">Não há registros lançados hoje!</MudText>
-                }
-                else
-                {
-                    <MudTimeline TimelineOrientation="TimelineOrientation.Horizontal">
-                        @foreach (var registro in registros.Where(x => x.DataLancamento.Date == ultimoRegistro.DataLancamento.Date))
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h6" Style="text-align: center;">Lançamentos Diários</MudText>
+                    </MudItem>
+                    <MudItem xs="12">
+                        @if(ultimoRegistro.DataLancamento.Date < DateTime.Now.Date)
                         {
-                        
-                            <MudTimelineItem Color="Color.Success" Class="itemTimeline">
-                                @if(@registro.DataAtualizacao.HasValue)
-                                {
-                                    <MudText Typo="Typo.button">@registro.BOE</MudText>
-                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Registrado de @registro.DataLancamento.ToString("t")</MudText>
-                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Atualizado de @registro.DataAtualizacao.Value.ToString("t")</MudText>
-                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">@registro.UsuarioRegistro</MudText>
-                                }
-                                else
-                                {
-                                    <MudText Typo="Typo.button">@registro.BOE</MudText>
-                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Registrado de @registro.DataLancamento.ToString("t")</MudText>
-                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">@registro.UsuarioRegistro</MudText>
-                                }
-                            </MudTimelineItem>
-                           
+                            <MudText Typo="Typo.body2" Style="text-align: center;">Não há registros lançados hoje!</MudText>
                         }
-                   </MudTimeline>
-                }
+                        else
+                        {
+                            <MudGrid>
+                                <MudItem xs="12">
+                                <MudTimeline TimelineOrientation="TimelineOrientation.Horizontal">
+                                    @foreach (var registro in registros.Where(x => x.DataLancamento.Date == ultimoRegistro.DataLancamento.Date))
+                                    {
+                        
+                                        <MudTimelineItem Color="Color.Info">
+                                            @if(@registro.DataAtualizacao.HasValue)
+                                            {
+                                                <MudText Typo="Typo.button">@registro.BOE</MudText>
+                                                <MudText Typo="Typo.body2" Class="mud-text-secondary">Registrado às @registro.DataLancamento.ToString("t") horas</MudText>
+                                                <MudText Typo="Typo.body2" Class="mud-text-secondary">Atualizado às @registro.DataAtualizacao.Value.ToString("t") horas</MudText>
+                                                <MudText Typo="Typo.body2" Class="mud-text-secondary">@registro.UsuarioRegistro</MudText>
+                                            }
+                                            else
+                                            {
+                                                <MudText Typo="Typo.button">@registro.BOE</MudText>
+                                                <MudText Typo="Typo.body2" Class="mud-text-secondary">Registrado às @registro.DataLancamento.ToString("t") horas</MudText>
+                                                <MudText Typo="Typo.body2" Class="mud-text-secondary">@registro.UsuarioRegistro</MudText>
+                                            }
+                                        </MudTimelineItem>
+                           
+                                    }
+                               </MudTimeline>
+                               </MudItem>
+                               <MudItem xs="12">
+                                    <MudText Typo="Typo.subtitle2" Style="text-align: center; padding-top: 50px;">Total: <MudText Typo="Typo.caption">@totalLancamentoDiario</MudText></MudText>
+                                </MudItem>
+                           </MudGrid>
+                        }
+                    </MudItem>
+                </MudGrid>
             </MudPaper>
         </MudItem>
         <!--Tabela de Registros-->
         <MudItem xs="12">
             <MudPaper Class="pa-2 mx-2" Elevation="0">
                 <MudTable ServerData="@(new Func<TableState, Task<TableData<ExibirRegistro>>>(ServerReload))"
-                    Dense="true" Hover="true" @ref="table" FixedHeader="true" Height="400px" Striped="true" HorizontalScrollbar="true">
+                    Dense="true" Hover="true" @ref="table" FixedHeader="true" Height="650px" Striped="true" HorizontalScrollbar="true">
                     <ToolBarContent>
-                        <MudText Typo="Typo.h6">Lista de Registros</MudText>
+                        <MudText Typo="Typo.h6" Style="padding-bottom: 10px;">Lista de Registros</MudText>
                         <MudSpacer />
                         <MudTextField T="string"
                                       ValueChanged="@(s => OnProcurar(s))"
@@ -89,27 +164,16 @@
                             <MudIcon Icon="@context.Icon" @onclick="@(()=> ExibirEnvolvidoEMudarIcon(@context.Id))"/>
                         </MudTd>
                         <MudTd DataLabel="Id">@context.Id</MudTd>
-                        <MudTd DataLabel="Tipo">
-                            @if(@context.TipoDeRegistro == "TENTATIVA")
-                            {
-                                <MudChip Style="background-color: #2979FF">@context.TipoDeRegistro</MudChip>
-                            }
-                            else
-                            {
-                                <MudChip Style="background-color: #1DE9B6">@context.TipoDeRegistro</MudChip>   
-                            }
-                        </MudTd>
+                        <MudTd DataLabel="Tipo">@context.TipoDeRegistro</MudTd>
                         <MudTd DataLabel="Nº BOE">@context.BOE</MudTd>
                         <MudTd DataLabel="Data">@context.DataRegistroBOE.Value.ToString("d")</MudTd>
                         <MudTd DataLabel="Município">@(context.Fato == null ? "N/A" : context.Fato.MunicipioFato)</MudTd>
                         <MudTd DataLabel="Status">
-                            @if (!@context.StatusRegistro)
+                            @if (@context.StatusRegistro)
                             {
-                                <MudAvatar Size="Size.Small" Style="background-color: #1DE9B6" />
-                            }
-                            else
-                            {
-                                <MudAvatar Size="Size.Small" Style="background-color: #2979FF" />
+                                <MudTooltip Text="Consistido" Placement="Placement.Right">
+                                    <MudIcon Icon="@Icons.Filled.Verified" Color="Color.Success"/>
+                                </MudTooltip>
                             }
                         </MudTd>
                         <MudTd DataLabel="Ações">
@@ -205,8 +269,17 @@
     public IEnumerable<ExibirRegistro> registros;
     public ExibirRegistro ultimoRegistro = new ExibirRegistro { };
     private string procurar = null;
+    private int totalRegistros;
+    private int totalTentativas;
+    private int totalConsumados;
+    private int totalConsistido;
+    private int totalNaoConsistido;
+    private int totalMensalTentativas;
+    private int totalMensalConsumados;
+    private int totalLancamentoDiario;
     public double[] DadosComparativoStatusRegistro = new double[] { };
     public List<ChartSeries> DadosComparativosEntreTentativaEConsumado = new List<ChartSeries> { };
+
 
     private void ExibirEnvolvidoEMudarIcon(int id)
     {
@@ -214,7 +287,7 @@
 
         if (icon == Icons.Material.Filled.AddCircle)
         {
-            registros.FirstOrDefault(x => x.Id == id).Icon = Icons.Material.Filled.ArrowCircleDown;
+            registros.FirstOrDefault(x => x.Id == id).Icon = Icons.Material.Filled.ArrowCircleUp;
             registros.FirstOrDefault(x => x.Id == id).Exibir = true;
         }
         else
@@ -270,11 +343,9 @@
     private async Task<TableData<ExibirRegistro>> ServerReload(TableState state)
     {
         var usuarioLogado = await ObterUsuarioLogadoNoSistema();
-
         registros = await ObterTodosRegistros(usuarioLogado);
 
-        GerarGraficoStatusRegistro();
-        GerarGraficoComparativoTentativaConsumado();
+        GerarTotais(registros);
         StateHasChanged();
 
         //Procurar
@@ -300,9 +371,6 @@
                 break;
             case "fato":
                 registros = registros.OrderByDirection(state.SortDirection, o => o.Fato.MunicipioFato);
-                break;
-            case "envolvido":
-                registros = registros.OrderByDirection(state.SortDirection, o => o.Envolvidos);
                 break;
         }
 
@@ -418,17 +486,28 @@
         DadosComparativoStatusRegistro = new double[] { totalConsistido, totalNaoConsistido };
     }
     public string[] labelGraficoStatusRegistro = { "Consistido", "Não Consistido" };
+
+    void GerarTotais(IEnumerable<ExibirRegistro> registros)
+    {
+        totalRegistros = registros.Count();
+        totalTentativas = registros.Where(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        totalConsumados = registros.Where(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        totalConsistido = registros.Where(x => x.StatusRegistro == true).Count();
+        totalNaoConsistido = registros.Where(x => x.StatusRegistro == false).Count();
+        totalMensalTentativas = registros.Where(x => x.DataRegistroBOE.Value.Month == DateTime.Now.Month).Select(x => x.TipoDeRegistro == "TENTATIVA").Count();
+        totalMensalConsumados = registros.Where(x => x.DataRegistroBOE.Value.Month == DateTime.Now.Month).Select(x => x.TipoDeRegistro == "CONSUMADO").Count();
+        totalLancamentoDiario = registros.Where(x => x.DataLancamento.Date == DateTime.Now.Date).Count();
+    }
 }
 
 <style>
 
     .tituloLancamentoDiario {
-        padding-bottom: 20px;
         text-align: center;
     }
 
-    .itemTimeline {
-        display: block;
+    .totais {
+        text-align: center;
     }
 
 </style>
