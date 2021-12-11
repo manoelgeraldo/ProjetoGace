@@ -5,6 +5,13 @@
     <DataAnnotationsValidator />
     <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
         <MudGrid>
+            <MudItem xs="12">
+                <MudBreadcrumbs Items="_items">
+                    <ItemTemplate Context="item">
+                        <MudLink Color="Color.Dark" Href="@item.Href">@item.Text.ToUpper()</MudLink>
+                    </ItemTemplate>
+                </MudBreadcrumbs>
+            </MudItem>
             <!--Cabeçalho do Formulário-->
             <MudItem xs="12">
                 <MudPaper Class="sombra pa-5 mx-2" Elevation="3">
@@ -636,6 +643,12 @@
 
 
 @code {
+
+    private List<BreadcrumbItem> _items = new List<BreadcrumbItem>
+    {
+        new BreadcrumbItem("Home", href: "/"),
+        new BreadcrumbItem("Alterar Registros", href: null, disabled: true)
+    };
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
