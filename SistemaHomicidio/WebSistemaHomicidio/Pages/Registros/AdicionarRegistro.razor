@@ -407,10 +407,10 @@
                                     <!--Situação Atual-->
                                     <MudItem xs="12" sm="6" md="3">
                                         <MudSelect T="string" Label="Situação Atual" Variant="Variant.Outlined" @bind-Value="@novoRegistro.Inquerito.SituacaoIP">
-                                            <MudSelectItem Value="@("Em Investigação")" />
-                                            <MudSelectItem Value="@("Sem Investigação")" />
-                                            <MudSelectItem Value="@("Conclusão com Autoria")" />
-                                            <MudSelectItem Value="@("Conclusão sem Autoria")" />
+                                            <MudSelectItem Value="@("EM INVESTIGACAO")" />
+                                            <MudSelectItem Value="@("SEM INVESTIGACAO")" />
+                                            <MudSelectItem Value="@("CONCLUSAO COM AUTORIA")" />
+                                            <MudSelectItem Value="@("CONCLUSAO SEM AUTORIA")" />
                                         </MudSelect>
                                     </MudItem>
                                     <!-- Números -->
@@ -458,7 +458,7 @@
                                         <MudField Label="Representação" Variant="Variant.Outlined">
                                             <MudGrid>
                                                 <MudItem xs="12" sm="6" md="12">
-                                                    <MudSelect T="string" Label="Situação Atual" Variant="Variant.Outlined" @bind-Value="@novoRegistro.Inquerito.TipoRepresentacao">
+                                                    <MudSelect T="string" Label="Tipo de Representação" Variant="Variant.Outlined" @bind-Value="@novoRegistro.Inquerito.TipoRepresentacao">
                                                         <MudSelectItem Value="@("PRISAO PREVENTIVA")" />
                                                         <MudSelectItem Value="@("PRISAO TEMPORARIA")" />
                                                         <MudSelectItem Value="@("BUSCA E APREENSAO ADOLESCENTE")" />
