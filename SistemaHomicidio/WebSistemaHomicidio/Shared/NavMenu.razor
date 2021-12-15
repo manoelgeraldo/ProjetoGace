@@ -4,11 +4,11 @@
     <MudNavLink Href="/SIMIP/registros-excluidos" Icon="@Icons.Material.Outlined.History">Registros Excluídos</MudNavLink>
     <MudNavGroup Icon="@Icons.Material.Outlined.Dashboard" Title="Dashboard">
         <MudNavLink Icon="@Icons.Material.Outlined.Analytics" Href="/SIMIP/CVLI">CVLI</MudNavLink>
-        <MudNavLink Icon="@Icons.Material.Outlined.IntegrationInstructions" Href="/SIMIP/dashboard">CVP</MudNavLink>
-        <MudNavLink Icon="@Icons.Material.Outlined.BarChart" Href="/SIMIP/dashboard">Crime Patrimônial</MudNavLink>
-        <MudNavLink Icon="@Icons.Material.Outlined.PieChart" Href="/SIMIP/dashboard">Vítimas de Viôlencia</MudNavLink>
-        <MudNavLink Icon="@Icons.Material.Outlined.BubbleChart" Href="/SIMIP/dashboard">Mortes de Trânsito</MudNavLink>
-        <MudNavLink Icon="@Icons.Material.Outlined.TableChart" Href="/SIMIP/dashboard">Dicionário de Dados</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.IntegrationInstructions" Href="/SIMIP/dashboard" Disabled="true">CVP</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.BarChart" Href="/SIMIP/dashboard" Disabled="true">Crime Patrimônial</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.PieChart" Href="/SIMIP/dashboard" Disabled="true">Vítimas de Viôlencia</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.BubbleChart" Href="/SIMIP/dashboard" Disabled="true">Mortes de Trânsito</MudNavLink>
+        <MudNavLink Icon="@Icons.Material.Outlined.TableChart" Href="/SIMIP/dashboard" Disabled="true">Dicionário de Dados</MudNavLink>
     </MudNavGroup>
     <MudNavGroup Icon="@Icons.Material.Outlined.MiscellaneousServices" Title="Configurações">
         <MudNavLink Icon="@Icons.Material.Outlined.Password" Href="/SIMIP/alterar-usuario">Alterar Senha</MudNavLink>
@@ -17,11 +17,10 @@
             @if (funcao.Descricao == "Gestor" || funcao.Descricao == "Administrador")
             {
                 <MudNavLink Icon="@Icons.Material.Outlined.ManageAccounts" Href="/SIMIP/usuarios">Usuários</MudNavLink> 
-                <MudNavLink Icon="@Icons.Material.Outlined.TableView" Href="/SIMIP/Tabelas">Tabelas</MudNavLink>   
+                <MudNavLink Icon="@Icons.Material.Outlined.TableView" Href="/SIMIP/Tabelas" Disabled="true">Tabelas</MudNavLink>   
             }   
         }
     </MudNavGroup>
-    <MudNavLink Icon="@Icons.Material.Outlined.ExitToApp" Href="/SIMIP/logout">Sair</MudNavLink>
 </MudNavMenu>
 @code {
     private bool collapseNavMenu = true;

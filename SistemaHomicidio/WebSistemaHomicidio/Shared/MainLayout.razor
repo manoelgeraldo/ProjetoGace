@@ -4,7 +4,7 @@
 <MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.Large" />
 <MudSnackbarProvider />
 
-<MudLayout RightToLeft="@_rightToLeft" id="bandeirape">
+<MudLayout id="bandeirape">
 
     @if (Authentication.Usuario is null)
     {
@@ -45,10 +45,10 @@
                                        Color="Color.Inherit"
                                        OnClick="@((e) => DarkMode())" />
                     </MudTooltip>
-                    <MudTooltip Text="Inverter componentes">
-                        <MudIconButton Icon="@Icons.Material.Filled.FormatTextdirectionRToL"
+                    <MudTooltip Text="Sair">
+                        <MudIconButton Icon="@Icons.Material.Outlined.ExitToApp"
                                        Color="Color.Inherit"
-                                       OnClick="@((e) => RightToLeftToggle())" />
+                                       OnClick="@((e) => Authentication.Logout())" />
                     </MudTooltip>
                 </MudHidden>
                 <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
@@ -61,9 +61,9 @@
                             <MudIconButton Icon="@Icons.Material.Filled.Brightness4"
                                            Color="Color.Inherit"
                                            OnClick="@((e) => DarkMode())" />
-                            <MudIconButton Icon="@Icons.Material.Filled.FormatTextdirectionRToL"
+                            <MudIconButton Icon="@Icons.Material.Outlined.ExitToApp"
                                            Color="Color.Inherit"
-                                           OnClick="@((e) => RightToLeftToggle())" />
+                                           OnClick="@((e) => Authentication.Logout())" />
                         </div>
                     </MudMenu>
                 </MudHidden>
@@ -154,17 +154,11 @@
 {
 
     private bool _drawerOpen = false;
-    private bool _rightToLeft = false;
     private string searchValue = string.Empty;
 
     private void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
-    }
-
-    private void RightToLeftToggle()
-    {
-        _rightToLeft = !_rightToLeft;
     }
 
     protected override void OnInitialized()

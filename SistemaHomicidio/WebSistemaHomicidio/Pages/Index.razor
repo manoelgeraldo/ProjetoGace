@@ -209,7 +209,7 @@
 
 <MudDrawer @bind-Open="@open" Anchor="@anchor" Elevation="1" Width="300px" Height="100%" Variant="@DrawerVariant.Temporary">
     <MudDrawerHeader>
-        <MudText Typo="Typo.h6">Registrados Hoje - <MudText Typo="Typo.subtitle2">Total:  @totalLancamentoDiario</MudText></MudText>
+        <MudText Typo="Typo.h6">Registrados Hoje   <MudText Typo="Typo.subtitle2">Total:  @totalLancamentoDiario</MudText></MudText>
     </MudDrawerHeader>
     @if(ultimoRegistro.DataLancamento.Date < DateTime.Now.Date)
     {
@@ -218,7 +218,7 @@
     else
     {
         <MudTimeline TimelinePosition="TimelinePosition.Start" TimelineAlign="TimelineAlign.Start">
-            @foreach (var registro in registros.Where(x => x.DataLancamento.Date == ultimoRegistro.DataLancamento.Date).OrderBy(x => x.DataLancamento.TimeOfDay))
+            @foreach (var registro in registros.Where(x => x.DataLancamento.Date == ultimoRegistro.DataLancamento.Date).OrderByDescending(x => x.DataLancamento.TimeOfDay))
             {
                 <MudTimelineItem Size="Size.Small" Color="Color.Dark">
                     @if(@registro.DataAtualizacao.HasValue)
@@ -472,7 +472,7 @@
 
     void GerarTotalLancamentoDiario()
     {
-        ultimoRegistro = registros.LastOrDefault(x => x.DataLancamento.Date <= DateTime.Now.Date);
+        ultimoRegistro = registros.MaxBy(x => x.DataLancamento.Date);
         totalLancamentoDiario = registros.Where(x => x.DataLancamento.Date == DateTime.Now.Date).Count();
     }
 }
