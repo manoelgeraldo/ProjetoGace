@@ -157,7 +157,7 @@ namespace Infra.Data.Migrations
                     b.Property<string>("RelacaoAutorVitima")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RelacaoIntraFamiliarVitimaAutor")
+                    b.Property<string>("IntraFamiliarVitimaAutor")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SequencialEnvolvido")
@@ -445,9 +445,6 @@ namespace Infra.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MatriculaAutoridadeResponsavel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MotivacaoIP")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumOfRemessa")

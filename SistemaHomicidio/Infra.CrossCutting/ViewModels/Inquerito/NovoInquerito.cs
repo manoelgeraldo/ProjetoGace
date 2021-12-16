@@ -10,7 +10,6 @@ namespace Infra.CrossCutting.ViewModels
 
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? DataInstaraucao { get; set; }
-        public string MotivacaoIP { get; set; }
         public string SituacaoIP { get; set; }
         public int? NumeroOuvida { get; set; }
         public int? NumeroDeclaracao { get; set; }

@@ -38,7 +38,7 @@ namespace WebSistemaHomicidio.ViewModels.Envolvido
         public string ProfissaoEnvolvildo { get; set; }
         public string InformacaoTrabalho { get; set; }
         public string RelacaoAutorVitima { get; set; }
-        public string RelacaoIntraFamiliarVitimaAutor { get; set; }
+        public string IntraFamiliarVitimaAutor { get; set; }
         public string InstrumentoUtilizado { get; set; }
         public string NomeInstrumentoUtilizado { get; set; }
         public string Flagrante { get; set; }

@@ -80,7 +80,7 @@ namespace Infra.Data.Repositories
                 ProfissaoEnvolvildo = envolvido.ProfissaoEnvolvildo,
                 InformacaoTrabalho = envolvido.InformacaoTrabalho,
                 RelacaoAutorVitima = envolvido.RelacaoAutorVitima,
-                RelacaoIntraFamiliarVitimaAutor = envolvido.RelacaoIntraFamiliarVitimaAutor,
+                IntraFamiliarVitimaAutor = envolvido.IntraFamiliarVitimaAutor,
                 InstrumentoUtilizado = envolvido.InstrumentoUtilizado,
                 NomeInstrumentoUtilizado = envolvido.NomeInstrumentoUtilizado,
                 Flagrante = envolvido.Flagrante,

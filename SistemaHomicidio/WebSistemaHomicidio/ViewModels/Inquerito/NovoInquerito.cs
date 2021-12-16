@@ -7,7 +7,6 @@ namespace WebSistemaHomicidio.ViewModels.Inquerito
         public string NumeroIP { get; set; }
         public string TipoInstauracao { get; set; }
         public DateTime? DataInstaraucao { get; set; }
-        public string MotivacaoIP { get; set; }
         public string SituacaoIP { get; set; }
         public int NumeroOuvida { get; set; }
         public int NumeroDeclaracao { get; set; }
