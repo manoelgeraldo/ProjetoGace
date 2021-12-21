@@ -9,7 +9,7 @@ namespace APISistemaHomicidio.Configurations
     {
         public static void AddDataBaseConfiguration(this IServiceCollection services, IConfiguration Configuration)
         {
-            services.AddDbContext<DataBase>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
+            services.AddDbContext<DataBase>(options => options.UseOracle(Configuration.GetConnectionString("OracleConnection")));
         }
     }
 }

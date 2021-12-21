@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace APISistemaHomicidio.Controllers.v1
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class Municipio_Diretoria_AIS_BPMController : ControllerBase
@@ -29,7 +29,7 @@ namespace APISistemaHomicidio.Controllers.v1
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get()
         {
-            var tbl_Municipio_Diretoria_AIS_BPM = await service.GetAll();
+            var tbl_Municipio_Diretoria_AIS_BPM = await service.GetAll().ConfigureAwait(false);
 
             if (tbl_Municipio_Diretoria_AIS_BPM.Any())
             {

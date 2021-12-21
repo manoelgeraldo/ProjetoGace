@@ -9,16 +9,16 @@ namespace Infra.Data.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        private readonly DataBase context;
+        private readonly DataBase db;
 
-        public UsuarioRepository(DataBase context)
+        public UsuarioRepository(DataBase db)
         {
-            this.context = context;
+            this.db = db;
         }
 
         public async Task<IEnumerable<Usuario>> GetAllUsersAsync()
         {
-            return await context.Usuarios.Include(f => f.Funcoes)
+            return await db.USUARIOS.Include(f => f.Funcoes)
                                          .AsNoTracking()
                                          .ToListAsync()
                                          .ConfigureAwait(false);
@@ -26,7 +26,7 @@ namespace Infra.Data.Repositories
 
         public async Task<Usuario> GetAsync(string login)
         {
-            return await context.Usuarios
+            return await db.USUARIOS
                                 .Include(f => f.Funcoes)
                                 .AsNoTracking()
                                 .SingleOrDefaultAsync(p => p.Login == login)
@@ -35,13 +35,13 @@ namespace Infra.Data.Repositories
 
         public async Task<Usuario> InsertAsync(Usuario usuario)
         {
-            var verificaUsuario = await context.Usuarios.SingleOrDefaultAsync(l => l.Login == usuario.Login).ConfigureAwait(false);
+            var verificaUsuario = await db.USUARIOS.SingleOrDefaultAsync(l => l.Login == usuario.Login).ConfigureAwait(false);
 
             if (verificaUsuario == null)
             {
                 await InsertUsuarioFuncaoAsync(usuario).ConfigureAwait(false);
-                await context.Usuarios.AddAsync(usuario).ConfigureAwait(false);
-                await context.SaveChangesAsync().ConfigureAwait(false);
+                await db.USUARIOS.AddAsync(usuario).ConfigureAwait(false);
+                await db.SaveChangesAsync().ConfigureAwait(false);
                 return usuario;
             }
 
@@ -53,7 +53,7 @@ namespace Infra.Data.Repositories
             var funcoesConsultas = new List<Funcao>();
             foreach (var funcao in usuario.Funcoes)
             {
-                var funcaoConsultada = await context.Funcoes.FindAsync(funcao.Id).ConfigureAwait(false);
+                var funcaoConsultada = await db.FUNCOES.FindAsync(funcao.Id).ConfigureAwait(false);
                 funcoesConsultas.Add(funcaoConsultada);
             }
             usuario.Funcoes = funcoesConsultas;
@@ -61,24 +61,24 @@ namespace Infra.Data.Repositories
 
         public async Task<Usuario> UpdateAsync(Usuario usuario)
         {
-            var usuarioConsultado = await context.Usuarios.FindAsync(usuario.Login).ConfigureAwait(false);
+            var usuarioConsultado = await db.USUARIOS.FindAsync(usuario.Login).ConfigureAwait(false);
             if (usuarioConsultado == null)
             {
                 return null;
             }
-            context.Entry(usuarioConsultado).CurrentValues.SetValues(usuario);
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            db.Entry(usuarioConsultado).CurrentValues.SetValues(usuario);
+            await db.SaveChangesAsync().ConfigureAwait(false);
             return usuarioConsultado;
         }
 
         public async Task<Usuario> DeleteAsync(string login)
         {
-            var usuarioConsultado = await context.Usuarios.FindAsync(login).ConfigureAwait(false);
+            var usuarioConsultado = await db.USUARIOS.FindAsync(login).ConfigureAwait(false);
 
             if (usuarioConsultado != null)
             {
-                var usuarioExcluido = context.Usuarios.Remove(usuarioConsultado);
-                await context.SaveChangesAsync().ConfigureAwait(false);
+                var usuarioExcluido = db.USUARIOS.Remove(usuarioConsultado);
+                await db.SaveChangesAsync().ConfigureAwait(false);
                 return usuarioExcluido.Entity;
             }
             return null;

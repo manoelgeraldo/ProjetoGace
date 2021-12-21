@@ -20,7 +20,7 @@ namespace Infra.Data.Repositories
 
         public async Task<List<Registro>> ExibirTodosRegistros()
         {
-            return await _db.Registros.Include(x => x.Fato)
+            return await _db.REGISTROS.Include(x => x.Fato)
                                       .Include(e => e.Envolvidos)
                                       .AsNoTracking()
                                       .ToListAsync()
@@ -29,7 +29,7 @@ namespace Infra.Data.Repositories
 
         public async Task<Registro> ObterRegistroPorID(int id)
         {
-            return await _db.Registros.Include(f => f.Fato)
+            return await _db.REGISTROS.Include(f => f.Fato)
                                       .Include(e => e.Envolvidos)
                                         .ThenInclude(e => e.Endereco)
                                       .Include(e => e.Envolvidos)
@@ -48,7 +48,7 @@ namespace Infra.Data.Repositories
             AdicionaEnvolvidoNoRegistro(registro);
             AdicionaBoeComplementadoNoRegistro(registro);
             AdicionaArquivoNoRegistro(registro);
-            await _db.Registros.AddAsync(registro).ConfigureAwait(false);
+            await _db.REGISTROS.AddAsync(registro).ConfigureAwait(false);
             await _db.SaveChangesAsync().ConfigureAwait(false);
             return registro;
         }
@@ -163,11 +163,11 @@ namespace Infra.Data.Repositories
 
         public async Task<Registro> ExcluirRegistro(int id)
         {
-            var verificaRegistro = await _db.Registros.FindAsync(id).ConfigureAwait(false);
+            var verificaRegistro = await _db.REGISTROS.FindAsync(id).ConfigureAwait(false);
 
             if (verificaRegistro != null)
             {
-                var registroExcluido = _db.Registros.Remove(verificaRegistro);
+                var registroExcluido = _db.REGISTROS.Remove(verificaRegistro);
                 await _db.SaveChangesAsync().ConfigureAwait(false);
                 return registroExcluido.Entity;
             }

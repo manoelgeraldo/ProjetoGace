@@ -9,28 +9,27 @@ namespace Infra.Data.Contexto
         public DataBase(DbContextOptions options) : base(options) { }
 
         #region//Tabelas Principais
-        public DbSet<Registro> Registros { get; set; }
-        public DbSet<Fato> Fatos { get; set; }
-        public DbSet<Envolvido> Envolvidos { get; set; }
-        public DbSet<EnvolvidoEndereco> Enderecos { get; set; }
-        public DbSet<EnvolvidoCriminal> Criminal { get; set; }
-        public DbSet<EnvolvidoSaude> Saude { get; set; }
-        public DbSet<Inquerito> Inqueritos { get; set; }
-        public DbSet<Arquivo> Arquivos { get; set; }
-        public DbSet<BoeComplementado> BoeComplementados { get; set; }
+        public DbSet<Registro> REGISTROS { get; set; }
+        public DbSet<Fato> FATOS { get; set; }
+        public DbSet<Envolvido> ENVOLVIDOS { get; set; }
+        public DbSet<EnvolvidoEndereco> ENDERECOS { get; set; }
+        public DbSet<EnvolvidoCriminal> CRIMINAL { get; set; }
+        public DbSet<EnvolvidoSaude> SAUDE { get; set; }
+        public DbSet<Inquerito> INQUERITOS { get; set; }
+        public DbSet<Arquivo> ARQUIVOS { get; set; }
+        public DbSet<BoeComplementado> BOECOMPL { get; set; }
         #endregion
 
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Funcao> Funcoes { get; set; }
+        public DbSet<Usuario> USUARIOS { get; set; }
+        public DbSet<Funcao> FUNCOES { get; set; }
 
-        public DbSet<Municipio_Diretoria_AIS_BPM> Municipio_Diretoria_AIS_BPMs { get; set; }
+        public DbSet<Municipio_Diretoria_AIS_BPM> MUNICIPIOS { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
         }
     }
 }

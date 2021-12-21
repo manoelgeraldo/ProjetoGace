@@ -67,7 +67,7 @@ namespace Service.Services
             {
                 return null;
             }
-            if (await ValidaEAtualizaHashAsync(usuario, usuarioConsultado.Senha))
+            if (await ValidaEAtualizaHashAsync(usuario, usuarioConsultado.Senha).ConfigureAwait(false))
             {
                 var usuarioLogado = mapper.Map<ExibirUsuario>(usuarioConsultado);
                 usuarioLogado.Token = jwt.GerarToken(usuarioConsultado);

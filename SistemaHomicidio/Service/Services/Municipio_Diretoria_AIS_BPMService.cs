@@ -20,7 +20,7 @@ namespace Service.Services
 
         public async Task<IEnumerable<Exibir_Municipio_Diretoria_AIS_BPM>> GetAll()
         {
-            var municipios = await repository.GetAll();
+            var municipios = await repository.GetAll().ConfigureAwait(false);
             return mapper.Map<IEnumerable<Exibir_Municipio_Diretoria_AIS_BPM>>(municipios);
         }
     }

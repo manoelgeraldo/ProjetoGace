@@ -21,9 +21,10 @@ namespace Infra.Data.Repositories
 
         public async Task<IEnumerable<Municipio_Diretoria_AIS_BPM>> GetAll()
         {
-            return await db.Municipio_Diretoria_AIS_BPMs.AsNoTracking()
-                                                        .OrderBy(m => m.Municipio)
-                                                        .ToListAsync();
+            return await db.MUNICIPIOS.AsNoTracking()
+                                      .OrderBy(m => m.Municipio)
+                                      .ToListAsync()
+                                      .ConfigureAwait(false);
         }
     }
 }

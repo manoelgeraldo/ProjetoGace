@@ -8,9 +8,11 @@ namespace Infra.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<BoeComplementado> builder)
         {
-            builder.Property(i => i.Id).ValueGeneratedOnAdd();
-            builder.Property(d => d.DataRegistro).IsRequired().HasColumnType("date");
-            builder.Property(d => d.Boe).IsRequired();
+            builder.ToTable("BOECOMPL", "SDS_SIMIP_USU");
+            builder.Property(i => i.Id).ValueGeneratedOnAdd().HasColumnName("ID");
+            builder.Property(d => d.DataRegistro).IsRequired().HasColumnType("date").HasColumnName("DATAREGISTRO");
+            builder.Property(d => d.Boe).IsRequired().HasColumnName("BOE");
+            builder.Property(X => X.RegistroId).HasColumnName("RGID");
         }
     }
 }
