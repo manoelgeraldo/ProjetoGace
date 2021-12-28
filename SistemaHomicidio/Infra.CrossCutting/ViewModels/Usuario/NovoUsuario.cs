@@ -7,7 +7,6 @@ namespace Infra.CrossCutting.ViewModels.Usuario
         public string Nome { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
-
-        public ICollection<ReferenciaFuncao> Funcoes { get; set; }
+        public string Funcao { get; set; }
     }
 }

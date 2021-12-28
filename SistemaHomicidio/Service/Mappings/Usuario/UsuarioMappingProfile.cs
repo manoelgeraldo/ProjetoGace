@@ -13,8 +13,6 @@ namespace Service.Mappings
             CreateMap<Usuario, UsuarioLogin>().ReverseMap();
             CreateMap<Usuario, ExibirUsuario>().ReverseMap();
             CreateMap<Usuario, NovoUsuario>().ReverseMap();
-            CreateMap<Funcao, ExibirFuncao>().ReverseMap();
-            CreateMap<Funcao, ReferenciaFuncao>().ReverseMap();
         }
     }
 }

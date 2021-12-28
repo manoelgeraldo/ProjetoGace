@@ -15,6 +15,6 @@ namespace WebSistemaHomicidio.ViewModels.Usuario
         public string Senha { get; set; }
 
         [Required(ErrorMessage = "É obrigatório!")]
-        public List<ReferenciaFuncao> Funcoes { get; set; }
+        public string Funcao { get; set; }
     }
 }

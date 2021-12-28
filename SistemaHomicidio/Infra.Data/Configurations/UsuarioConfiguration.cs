@@ -13,6 +13,7 @@ namespace Infra.Data.Configurations
             builder.Property(l => l.Login).IsRequired().HasColumnName("LOGIN");
             builder.Property(n => n.Nome).IsRequired().HasColumnName("NOME");
             builder.Property(s => s.Senha).IsRequired().HasColumnName("SENHA");
+            builder.Property(x => x.Funcao).IsRequired().HasColumnName("FUNCAO");
         }
     }
 }

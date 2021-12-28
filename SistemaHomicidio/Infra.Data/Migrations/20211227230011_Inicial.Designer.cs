@@ -12,14 +12,14 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace Infra.Data.Migrations
 {
     [DbContext(typeof(DataBase))]
-    [Migration("20211221142659_Inicial")]
+    [Migration("20211227230011_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -506,24 +506,6 @@ namespace Infra.Data.Migrations
                     b.ToTable("FATOS", "SDS_SIMIP_USU");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Funcao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("NVARCHAR2(2000)")
-                        .HasColumnName("DESCRICAO");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FUNCAO", "SDS_SIMIP_USU");
-                });
-
             modelBuilder.Entity("Domain.Entities.Inquerito", b =>
                 {
                     b.Property<int>("RegistroId")
@@ -692,6 +674,11 @@ namespace Infra.Data.Migrations
                         .HasColumnType("NVARCHAR2(450)")
                         .HasColumnName("LOGIN");
 
+                    b.Property<string>("Funcao")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)")
+                        .HasColumnName("FUNCAO");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)")
@@ -705,21 +692,6 @@ namespace Infra.Data.Migrations
                     b.HasKey("Login");
 
                     b.ToTable("USUARIO", "SDS_SIMIP_USU");
-                });
-
-            modelBuilder.Entity("FuncaoUsuario", b =>
-                {
-                    b.Property<int>("FuncoesId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<string>("UsuariosLogin")
-                        .HasColumnType("NVARCHAR2(450)");
-
-                    b.HasKey("FuncoesId", "UsuariosLogin");
-
-                    b.HasIndex("UsuariosLogin");
-
-                    b.ToTable("FuncaoUsuario", "SDS_SIMIP_USU");
                 });
 
             modelBuilder.Entity("Domain.Entities.Arquivo", b =>
@@ -790,21 +762,6 @@ namespace Infra.Data.Migrations
                     b.HasOne("Domain.Entities.Registro", null)
                         .WithOne("Inquerito")
                         .HasForeignKey("Domain.Entities.Inquerito", "RegistroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FuncaoUsuario", b =>
-                {
-                    b.HasOne("Domain.Entities.Funcao", null)
-                        .WithMany()
-                        .HasForeignKey("FuncoesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Usuario", null)
-                        .WithMany()
-                        .HasForeignKey("UsuariosLogin")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

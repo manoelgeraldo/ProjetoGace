@@ -19,7 +19,7 @@
                         <!-- Nome -->
                         <MudItem xs="12" sm="6" md="5">
                             <MudTextField @bind-Value="@novoUsuario.Nome"
-                                            Label="Nome e SobreNome"
+                                            Label="Nome e Sobrenome"
                                             Variant="Variant.Outlined"
                                             For="@(()=> novoUsuario.Nome)"/>
                         </MudItem>
@@ -44,19 +44,16 @@
                         <!-- Função -->
                         <MudItem xs="12" sm="6" md="3">
                             <MudSelect T="string" Label="Função" Variant="Variant.Outlined" @bind-Value="@descricaoFuncao">
-                                @foreach (var funcao in Authentication.Usuario.Funcoes)
+                                @if(Authentication.Usuario.Funcao == "Gestor")
                                 {
-                                    @if(funcao.Descricao == "Gestor")
-                                    {
-                                        <MudSelectItem Value="@("Gestor")"/>
-                                        <MudSelectItem Value="@("Administrador")"/>
-                                        <MudSelectItem Value="@("Operador")"/>
-                                    }
-                                    else
-                                    {
-                                        <MudSelectItem Value="@("Administrador")"/>
-                                        <MudSelectItem Value="@("Operador")"/>
-                                    }
+                                    <MudSelectItem Value="@("Gestor")"/>
+                                    <MudSelectItem Value="@("Administrador")"/>
+                                    <MudSelectItem Value="@("Operador")"/>
+                                }
+                                else
+                                {
+                                    <MudSelectItem Value="@("Administrador")"/>
+                                    <MudSelectItem Value="@("Operador")"/>
                                 }
                             </MudSelect>
                         </MudItem>
@@ -83,25 +80,19 @@
                         <RowTemplate Context="usuario">
                             <MudTd DataLabel="Nome">@usuario.Nome</MudTd>
                             <MudTd DataLabel="Login">@usuario.Login</MudTd>
-                            @foreach (var funcao in @usuario.Funcoes)
-                            {
-                                <MudTd DataLabel="Função">@funcao.Descricao</MudTd>   
-                            }
+                            <MudTd DataLabel="Função">@usuario.Funcao</MudTd>
                             <MudTd DataLabel="Ações">
-                                @foreach (var funcao in @usuario.Funcoes)
+                                @if(@usuario.Funcao == "Gestor" || @usuario.Nome == Authentication.Usuario.Nome)
                                 {
-                                    @if(funcao.Descricao == "Gestor" || @usuario.Nome == Authentication.Usuario.Nome)
-                                    {
-                                        <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
-                                            <MudIconButton @onclick="(()=> ExcluirUsuario(usuario))" Disabled="true" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
-                                        </MudTooltip>
-                                    }
-                                    else
-                                    {
-                                        <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
-                                            <MudIconButton @onclick="(()=> ExcluirUsuario(usuario))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
-                                        </MudTooltip>
-                                    }
+                                    <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
+                                        <MudIconButton @onclick="(()=> ExcluirUsuario(usuario))" Disabled="true" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                                    </MudTooltip>
+                                }
+                                else
+                                {
+                                    <MudTooltip Text="Excluir" Arrow="true" Placement="Placement.Right">
+                                        <MudIconButton @onclick="(()=> ExcluirUsuario(usuario))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                                    </MudTooltip>
                                 }
                             </MudTd>
                         </RowTemplate>
@@ -123,16 +114,9 @@
 
     string descricaoFuncao;
 
-    public ReferenciaFuncao funcao = new ReferenciaFuncao() { };
-
     public List<Usuario> usuarios { get; set; } = new List<Usuario> { };
 
-    public List<ReferenciaFuncao> listaFuncoes { get; set; } = new List<ReferenciaFuncao> { };
-
-    public NovoUsuario novoUsuario = new NovoUsuario()
-    {
-        Funcoes = new List<ReferenciaFuncao>()
-    };
+    public NovoUsuario novoUsuario = new NovoUsuario() { };
 
     protected override async Task OnInitializedAsync()
     {
@@ -160,32 +144,8 @@
         return usuarios;
     }
 
-    void FuncaoDescricao(string descricao)
-    {
-        switch(descricao)
-        {
-            case "Gestor":
-                funcao.Id = 1;
-                break;
-            case "Administrador":
-                funcao.Id = 2;
-                break;
-            case "Operador":
-                funcao.Id = 3;
-                break;
-        }
-    }
-
-    void AdicionarFuncaoNaListaFuncoes(ReferenciaFuncao funcao)
-    {   
-        listaFuncoes.Add(funcao);
-        novoUsuario.Funcoes = listaFuncoes;
-    }
-
     private async Task AdicionarUsuario()
     {
-        FuncaoDescricao(descricaoFuncao);
-        AdicionarFuncaoNaListaFuncoes(funcao);
         var usuarioLogado = await ObterUsuarioLogadoNoSistema();
 
         var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44343/api/Usuarios/novo-usuario");

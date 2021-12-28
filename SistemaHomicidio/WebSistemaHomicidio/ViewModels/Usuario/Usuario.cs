@@ -6,12 +6,6 @@ namespace WebSistemaHomicidio.ViewModels.Usuario
     {
         public string Nome { get; set; }
         public string Login { get; set; }
-
-        public ICollection<Funcao> Funcoes { get; set; }
-
-        public Usuario()
-        {
-            Funcoes = new HashSet<Funcao>();
-        }
+        public string Funcao { get; set; }
     }
 }

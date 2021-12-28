@@ -21,7 +21,6 @@ namespace Infra.Data.Contexto
         #endregion
 
         public DbSet<Usuario> USUARIOS { get; set; }
-        public DbSet<Funcao> FUNCOES { get; set; }
 
         public DbSet<Municipio_Diretoria_AIS_BPM> MUNICIPIOS { get; set; }
 

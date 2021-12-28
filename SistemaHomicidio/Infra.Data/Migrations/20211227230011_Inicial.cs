@@ -13,20 +13,6 @@ namespace Infra.Data.Migrations
                 name: "SDS_SIMIP_USU");
 
             migrationBuilder.CreateTable(
-                name: "FUNCAO",
-                schema: "SDS_SIMIP_USU",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    DESCRICAO = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FUNCAO", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MUNICIPIOS",
                 columns: table => new
                 {
@@ -70,7 +56,8 @@ namespace Infra.Data.Migrations
                 {
                     LOGIN = table.Column<string>(type: "NVARCHAR2(450)", nullable: false),
                     NOME = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    SENHA = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
+                    SENHA = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    FUNCAO = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -257,33 +244,6 @@ namespace Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FUNCAOUSUARIO",
-                schema: "SDS_SIMIP_USU",
-                columns: table => new
-                {
-                    FUNCOESID = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    USUARIOSLOGIN = table.Column<string>(type: "NVARCHAR2(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FUNCAOUSUARIO", x => new { x.FUNCOESID, x.USUARIOSLOGIN });
-                    table.ForeignKey(
-                        name: "FK_FUNCAO_FUNCOESID",
-                        column: x => x.FUNCOESID,
-                        principalSchema: "SDS_SIMIP_USU",
-                        principalTable: "FUNCAO",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_USUARIO_USUARIOSLOGIN",
-                        column: x => x.USUARIOSLOGIN,
-                        principalSchema: "SDS_SIMIP_USU",
-                        principalTable: "USUARIO",
-                        principalColumn: "LOGIN",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CRIMINAL",
                 schema: "SDS_SIMIP_USU",
                 columns: table => new
@@ -391,12 +351,6 @@ namespace Infra.Data.Migrations
                 schema: "SDS_SIMIP_USU",
                 table: "ENVOLVIDOS",
                 column: "RGID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FUNCAOUSUARIO_USUARIOSLOGIN",
-                schema: "SDS_SIMIP_USU",
-                table: "FUNCAOUSUARIO",
-                column: "USUARIOSLOGIN");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -422,10 +376,6 @@ namespace Infra.Data.Migrations
                 schema: "SDS_SIMIP_USU");
 
             migrationBuilder.DropTable(
-                name: "FUNCAOUSUARIO",
-                schema: "SDS_SIMIP_USU");
-
-            migrationBuilder.DropTable(
                 name: "INQUERITOS",
                 schema: "SDS_SIMIP_USU");
 
@@ -434,10 +384,6 @@ namespace Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "SAUDE",
-                schema: "SDS_SIMIP_USU");
-
-            migrationBuilder.DropTable(
-                name: "FUNCAO",
                 schema: "SDS_SIMIP_USU");
 
             migrationBuilder.DropTable(

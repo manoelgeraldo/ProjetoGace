@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace APISistemaHomicidio.Controllers.v1
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class Municipio_Diretoria_AIS_BPMController : ControllerBase

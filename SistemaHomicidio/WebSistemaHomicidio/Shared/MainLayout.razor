@@ -80,10 +80,7 @@
                                         @Authentication.Usuario.Nome
                                     </MudText>
                                     <MudText Typo="Typo.caption">
-                                        @foreach (var item in @Authentication.Usuario.Funcoes)
-                                        {
-                                            @item.Descricao
-                                        }
+                                        @Authentication.Usuario.Funcao
                                     </MudText>   
                                 }
                             </CardHeaderContent>

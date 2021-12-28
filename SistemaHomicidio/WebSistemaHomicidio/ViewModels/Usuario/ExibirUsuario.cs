@@ -6,7 +6,7 @@ namespace WebSistemaHomicidio.ViewModels.Usuario
     {
         public string Nome { get; set; }
 
-        public ICollection<ExibirFuncao> Funcoes { get; set; }
+        public string Funcao { get; set; }
 
         public string Token { get; set; }
     }

@@ -28,7 +28,8 @@ namespace Infra.Data.JWT
             {
                 new Claim(ClaimTypes.Name, usuario.Login)
             };
-            claims.AddRange(usuario.Funcoes.Select(p => new Claim(ClaimTypes.Role, p.Descricao)));
+            //claims.AddRange(usuario.Funcoes.Select(p => new Claim(ClaimTypes.Role, p.Descricao)));
+            claims.Add(new Claim(ClaimTypes.Role, usuario.Funcao));
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),

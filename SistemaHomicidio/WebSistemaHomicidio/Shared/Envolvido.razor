@@ -128,22 +128,22 @@
                             <!--Identidade de Gênero-->
                             <MudItem xs="12" sm="6" md="3">
                                 <MudSelect T="string" Label="Ident.Gênero" Variant="Variant.Outlined" @bind-Value="@novoEnvolvido.IdentidadeGenero">
-                                    <MudSelectItem Value="@("HOMEM CISGENERO")" />
-                                    <MudSelectItem Value="@("MULHER CISGENERO")" />
-                                    <MudSelectItem Value="@("HOMEM TRANS")" />
-                                    <MudSelectItem Value="@("MULHER TRANS")" />
-                                    <MudSelectItem Value="@("TRAVESTI")" />
+                                    <MudSelectItem Value="@("HETEROSSEXUAL")" />
+                                    <MudSelectItem Value="@("HOMOSSEXUAL")" />
+                                    <MudSelectItem Value="@("BISSEXUAL")" />
+                                    <MudSelectItem Value="@("LESBICA")" />
+                                    <MudSelectItem Value="@("GAY")" />
                                     <MudSelectItem Value="@("NAO INFORMADO")" />
                                 </MudSelect>
                             </MudItem>
                             <!--Orientação Afetiva-Sexual-->
                             <MudItem xs="12" sm="6" md="2">
                                 <MudSelect T="string" Label="Orientação Sexual" Variant="Variant.Outlined" @bind-Value="@novoEnvolvido.OrientacaoSexual">
-                                    <MudSelectItem Value="@("HETEROSSEXUAL")" />
-                                    <MudSelectItem Value="@("HOMOSSEXUAL")" />
-                                    <MudSelectItem Value="@("BISSEXUAL")" />
-                                    <MudSelectItem Value="@("LESBICA")" />
-                                    <MudSelectItem Value="@("GAY")" />
+                                    <MudSelectItem Value="@("HOMEM CISGENERO")" />
+                                    <MudSelectItem Value="@("MULHER CISGENERO")" />
+                                    <MudSelectItem Value="@("HOMEM TRANS")" />
+                                    <MudSelectItem Value="@("MULHER TRANS")" />
+                                    <MudSelectItem Value="@("TRAVESTI")" />
                                     <MudSelectItem Value="@("NAO INFORMADO")" />
                                 </MudSelect>
                             </MudItem>
@@ -189,7 +189,7 @@
                             <!--Dependência Química-->
                             <MudItem xs="12" sm="6" md="3">
                                 <MudField  Label="Dep.Químico" Variant="Variant.Outlined" InnerPadding="false" @bind-Value="@novoEnvolvido.DepedenciaQuimica">
-                                    <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.InformacaoTrabalho">
+                                    <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.DepedenciaQuimica">
                                         <MudRadio Option="@("SIM")" Color="Color.Primary">SIM</MudRadio>
                                         <MudRadio Option="@("NAO")" Color="Color.Primary">NÃO</MudRadio>
                                     </MudRadioGroup>
@@ -197,8 +197,8 @@
                             </MudItem>
                             <!--Consumo de Drogas-->
                             <MudItem xs="12" sm="6" md="3">
-                                <MudField  Label="Cons.Drogas" Variant="Variant.Outlined" InnerPadding="false" @bind-Value="@novoEnvolvido.DepedenciaQuimica">
-                                    <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.InformacaoTrabalho">
+                                <MudField  Label="Cons.Drogas" Variant="Variant.Outlined" InnerPadding="false" @bind-Value="@novoEnvolvido.ConsumoDrogas">
+                                    <MudRadioGroup @bind-SelectedOption="@novoEnvolvido.ConsumoDrogas">
                                         <MudRadio Option="@("SIM")" Color="Color.Primary">SIM</MudRadio>
                                         <MudRadio Option="@("NAO")" Color="Color.Primary">NÃO</MudRadio>
                                     </MudRadioGroup>
