@@ -26,6 +26,7 @@ namespace Infra.Data.Configurations
             builder.Property(c => c.SituacaoVitimaAcidente).HasColumnName("SITUACAOVITIMAACIDENTE");
             builder.Property(c => c.TransporteVitima).HasColumnName("TRANSPORTEVITIMA");
             builder.Property(c => c.TransporteAutor).HasColumnName("TRANSPORTEAUTOR");
+            builder.Property(c => c.Evoluiu).HasColumnName("EVOLUIU");
         }
     }
 }

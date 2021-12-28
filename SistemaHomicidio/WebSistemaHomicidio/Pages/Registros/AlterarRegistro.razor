@@ -35,17 +35,18 @@
                                            For="@(()=> editarRegistro.DataRegistroBOE)" />
                         </MudItem>
                         <!-- Tipo de Registro-->
-                        <MudItem xs="12" sm="6" md="4">
+                        <MudItem xs="12" sm="6" md="5">
                             <MudField Label="Tipo de Registro" Variant="Variant.Outlined" InnerPadding="false" Class="align-content-center">
                                 <MudRadioGroup @bind-SelectedOption="@editarRegistro.TipoDeRegistro">
                                     <MudRadio Option="@("TENTATIVA")" Color="Color.Primary">Tentativa</MudRadio>
                                     <MudRadio Option="@("CONSUMADO")" Color="Color.Primary">Consumado</MudRadio>
+                                    <MudRadio Option="@("AMBOS")" Color="Color.Primary">Ambos</MudRadio>
                                     <ValidationMessage For="@(()=> editarRegistro.TipoDeRegistro)" />
                                 </MudRadioGroup>
                             </MudField>
                         </MudItem>
                         <!-- Intencionalidade-->
-                        <MudItem xs="12" sm="6" md="3">
+                        <MudItem xs="12" sm="6" md="2">
                             <MudSelect T="string" Label="Intencionalidade" Variant="Variant.Outlined" @bind-Value="editarRegistro.Intencionalidade">
                                 <MudSelectItem Value="@("CULPOSO")" />
                                 <MudSelectItem Value="@("DOLOSO")" />

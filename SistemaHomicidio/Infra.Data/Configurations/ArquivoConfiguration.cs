@@ -13,7 +13,7 @@ namespace Infra.Data.Configurations
             builder.Property(X => X.NomeArquivo).HasColumnName("NOMEARQUIVO");
             builder.Property(X => X.RegistroId).HasColumnName("RGID");
             builder.Property(X => X.TipoArquivo).HasColumnName("TIPOARQUIVO");
-            builder.Property(X => X.DadosArquivo).HasColumnName("DADOSARQUIVO");
+            builder.Property(X => X.DadosArquivo).HasColumnName("DADOSARQUIVO").HasColumnType("BLOB");
             builder.Property(X => X.CriacaoArquivo).HasColumnName("CRIACAOARQUIVO");
         }
     }

@@ -3,6 +3,7 @@ using System;
 using Infra.Data.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,10 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace Infra.Data.Migrations
 {
     [DbContext(typeof(DataBase))]
-    partial class DataBaseModelSnapshot : ModelSnapshot
+    [Migration("20211228141637_AdicionandoColunaEvoluiuSaude")]
+    partial class AdicionandoColunaEvoluiuSaude
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

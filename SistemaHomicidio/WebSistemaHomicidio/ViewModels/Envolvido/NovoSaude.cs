@@ -20,6 +20,7 @@ namespace WebSistemaHomicidio.ViewModels.Envolvido
         public string SituacaoVitimaAcidente { get; set; }
         public string TransporteVitima { get; set; }
         public string TransporteAutor { get; set; }
+        public bool Evoluiu { get; set; }
 
         [NotMapped]
         public long MyTimeSpanSerializer

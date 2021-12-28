@@ -20,5 +20,6 @@ namespace Domain.Entities
         public string SituacaoVitimaAcidente { get; set; }
         public string TransporteVitima { get; set; }
         public string TransporteAutor { get; set; }
+        public bool Evoluiu { get; set; }
     }
 }

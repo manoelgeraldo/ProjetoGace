@@ -448,11 +448,18 @@
                                 </MudField>
                             </MudItem>
                             <!--Hospital de Socorro-->
-                            <MudItem xs="12" sm="6" md="12">
+                            <MudItem xs="12" sm="6" md="11">
                                 <MudTextField Label="Unidade de Socorro"
                                               Variant="Variant.Outlined"
                                               Adornment="Adornment.End"
                                               @bind-Value="@novoEnvolvido.Saude.HospitalSocorro"/>
+                            </MudItem>
+                            <!--Status do Registro-->
+                            <MudItem xs="12" sm="6" md="1">
+                                <MudGrid Justify="Justify.Center" Style="margin-top: 8px;">
+                                    <MudText Typo="Typo.caption">Evoluiu</MudText>
+                                    <MudSwitch @bind-Checked="novoEnvolvido.Saude.Evoluiu" Color="Color.Primary" Class="status"/>
+                                </MudGrid>
                             </MudItem>
                             <!--Data do Óbito-->
                             <MudItem xs="12" sm="6" md="2">
@@ -1056,5 +1063,11 @@
     .mudRadioGrup{
         margin-left:-22px;
         margin-right:-15px;
+    }
+
+    .status {
+        margin-left: 10px;
+        margin-right: 0px;
+        margin-bottom: 0px;
     }
 </style>

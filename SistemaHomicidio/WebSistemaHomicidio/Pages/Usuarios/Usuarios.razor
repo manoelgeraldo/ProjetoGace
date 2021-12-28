@@ -43,7 +43,7 @@
                         </MudItem>
                         <!-- Função -->
                         <MudItem xs="12" sm="6" md="3">
-                            <MudSelect T="string" Label="Função" Variant="Variant.Outlined" @bind-Value="@descricaoFuncao">
+                            <MudSelect T="string" Label="Função" Variant="Variant.Outlined" @bind-Value="@novoUsuario.Funcao">
                                 @if(Authentication.Usuario.Funcao == "Gestor")
                                 {
                                     <MudSelectItem Value="@("Gestor")"/>
@@ -112,11 +112,9 @@
         new BreadcrumbItem("Usuarios", href: null, disabled: true)
     };
 
-    string descricaoFuncao;
-
     public List<Usuario> usuarios { get; set; } = new List<Usuario> { };
 
-    public NovoUsuario novoUsuario = new NovoUsuario() { };
+    public NovoUsuario novoUsuario { get; set; } = new NovoUsuario() { };
 
     protected override async Task OnInitializedAsync()
     {
@@ -157,7 +155,6 @@
         {
             snackbar.Add("Usuário Cadastrado!", Severity.Success);
             novoUsuario = new ();
-            descricaoFuncao = null;
             StateHasChanged();
             await ObterTodosUsuarios(usuarioLogado);
         }
