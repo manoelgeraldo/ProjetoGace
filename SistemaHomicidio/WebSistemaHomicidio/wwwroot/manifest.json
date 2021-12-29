@@ -1,6 +1,7 @@
 {
-  "name": "Sistema de Registro de Homicidios",
+  "name": "Sistema de Registros de Homicidios de Interesse Policial",
   "short_name": "SIMIP",
+  "description": "Sistema que realiza a coleta e tratamento de dados referentes aos homícidios ocorridos em Pernambuco.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -9,7 +10,8 @@
     {
       "src": "imagens/anubis.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ]
 }
