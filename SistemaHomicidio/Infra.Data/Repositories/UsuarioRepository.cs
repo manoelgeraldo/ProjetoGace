@@ -2,7 +2,6 @@
 using Infra.Data.Contexto;
 using Infra.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

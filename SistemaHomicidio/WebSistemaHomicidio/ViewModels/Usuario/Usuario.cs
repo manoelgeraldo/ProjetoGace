@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WebSistemaHomicidio.ViewModels.Usuario
+﻿namespace WebSistemaHomicidio.ViewModels.Usuario
 {
     public class Usuario
     {

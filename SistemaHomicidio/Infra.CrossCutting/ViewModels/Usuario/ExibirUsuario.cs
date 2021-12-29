@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Infra.CrossCutting.ViewModels.Usuario
+﻿namespace Infra.CrossCutting.ViewModels.Usuario
 {
     public class ExibirUsuario
     {
