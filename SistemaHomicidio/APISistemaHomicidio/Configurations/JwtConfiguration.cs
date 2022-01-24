@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 
 namespace APISistemaHomicidio.Configurations
@@ -15,7 +16,7 @@ namespace APISistemaHomicidio.Configurations
         {
             services.AddSingleton<IJWTService, JWTService>();
 
-            var chave = Encoding.ASCII.GetBytes(configuration.GetSection("JWT:Secret").Value);
+            var chave = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT__SECRET"));
 
             services.AddAuthentication(p =>
             {

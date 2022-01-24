@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotNetEnv" Version="2.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.1" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="6.21.4" />
     <PackageReference Include="System.Net.Http.Json" Version="6.0.0" Condition="'$(TargetFramework)' != 'net6.0'" />
@@ -39,6 +40,10 @@
 
   <ItemGroup>
     <Folder Include="Arquivos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".env" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
