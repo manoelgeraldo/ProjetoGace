@@ -2,7 +2,7 @@
 
 ## Na pasta [Capturas de tela](https://github.com/manoelgeraldo/ProjetoGace/tree/master/Capturas%20de%20tela) você pode visualizar detalhadamente os slides.
 
-### O projeto original encontrasse em repositório no GitLab e em deploy pelo OpenShift com constante melhorias
+### O projeto original está no repositório privado no GitLab e em deploy pelo OpenShift com constantes melhorias
 
 <br>
  
